@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Welcome to Finance Planner</h1>
+        <p class="lead">Track your expenses, set savings goals, visualize your progress, and share tips with our community.</p>
+        {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">Get Started - Login</a>
+        {% else %}
+            <a href="{{ url_for('upload.upload') }}" class="btn btn-primary btn-lg">Start Managing Your Finances</a>
+        {% endif %}
+    </div>
+{% endblock %}

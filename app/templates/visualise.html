@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Visualise Data{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h2>Your Spending Analytics</h2>
+        <canvas id="spendingChart" width="400" height="200"></canvas>
+    </div>
+
+    <!-- Chart.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom JavaScript for fetching and drawing charts -->
+    <script src="{{ url_for('static', filename='js/visualise.js') }}"></script>
+{% endblock %}
