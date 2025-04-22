@@ -17,23 +17,23 @@ cd finance_planner
 Set up a virtual environment:
 
 python -m venv venv
-On Linux / Mac: source venv/bin/activate  
-On Windows:     venv\Scripts\activate
+On Linux / Mac: > source venv/bin/activate  
+On Windows:     > venv\Scripts\activate
 
 
 Install dependencies:
-pip install -r requirements.txt
-Set environment variables: Create a .env file in the root directory:
+    >pip install -r requirements.txt
 
 
-FLASK_APP=run.py
+FLASK_APP=app.py
 FLASK_ENV=development
-SECRET_KEY=your-secret-key
+SECRET_KEY=123
 DATABASE_URI=sqlite:///finance.db
+
 Run the application:
+    > python app.py
 
 
-python run.py
 Open your browser and navigate to http://127.0.0.1:5000.
 Features
 User authentication (login/register/logout)

@@ -8,7 +8,7 @@ load_dotenv()
 
 class Config:
     # Secret key for session management and CSRF protection
-    SECRET_KEY = os.getenv("SECRET_KEY", "default-secret-key")
+    SECRET_KEY = os.getenv("SECRET_KEY", "123")
 
     # SQLite database URI
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URI", "sqlite:///finance.db")
