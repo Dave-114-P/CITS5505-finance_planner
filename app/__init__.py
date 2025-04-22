@@ -20,6 +20,9 @@ def create_app():
     load_dotenv()
 
     # Configure app settings
+    print("DATABASE_URI:", os.getenv("DATABASE_URI"))
+    print("SECRET_KEY:", os.getenv("SECRET_KEY"))
+
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
