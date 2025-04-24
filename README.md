@@ -1,43 +1,65 @@
-Provide an overview of the app.
+# Finance Planner
 
-Finance Planner
-Overview
-Finance Planner is a web application built with Flask and Bootstrap to help users manage their finances. It includes features for user authentication, expense tracking, savings goals, data visualization, and a community forum.
+## Overview
+Finance Planner is a web application built with Flask and Bootstrap to help users manage their finances. It includes features such as:
+- User authentication
+- Expense tracking
+- Savings goals
+- Data visualization
+- Community forum
 
-Group Info
-Developed by Group-18 for CITS5505.
+### Group Info
+Developed by **Group-18** for **CITS5505**.
 
-Setup and Run Guide
+---
 
-Clone the repository:
+## Setup and Run Guide
+
+### Clone the Repository
+```bash
 git clone https://github.com/Dave-114-P/CITS5505-finance_planner
+cd CITS5505-finance_planner
+```
 
-
-cd finance_planner
-Set up a virtual environment:
-
+### Set Up a Virtual Environment
+```bash
 python -m venv venv
-On Linux / Mac: > source venv/bin/activate  
-On Windows:     > venv\Scripts\activate
+```
+- On Linux/Mac:
+    ```bash
+    source venv/bin/activate
+    ```
+- On Windows:
+    ```bash
+    venv\Scripts\activate
+    ```
 
+### Install Dependencies
+```bash
+pip install -r requirements.txt
+```
 
-Install dependencies:
-    >pip install -r requirements.txt
-
-
+### Configure Environment Variables
+Set the following environment variables:
+```bash
 FLASK_APP=app.py
 FLASK_ENV=development
-SECRET_KEY=123
 DATABASE_URI=sqlite:///finance.db
+```
 
-Run the application:
-    > python app.py
+### Run the Application
+```bash
+python app.py
+```
 
+### Access the Application
+Open your browser and navigate to: [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
-Open your browser and navigate to http://127.0.0.1:5000.
-Features
-User authentication (login/register/logout)
-Upload spending data and budget estimates
-Set and track savings goals
-Visualize financial data with charts
-Community forum for sharing and advice
+---
+
+## Features
+- **User Authentication**: Login, register, and logout functionality.
+- **Expense Tracking**: Upload spending data and budget estimates.
+- **Savings Goals**: Set and track your savings goals.
+- **Data Visualization**: View financial data through interactive charts.
+- **Community Forum**: Share advice and connect with others.
