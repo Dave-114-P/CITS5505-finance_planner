@@ -7,6 +7,12 @@ body {
     font-weight: bold;
 }
 
+.active {
+    background-color: #d3d3d3 !important;
+    padding:0rem;
+    margin:0rem;
+  }
+
 footer {
     position: relative;
     bottom: 0;
