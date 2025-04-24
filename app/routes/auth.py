@@ -17,7 +17,8 @@ def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
 @bp.route("/login", methods=["GET", "POST"])
-def login():
+def login(): 
+    # Login route
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -30,6 +31,7 @@ def login():
 
 @bp.route("/register", methods=["GET", "POST"])
 def register():
+    # Registration route
     if request.method == "POST":
         username = request.form.get("username")
         email = request.form.get("email")
@@ -54,5 +56,7 @@ def register():
 @bp.route("/logout")
 @login_required
 def logout():
+    # Logout route
+    # Logout the user and redirect to the index page
     logout_user()
     return redirect(url_for("index"))
