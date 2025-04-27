@@ -3,48 +3,109 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="margin: 0; padding: 0; border: 1px solid black;">
-        <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="margin: 0; padding: 0; border-radius: 10px;margin-bottom: 4rem;">
+        <div class="carousel-indicators" style="margin: 0; padding: 0;">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
         </div>
     
-        <div class="carousel-inner" style="margin: 0;">
-            <div class="carousel-item active">
-                <div class="containter">
+        <div class="carousel-inner" style="margin: 0; border-radius: 10px; overflow:hidden; flex-wrap: nowrap;">
+            <div class="carousel-item active" style="margin: 0; padding: 0;">
+                <div class="container-fluid" style="background-color: #76c87d;">
                     <div class="row align-items-center">
                         <!-- Text container -->
-                    <div class="col-md-6">
-                        <p> 
-                            <span>Hello, welcome to Finance Planner!</span><br>
-                            <span>We are here to help students achieve their Australian dream.</span><br>
-                        </p>
-                    </div>
-                    <!-- Image container -->
-                    <div class="col-md-6">
-                        <img src="{{ url_for('static',filename='image/career_ladder.png')}}" 
-                        alt="career_ladder" 
-                        style="width:100%; height: 30rem; object-fit: cover;">
-                    </div>
+                        <div class="col-md-6" style ="text-align: left; margin-left: 5%; width: 45%;">
+                            <p> 
+                                <span class="title">Hello!</span><br>
+                                <span class="message">We are here to help students achieve their Australian dream.</span><br>
+                            </p>
+                        </div>
+                        <!-- Image container -->
+                        <div class="col-md-6" style="margin-right:5%; width: 45%; padding: 0;">
+                            <img src="{{ url_for('static',filename='image/career_ladder.png')}}" 
+                            alt="career_ladder" 
+                            style="width: 100%; height: auto; margin:0; align-items: flex-end;">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="carousel-item">
-                
+            <div class="carousel-item" style="margin: 0; padding: 0;">
+                <div class="container-fluid" style="background-color: #76c87d;">
+                    <div class="row align-items-center">
+                        <!-- Text container -->
+                        <div class="col-md-6" style ="text-align: left; margin-left: 5%; width: 45%;">
+                            <p> 
+                                <span class="title">Studying in Australia?</span><br>
+                                <span class="message">No big deal! We offer you tools to manage your finance for study.</span><br>
+                            </p>
+                        </div>
+                        <!-- Image container -->
+                        <div class="col-md-6" style="margin-right:5%; width: 45%; padding: 0;">
+                            <picture style="border-radius: 10px;">
+                                <source media="(max-width: 600px)" srcset="{{ url_for('static', filename='image/group_study.png') }}">
+                                <img src="{{ url_for('static',filename='image/fee_summary.png')}}" 
+                                alt="career_ladder" 
+                                style="width: 100%; height: auto; margin:0; align-items: flex-end;">
+                            </picture>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="carousel-item">
-                
+            <div class="carousel-item" style="margin: 0; padding: 0;">
+                <div class="container-fluid" style="background-color: #76c87d;">
+                    <div class="row align-items-center">
+                        <!-- Text container -->
+                        <div class="col-md-6" style ="text-align: left; margin-left: 5%; width: 45%;">
+                            <p> 
+                                <span class="title">Know your spendings</span><br>
+                                <span class="message">Don't let overspending stress you out!</span><br>
+                            </p>
+                        </div>
+                        <!-- Image container -->
+                        <div class="col-md-6" style="margin-right:5%; width: 45%; padding: 0;">
+                            <picture style="border-radius: 10px;">
+                                <source media="(max-width: 600px)" srcset="{{ url_for('static', filename='image/overspending.png') }}">
+                                <img src="{{ url_for('static',filename='image/expense_management.png')}}" 
+                                alt="career_ladder" 
+                                style="width: 100%; height: auto; margin:0; align-items: flex-end;">
+                            </picture>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" style="margin: 0; padding: 0;">
+                <div class="container-fluid" style="background-color: #76c87d;">
+                    <div class="row align-items-center">
+                        <!-- Text container -->
+                        <div class="col-md-6" style ="text-align: left; margin-left: 5%; width: 45%;">
+                            <p> 
+                                <span class="title">Connect!</span><br>
+                                <span class="message">You are not alone, connect with others to learn their tips.</span><br>
+                            </p>
+                        </div>
+                        <!-- Image container -->
+                        <div class="col-md-6" style="margin-right:5%; width: 45%; padding: 0;">
+                            <picture style="border-radius: 10px;">
+                                <source media="(max-width: 600px)" srcset="{{ url_for('static', filename='image/chatting.png') }}">
+                                <img src="{{ url_for('static',filename='image/chat.png')}}" 
+                                alt="career_ladder" 
+                                style="width: 100%; height: auto; margin:0; align-items: flex-end;">
+                            </picture>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" style="margin-right: 0;width: 5%;">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" style="margin-right: 0;width: 5%;">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
         </button>
     </div>
   

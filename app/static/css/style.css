@@ -7,14 +7,45 @@ body {
     font-weight: bold;
 }
 
-.active {
+.myActive {
     background-color: #d3d3d3 !important;
     padding:0rem;
-    margin:0rem;
-  }
+    margin-top:0rem;
+}
+
+@media (max-width: 767.98px) {
+    .myActive {
+        margin-top: 0.5rem;
+    }
+}
 
 footer {
     position: relative;
     bottom: 0;
     width: 100%;
+}
+
+/* Custom for the carousel */
+.title {
+    font-size: clamp(1.5rem, 5.5vw, 10rem);
+    font-weight: bold;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.messsage {
+    font-size: clamp(0.75rem,2.75vw,5rem);
+    color: black;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+/* This code avoid carousel height shrink suddenly when trasitting to a new one */
+
+.carousel-item {
+    display: none; /* Hide everything by default */
+    transition: transform 0.6s ease-in-out;
+}
+
+.carousel-item.active {
+    display: block; /* Only show the active slide */
 }

@@ -26,15 +26,15 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item {% if request.endpoint=='main.index' %}active{% endif %}"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
-                    <li class="nav-item {% if request.endpoint=='est.estimation' %}active{% endif %}"><a class="nav-link" href="{{ url_for('est.estimation') }}">Fee Estimation</a></li>
-                    <li class="nav-item {% if request.endpoint=='trans.transaction' %}active{% endif %}"><a class="nav-link" href="{{ url_for('trans.transaction') }}">Transaction</a></li>
+                    <li class="nav-item {% if request.endpoint=='main.index' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
+                    <li class="nav-item {% if request.endpoint=='est.estimation' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('est.estimation') }}">Fee Estimation</a></li>
+                    <li class="nav-item {% if request.endpoint=='trans.transaction' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('trans.transaction') }}">Transaction</a></li>
                     {% if current_user.is_authenticated %}
-                        <li class="nav-item {% if current_page == 'upload.upload' %}active{% endif %}"><a class="nav-link" href="{{ url_for('upload.upload') }}">Upload</a></li>
-                        <li class="nav-item {% if current_page == 'goals.goals' %}active{% endif %}"><a class="nav-link" href="{{ url_for('goals.goals') }}">Goals</a></li>
-                        <li class="nav-item {% if current_page == 'visualise.visualise' %}active{% endif %}"><a class="nav-link" href="{{ url_for('visualise.visualise') }}">Visualise</a></li>
-                        <li class="nav-item {% if current_page == 'share.share' %}active{% endif %}"><a class="nav-link" href="{{ url_for('share.share') }}">Share</a></li>
-                        <li class="nav-item {% if current_page == 'auth.logout' %}active{% endif %}"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a></li>
+                        <li class="nav-item {% if current_page == 'upload.upload' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('upload.upload') }}">Upload</a></li>
+                        <li class="nav-item {% if current_page == 'goals.goals' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('goals.goals') }}">Goals</a></li>
+                        <li class="nav-item {% if current_page == 'visualise.visualise' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('visualise.visualise') }}">Visualise</a></li>
+                        <li class="nav-item {% if current_page == 'share.share' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('share.share') }}">Share</a></li>
+                        <li class="nav-item {% if current_page == 'auth.logout' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a></li>
                     {% else %}
                         <li class="nav-item skip"><a class="nav-link" href="{{ url_for('auth.login') }}">Login</a></li>
                         <li class="nav-item skip"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
@@ -47,7 +47,7 @@
     
 
     <!-- Flash messages -->
-    <div class="container mt-3">
+    <div class="container-fluid mt-3">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -61,7 +61,7 @@
     </div>
 
     <!-- Main content block -->
-    <div class="container mt-4">
+    <div class="container-fluid mt-4" style=" width: 100%; padding: 5%;">
         {% block content %}{% endblock %}
     </div>
 
