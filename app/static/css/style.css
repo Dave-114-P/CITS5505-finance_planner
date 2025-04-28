@@ -147,7 +147,3 @@ footer {
         flex: 100%; /* Take full width of parent */
     }
 }
-
-.zoomed-in {
-    transform: scale(2) translate(-30%, -30%); /* Change the scale and translate */
-}
