@@ -1,3 +1,11 @@
+/* General styles for the application */
+.header_font{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.text_font{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 /* Custom styles to override Bootstrap */
 body {
     background-color: #f8f9fa;
@@ -48,4 +56,98 @@ footer {
 
 .carousel-item.active {
     display: block; /* Only show the active slide */
+}
+
+/*Australian map*/
+.australia-map .land {
+    fill: #ccc; /* base color */
+    stroke: #333; /* border color */
+    stroke-width: 1;
+    transition: all 0.3s ease;
+  }
+  
+  /* When hovering any state */
+  .australia-map .land:hover {
+    fill: #00205B; /* highlight color */
+    stroke: #000; /* darker border when hover */
+  }
+  
+  /* Make all states semi-transparent when hovering any one */
+  .australia-map:hover .land {
+    opacity: 0.3;
+  }
+  
+  /* But keep the hovered state fully visible */
+  .australia-map .land:hover {
+    opacity: 1;
+  }
+  
+/* State's name property */
+.tooltip {
+    position: absolute;
+    background: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    pointer-events: none;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.reset-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 0.5rem;
+    background-color: #76c87d;
+    font-weight: bold;
+  }
+
+  .reset-button:hover {
+    background-color: #0056b3;
+  }
+
+ /* Ensure parent div is a flex container */
+ .parent {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allows wrapping for smaller screens */
+}
+
+/* Map and Text sections */
+.map-section, .text-section {
+    flex: 1; /* Both will take equal space */
+    padding: 10px; /* Optional padding */
+}
+
+/* Optional: Ensure the map doesn't overflow */
+.map-section svg {
+    max-width: 100%; /* Makes sure the SVG fits within its parent */
+    height: auto; /* Keeps aspect ratio intact */
+}
+
+/* Ensure that on smaller screens (less than 768px), the sections stack vertically */
+@media (max-width: 767px) {
+    .map-section {
+        order: 2; /* Make map come after text */
+    }
+
+    .text-section {
+        order: 1; /* Keep text in first position */
+    }
+    .map-section, .text-section {
+        flex: 100%; /* Take full width of parent */
+    }
+}
+
+.zoomed-in {
+    transform: scale(2) translate(-30%, -30%); /* Change the scale and translate */
 }
