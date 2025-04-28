@@ -12,3 +12,25 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+/* Customize the background color of the navbar dropdown when toggled */
+.navbar-css {
+    background-color: lightseagreen;
+}
+
+.navbar-collapse.collapsing{
+    background-color: #e3f2fd;
+}
+.navbar-collapse.show {
+    background-color: #e3f2fd; /* Light blue background for the dropdown */
+}
+
+/* Optional: Ensure the dropdown menu items are styled nicely */
+.navbar-collapse.show .navbar-nav .nav-link {
+    color: #333; /* Darker text color for better contrast */
+}
+
+/* Optional: Add padding to the dropdown for better spacing
+.navbar-collapse.show {
+    padding: 10px;
+} */
