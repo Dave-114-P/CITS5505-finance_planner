@@ -24,13 +24,15 @@ def create_app():
     login_manager.login_view = "auth.login"
 
     # Import and register blueprints (routes)
-    from app.routes import main, auth, upload, goals, visualise, share
+    from app.routes import main, auth, upload, goals, visualise, share, estimation, transaction
     app.register_blueprint(main.bp)
     app.register_blueprint(auth.bp)
     app.register_blueprint(upload.bp)
     app.register_blueprint(goals.bp)
     app.register_blueprint(visualise.bp)
     app.register_blueprint(share.bp)
+    app.register_blueprint(estimation.bp)
+    app.register_blueprint(transaction.bp)
 
     @app.route("/")
     def index():
