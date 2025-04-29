@@ -17,16 +17,19 @@ def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
 @bp.route("/login", methods=["GET", "POST"])
-def login(): 
-    # Login route
+def login():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
         user = User.query.filter_by(username=username).first()
+
         if user and user.password == hash_password(password):
             login_user(user)
             return redirect(url_for("index"))
-        flash("Invalid username or password", "danger")
+        else:
+            flash("Invalid username or password", "danger")
+            return redirect(url_for("auth.login"))
+
     return render_template("login.html")
 
 @bp.route("/register", methods=["GET", "POST"])
