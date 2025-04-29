@@ -147,3 +147,21 @@ footer {
         flex: 100%; /* Take full width of parent */
     }
 }
+
+.uni_link{
+    color: black;
+    text-decoration: none;
+    font-size: 0.75rem;
+}
+.uni_link:hover{
+    color: red;
+    text-decoration: underline;
+}
+.uni_link:visited{
+    color: #007bff;
+    text-decoration: underline;
+}
+.uni_link:active{
+    color: lightblue;
+    text-decoration: underline;
+}
