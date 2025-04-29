@@ -89,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                     
                     setImageSource(stateID); // Retry with the next extension
+                    console.log("State ID:", stateID);
     
                     // Generate state intro and university list
                     let html = `<h2 class="header_font"><strong>${stateKey}</strong></h2>
@@ -99,6 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             <tr class="header_font" style="background-color: #76c87d; color: white; text-align: center;">
                                 <th style="border: 1px solid #ddd; padding: 8px; font-size:1rem;">City</th>
                                 <th style="border: 1px solid #ddd; padding: 8px; font-size:1rem;">University Name</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; font-size:1rem;">Yearly Tuition Fee</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; font-size:1rem;">Yearly Increase Rate</th>
                                 <th style="border: 1px solid #ddd; padding: 8px; font-size:1rem;">Website</th>
                             </tr>
                         </thead>
@@ -112,6 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <tr>
                                     <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size:0.75rem;">${city}</td>
                                     <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size:0.75rem;">${uni.name}</td>
+                                    <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size:0.75rem;">${uni.tuition_fee_aud}</td>
+                                    <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size:0.75rem;">${uni.increase_rate}</td>
                                     <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size:0.75rem;">
                                         <a class="uni_link" href="${uni.website}" target="_blank">${uni.website}</a>
                                     </td>
