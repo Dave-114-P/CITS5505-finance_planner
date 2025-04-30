@@ -1,6 +1,6 @@
 # Routes for returning analytics charts via AJAX
 
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, render_template
 from flask_login import login_required, current_user
 from app.models.spending import Spending
 
