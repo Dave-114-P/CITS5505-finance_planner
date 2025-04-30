@@ -1,9 +1,11 @@
 /* General styles for the application */
 .header_font{
     font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.5rem;
 }
 .text_font{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 0.75rem;
 }
 
 /* Custom styles to override Bootstrap */
@@ -165,3 +167,40 @@ footer {
     color: lightblue;
     text-decoration: underline;
 }
+
+/* Responsive font size for smaller screens */
+@media (max-width: 767px) {
+    .smaller_font {
+        font-size:x-small !important;
+    }
+}
+
+/* Custom progress bar styles */
+.custom-progress {
+    position: relative;
+    background-color: #bcf1af;
+    border-radius: 20px;
+    height: 2.5rem; /* Increase height as needed */
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .custom-progress-fill {
+    background-color: #76c87d;
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.4s ease;
+  }
+  
+  .custom-progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    color: black;
+    z-index: 1;
+    font-size: 1rem;
+  }
+  
+  
