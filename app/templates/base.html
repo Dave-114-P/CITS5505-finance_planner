@@ -9,9 +9,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <!-- Tailswind -->
-    <script src="https://cdn.tailwindcss.com"></script>
     <!-- jQuery for AJAX -->
+     <!-- Bootstrap JS and dependencies via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     {% set scripts = ['js/behaviour.js', 'js/share.js', 'js/upload.js', 'js/visualise.js'] %}
     {% for script in scripts %}
@@ -30,17 +30,17 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-collapse collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item {% if request.endpoint=='main.index' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
                     <li class="nav-item {% if request.endpoint=='est.estimation' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('est.estimation') }}">Fee Estimation</a></li>
                     <li class="nav-item {% if request.endpoint=='trans.transaction' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('trans.transaction') }}">Transaction</a></li>
                     {% if current_user.is_authenticated %}
-                        <li class="nav-item {% if current_page == 'upload.upload' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('upload.upload') }}">Upload</a></li>
-                        <li class="nav-item {% if current_page == 'goals.goals' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('goals.goals') }}">Goals</a></li>
-                        <li class="nav-item {% if current_page == 'visualise.visualise' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('visualise.visualise') }}">Visualise</a></li>
-                        <li class="nav-item {% if current_page == 'share.share' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('share.share') }}">Share</a></li>
-                        <li class="nav-item {% if current_page == 'auth.logout' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a></li>
+                        <li class="nav-item {% if request.endpoint == 'upload.upload' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('upload.upload') }}">Upload</a></li>
+                        <li class="nav-item {% if request.endpoint == 'goals.goals' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('goals.goals') }}">Goals</a></li>
+                        <li class="nav-item {% if request.endpoint == 'visualise.visualise' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('visualise.visualise') }}">Visualise</a></li>
+                        <li class="nav-item {% if request.endpoint == 'share.share' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('share.share') }}">Share</a></li>
+                        <li class="nav-item {% if request.endpoint == 'auth.logout' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a></li>
                     {% else %}
                         <li class="nav-item skip"><a class="nav-link" href="{{ url_for('auth.login') }}">Login</a></li>
                         <li class="nav-item skip"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
@@ -75,8 +75,7 @@
         <p>© 2025 Finance Planner. All rights reserved.</p>
     </footer>
 
-    <!-- Bootstrap JS and dependencies via CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     
 </body>
 </html>
