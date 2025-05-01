@@ -1,0 +1,280 @@
+{
+  "New South Wales": {
+    "intro": "New South Wales offers a vibrant cultural scene, iconic landmarks, and top-ranked universities. Known for its diverse academic programs in business, technology, and arts, it's an exciting destination for international students, blending city life with numerous academic and extracurricular opportunities.",
+    "cities":{
+      "Sydney": [
+      {
+        "name": "University of Sydney",
+        "website": "https://sydney.edu.au",
+        "tuition_fee_aud": "38,000–55,000",
+        "increase_rate": "3–5%"
+      },
+      {
+        "name": "University of New South Wales",
+        "website": "https://unsw.edu.au",
+        "tuition_fee_aud": "38,000–53,000",
+        "increase_rate": "3–5%"
+      },
+      {
+        "name": "University of Technology Sydney",
+        "website": "https://uts.edu.au",
+        "tuition_fee_aud": "34,000–45,000",
+        "increase_rate": "3–5%"
+      },
+      {
+        "name": "Macquarie University",
+        "website": "https://mq.edu.au",
+        "tuition_fee_aud": "33,000–45,000",
+        "increase_rate": "3–5%"
+      },
+      {
+        "name": "Western Sydney University",
+        "website": "https://westernsydney.edu.au",
+        "tuition_fee_aud": "30,000–40,000",
+        "increase_rate": "3–5%"
+      }
+      ],
+      "Wollongong": [
+        {
+          "name": "University of Wollongong",
+          "website": "https://uow.edu.au",
+          "tuition_fee_aud": "30,000–40,000",
+          "increase_rate": "3–5%"
+        }
+      ],
+      "Armidale": [
+        {
+          "name": "University of New England",
+          "website": "https://une.edu.au",
+          "tuition_fee_aud": "26,000–35,000",
+          "increase_rate": "3–5%"
+        }
+      ],
+      "Lismore": [
+        {
+          "name": "Southern Cross University",
+          "website": "https://scu.edu.au",
+          "tuition_fee_aud": "26,000–35,000",
+          "increase_rate": "3–5%"
+        }
+      ]
+    }    
+  },
+  "Victoria": {
+    "intro": "Victoria is known for its thriving arts scene, diverse culture, and prestigious universities. A hub for international students, Melbourne provides world-class education in areas like engineering, business, and the arts, combined with a lively atmosphere and endless opportunities for exploration and growth.",
+    "cities": {
+      "Melbourne": [
+        {
+          "name": "University of Melbourne",
+          "website": "https://unimelb.edu.au",
+          "tuition_fee_aud": "40,000–60,000",
+          "increase_rate": "3–5%"
+        },
+        {
+          "name": "Monash University",
+          "website": "https://monash.edu",
+          "tuition_fee_aud": "37,000–54,000",
+          "increase_rate": "3–5%"
+        },
+        {
+          "name": "RMIT University",
+          "website": "https://rmit.edu.au",
+          "tuition_fee_aud": "30,000–42,000",
+          "increase_rate": "3–5%"
+        },
+        {
+          "name": "La Trobe University",
+          "website": "https://latrobe.edu.au",
+          "tuition_fee_aud": "30,000–42,000",
+          "increase_rate": "3–5%"
+        },
+        {
+          "name": "Victoria University",
+          "website": "https://vu.edu.au",
+          "tuition_fee_aud": "28,000–40,000",
+          "increase_rate": "3–5%"
+        },
+        {
+          "name": "Swinburne University of Technology",
+          "website": "https://swinburne.edu.au",
+          "tuition_fee_aud": "30,000–40,000",
+          "increase_rate": "3–5%"
+        }
+      ],
+      "Geelong": [
+        {
+          "name": "Deakin University",
+          "website": "https://deakin.edu.au",
+          "tuition_fee_aud": "30,000–42,000",
+          "increase_rate": "3–5%"
+        }
+      ],
+      "Ballarat": [
+        {
+          "name": "Federation University Australia",
+          "website": "https://federation.edu.au",
+          "tuition_fee_aud": "26,000–35,000",
+          "increase_rate": "3–5%"
+        }
+      ]
+    }
+  },
+  "Queensland": {
+    "intro": "Queensland is a welcoming, sun-filled state with renowned universities. Offering a relaxed lifestyle, beautiful landscapes, and diverse academic programs, it's perfect for international students. The city's warmth extends beyond the climate, fostering a supportive environment for study and personal development.",
+    "cities": {
+      "Brisbane": [
+        {
+          "name": "University of Queensland",
+          "website": "https://uq.edu.au",
+          "tuition_fee_aud": "38,000–48,000",
+          "increase_rate": "3–5%"
+        },
+        {
+          "name": "Queensland University of Technology",
+          "website": "https://qut.edu.au",
+          "tuition_fee_aud": "30,000–42,000",
+          "increase_rate": "3–5%"
+        },
+        {
+          "name": "Griffith University",
+          "website": "https://griffith.edu.au",
+          "tuition_fee_aud": "28,000–40,000",
+          "increase_rate": "3–5%"
+        }
+      ],
+      "Toowoomba": [
+        {
+          "name": "University of Southern Queensland",
+          "website": "https://usq.edu.au",
+          "tuition_fee_aud": "26,000–35,000",
+          "increase_rate": "3–5%"
+        }
+      ],
+      "Rockhampton": [
+        {
+          "name": "Central Queensland University",
+          "website": "https://cqu.edu.au",
+          "tuition_fee_aud": "26,000–35,000",
+          "increase_rate": "3–5%"
+        }
+      ],
+      "Gold Coast": [
+        {
+          "name": "Bond University",
+          "website": "https://bond.edu.au",
+          "tuition_fee_aud": "30,000–45,000",
+          "increase_rate": "3–5%"
+        }
+      ],
+      "Townsville": [
+        {
+          "name": "James Cook University",
+          "website": "https://jcu.edu.au",
+          "tuition_fee_aud": "30,000–42,000",
+          "increase_rate": "3–5%"
+        }
+      ]
+    }
+  },
+  "Western Australia": {
+    "intro": "Welcome to Western Australia, where you'll find Perth, one of the most beautiful and isolated cities in the world. With stunning beaches, a relaxed lifestyle, and a thriving cultural scene, Perth is an ideal place for international students seeking a mix of outdoor adventures and academic excellence.",
+    "cities": {
+      "Perth": [
+        {
+          "name": "University of Western Australia",
+          "website": "https://uwa.edu.au",
+          "tuition_fee_aud": "36,000–47,000",
+          "increase_rate": "3–5%"
+        },
+        {
+          "name": "Curtin University",
+          "website": "https://curtin.edu.au",
+          "tuition_fee_aud": "30,000–42,000",
+          "increase_rate": "3–5%"
+        },
+        {
+          "name": "Murdoch University",
+          "website": "https://murdoch.edu.au",
+          "tuition_fee_aud": "26,000–35,000",
+          "increase_rate": "3–5%"
+        },
+        {
+          "name": "Edith Cowan University",
+          "website": "https://ecu.edu.au",
+          "tuition_fee_aud": "26,000–35,000",
+          "increase_rate": "3–5%"
+        }
+      ]
+    }
+  },
+  "South Australia": {
+    "intro": "South Australia offers a relaxed atmosphere combined with high-quality education. Its universities focus on research and student support, making it ideal for international students seeking both academic excellence and a peaceful lifestyle, complemented by cultural events and stunning landscapes.",
+    "cities": {
+      "Adelaide": [
+        {
+          "name": "University of Adelaide",
+          "website": "https://adelaide.edu.au",
+          "tuition_fee_aud": "36,000–46,000",
+          "increase_rate": "3–5%"
+        },
+        {
+          "name": "University of South Australia",
+          "website": "https://unisa.edu.au",
+          "tuition_fee_aud": "30,000–42,000",
+          "increase_rate": "3–5%"
+        },
+        {
+          "name": "Flinders University",
+          "website": "https://flinders.edu.au",
+          "tuition_fee_aud": "30,000–42,000",
+          "increase_rate": "3–5%"
+        }
+      ]
+    }
+  },
+  "Tasmania": {
+    "intro": "Tasmania, offers a peaceful and unique setting for international students. Surrounded by nature and rich in history, it's perfect for those studying environmental sciences, arts, or sustainability. The small community and strong university support foster a close-knit, focused academic environment.",
+    "cities": {
+      "Hobart": [
+        {
+          "name": "University of Tasmania",
+          "website": "https://utas.edu.au",
+          "tuition_fee_aud": "26,000–38,000",
+          "increase_rate": "3–5%"
+        }
+      ]
+    }
+  },
+  "Australian Capital Territory": {
+    "intro": "Australian Capital Territory, with Canberra - the capital city, is known for its academic rigor and political influence. It's home to top universities with strong research programs, particularly in politics and law. International students will find a vibrant, dynamic academic community set in a city full of museums and national monuments.",
+    "cities": {
+      "Canberra": [
+        {
+          "name": "Australian National University",
+          "website": "https://anu.edu.au",
+          "tuition_fee_aud": "39,000–50,000",
+          "increase_rate": "3–5%"
+        },
+        {
+          "name": "University of Canberra",
+          "website": "https://canberra.edu.au",
+          "tuition_fee_aud": "28,000–40,000",
+          "increase_rate": "3–5%"
+        }
+      ]
+    }
+  },
+  "Northern Territory": {
+    "intro": "Northern Territory offers an exciting mix of tropical weather, outdoor adventure, and diverse culture. With universities focused on sustainability and indigenous studies, it provides international students with a unique academic experience, along with a welcoming environment and close proximity to stunning natural landscapes.",
+    "cities": {
+      "Darwin": [
+        {
+          "name": "Charles Darwin University",
+          "website": "https://cdu.edu.au",
+          "tuition_fee_aud": "26,000–35,000",
+          "increase_rate": "3–5%"
+        }
+      ]
+    }
+  }
+}

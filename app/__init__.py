@@ -36,7 +36,7 @@ def create_app():
 
     @app.route("/")
     def index():
-        render_template("index.html")
+        return render_template("index.html")
 
     # Create database tables if they don't exist
     with app.app_context():
