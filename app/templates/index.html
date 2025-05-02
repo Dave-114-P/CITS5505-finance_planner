@@ -1,15 +1,99 @@
 {% extends "base.html" %}
-
-{% block title %}Home{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
-    <div class="text-center">
-        <h1>Welcome to Finance Planner</h1>
-        <p class="lead">Track your expenses, set savings goals, visualize your progress, and share tips with our community.</p>
-        {% if not current_user.is_authenticated %}
-            <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">Get Started - Login</a>
-        {% else %}
-            <a href="{{ url_for('upload.upload') }}" class="btn btn-primary btn-lg">Start Managing Your Finances</a>
-        {% endif %}
+<div class="container py-5" style="background: linear-gradient(to right, #e0f7fa, #f1f8e9); border-radius: 15px;">
+
+  <div class="p-5 mb-4 text-white rounded-3" style="background: linear-gradient(45deg, #42a5f5, #478ed1); box-shadow: 0 0 10px rgba(0,0,0,0.2);">
+    <div class="container-fluid py-3">
+      <h1 class="display-5 fw-bold">Welcome back, {{ current_user.username }} 👋</h1>
+      <p class="col-md-8 fs-5">Here's your personalized financial dashboard. Stay focused, track smart, and grow financially!</p>
     </div>
+  </div>
+
+  <!-- Info cards -->
+  <div class="row text-center mb-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0" style="background-color: #4caf50; color: white;">
+        <div class="card-body">
+          <h5 class="card-title">💸 Total Expenses</h5>
+          <p class="card-text fs-3">${{ total_expense }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0" style="background-color: #ffb300; color: white;">
+        <div class="card-body">
+          <h5 class="card-title">🎯 Goals Created</h5>
+          <p class="card-text fs-3">{{ goals_created }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0" style="background-color: #455a64; color: white;">
+        <div class="card-body">
+          <h5 class="card-title">📅 Active Days</h5>
+          <p class="card-text fs-3">15</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="d-flex justify-content-around mb-5">
+    <a href="{{ url_for('upload.upload') }}" class="btn btn-outline-primary btn-lg fw-semibold">➕ Upload Data</a>
+    <a href="{{ url_for('visualise.visualise') }}" class="btn btn-outline-success btn-lg fw-semibold">📊 View Charts</a>
+    <a href="{{ url_for('share.share') }}" class="btn btn-outline-secondary btn-lg fw-semibold">🔗 Share Insights</a>
+  </div>
+
+  <!-- Chart -->
+  <div class="card shadow mb-5">
+    <div class="card-body">
+      <h4 class="card-title text-center mb-4">📉 Weekly Spending Overview</h4>
+      <canvas id="spendingChart" height="100"></canvas>
+    </div>
+  </div>
+
+  <!-- Tip -->
+  <div class="alert alert-info border-0 shadow-sm" role="alert">
+    <strong>💡 Financial Tip:</strong> <span id="tip-text">“Pay yourself first” – set aside savings before spending.</span>
+  </div>
+
+  <!--reset-->
+  <div class="d-flex justify-content-around mb-5">
+    <a href="{{ url_for('upload.upload') }}" class="btn btn-outline-primary btn-lg fw-semibold">➕ Upload Data</a>
+    <a href="{{ url_for('visualise.visualise') }}" class="btn btn-outline-success btn-lg fw-semibold">📊 View Charts</a>
+    <a href="{{ url_for('share.share') }}" class="btn btn-outline-secondary btn-lg fw-semibold">🔗 Share Insights</a>
+    <form action="{{ url_for('main.reset_expenses') }}" method="POST">
+        <button type="submit" class="btn btn-danger btn-lg fw-semibold">🧹 Reset Expenses</button>
+    </form>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const labels = {{ labels | tojson }};
+  const data = {{ expense_data | tojson }};
+
+  const ctx = document.getElementById('spendingChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Spending',
+        data: data,
+        borderColor: 'rgba(33, 150, 243, 1)',
+        backgroundColor: 'rgba(33, 150, 243, 0.2)',
+        tension: 0.4,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+</script>
 {% endblock %}
