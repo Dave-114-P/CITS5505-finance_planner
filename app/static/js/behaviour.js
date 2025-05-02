@@ -77,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                 const response = await fetch(path, { method: 'HEAD' });
                                 if (response.ok) {
                                     imageElement.src = path; // Set the src attribute of the image
-                                    console.log("Image src set to:", imageElement.src);
                                     return; // Exit the loop once the valid image is found
                                 }
                             } catch (e) {
@@ -89,46 +88,88 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                     
                     setImageSource(stateID); // Retry with the next extension
-                    console.log("State ID:", stateID);
     
-                    // Generate state intro and university list
+                    // Generate state intro and city living cost list
                     let html = `<h2 class="header_font"><strong>${stateKey}</strong></h2>
-                    <p class="text_font" style="text-align: justify;">${stateData.intro}</p>`;
-                    html += '<div class="table-responsive" style="overflow-x: auto; max-width: 100%; margin-top: 20px;"><table style="width: 100%; border-collapse: collapse; margin-top: 20px; overflow-x: auto;">';
+                    <p class="text_font" style="text-align: justify; font-size:0.8rem">${stateData.intro}</p>`;
+
                     html += `
+                    <div class="table-responsive" style="overflow-x: auto; max-width: 100%; margin-top: 20px;">
+                    <table style="width: 100%; border-collapse: collapse;">
                         <thead>
-                            <tr class="header_font" style="background-color: #76c87d; color: white; text-align: center;">
-                                <th style="border: 1px solid #ddd; padding: 8px; font-size:1rem;">City</th>
-                                <th style="border: 1px solid #ddd; padding: 8px; font-size:1rem;">University Name</th>
-                                <th style="border: 1px solid #ddd; padding: 8px; font-size:1rem;">Yearly Tuition Fee</th>
-                                <th style="border: 1px solid #ddd; padding: 8px; font-size:1rem;">Yearly Increase Rate</th>
-                                <th style="border: 1px solid #ddd; padding: 8px; font-size:1rem;">Website</th>
-                            </tr>
+                        <tr class="header_font" style="background-color: #76c87d; color: white; text-align: center;">
+                            <th style="border: 1px solid #ddd; padding: 8px; font-size: 1rem;">City</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; font-size: 1rem;">Family of Four<br>Estimated Monthly Cost</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; font-size: 1rem;">Single Person<br>Estimated Monthly Cost</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; font-size: 1rem;">More Info</th>
+                        </tr>
                         </thead>
                         <tbody>
                     `;
 
-                    // Iterate through each city and its universities
-                    for (const [city, universities] of Object.entries(stateData.cities)) {
-                        universities.forEach(uni => {
+                    for (const [city, dataArray] of Object.entries(stateData.cities)) {
+                    dataArray.forEach(data => {
+                        html += `
+                        <tr>
+                            <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size: 0.85rem;">${city}</td>
+                            <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size: 0.85rem;">${data.family_of_four}</td>
+                            <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size: 0.85rem;">${data.single_person}</td>
+                            <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size: 0.85rem;">
+                            <a class="uni_link" href="${data.details}" target="_blank">View Details</a>
+                            </td>
+                        </tr>
+                        `;
+                    });
+                    }
+
+                    const baseCity = Object.keys(stateData.cities)[0]; // assuming you store the selected city somewhere
+                    const comparisonData = data.comparisons?.[baseCity];
+                    html += '</tbody></table></div>';
+
+                    html += `<h2 class="header_font" style="margin-top: 20px;"><strong>Comparison</strong></h2>`;
+
+                    html += `
+                    <div class="table-responsive" style="overflow-x: auto; max-width: 100%; margin-top: 10px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                        <tr class="header_font" style="background-color: #76c87d; color: white; text-align: center;">
+                            <th style="border: 1px solid #ddd; padding: 8px; font-size: 1rem;">City</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; font-size: 1rem;">Expense in ${baseCity} is</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                    `;
+
+                    if (comparisonData) {
+                        for (const [comparedCity, text] of Object.entries(comparisonData)) {
+                            let color = "#808080"; // default for "nearly the same"
+                            let symbol = "➖";
+
+                            if (text.includes("more")) {
+                                symbol = "▲";
+                                color = "#e74c3c"; // red
+                            } else if (text.includes("less")) {
+                                symbol = "▼";
+                                color = "#76c87d"; // green
+                            }
+
                             html += `
                                 <tr>
-                                    <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size:0.75rem;">${city}</td>
-                                    <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size:0.75rem;">${uni.name}</td>
-                                    <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size:0.75rem;">${uni.tuition_fee_aud}</td>
-                                    <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size:0.75rem;">${uni.increase_rate}</td>
-                                    <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size:0.75rem;">
-                                        <a class="uni_link" href="${uni.website}" target="_blank">${uni.website}</a>
+                                    <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size: 0.85rem;">
+                                        ${comparedCity}
+                                    </td>
+                                    <td class="text_font" style="border: 1px solid #ddd; padding: 8px; font-size: 0.85rem; color: ${color};">
+                                        ${symbol} ${text}
                                     </td>
                                 </tr>
                             `;
-                        });
+                        }
                     }
 
-                    html += '</tbody></table></div>'; 
-    
-                    document.getElementById('state_info').innerHTML = html;
-    
+                    html += '</tbody></table></div>';
+
+                    document.getElementById('state_info').innerHTML = html; // Update the state info container with the generated HTML
+
                     // Show the state info container
                     const stateInfo = document.querySelectorAll('#state_uni_info > div');
                     stateInfo.forEach(div => {
