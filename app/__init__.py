@@ -1,12 +1,16 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_migrate import Migrate
 
 # Initialize SQLAlchemy database
 db = SQLAlchemy()
 
 # Initialize Flask-Login manager
 login_manager = LoginManager()
+
+# Initialize Flask-Migrate for database migrations
+migrate = Migrate()
 
 def create_app():
     # Create Flask app instance
@@ -22,6 +26,9 @@ def create_app():
     # Initialize login manager with app
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
+
+    # Initialize Flask-Migrate with app
+    migrate.init_app(app, db)
 
     # Import and register blueprints (routes)
     from app.routes import main, auth, upload, goals, visualise, share, estimation, transaction

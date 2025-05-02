@@ -7,7 +7,7 @@
     <section>
         {% if current_user.is_authenticated %}
         <h1 class="header_font">
-            <strong> Good day, Mike! <!-- {{ current_user.username }} --> </strong> <!-- need backend or js -->
+            <strong> Good day, {{username}}! <!-- {{ current_user.username }} --> </strong> <!-- need backend or js -->
         </h1>
         <div class="container-fluid justify-content-center mb-4" style="background-color: #76c87d; border-radius: 10px; padding: 1rem;"> <!-- Text section -->
             <h2 class="header_font ms-2">
@@ -140,6 +140,20 @@
     <!-- Map or top spending for logged in users -->
     <section>
         {% if current_user.is_authenticated %} <!-- Top spending -->
+        {% for spend in top_spendings %}
+        <div class="row justify-content-center align-items-center mx-auto mt-2" style="background-color: #ddd0c2; width: 90%; border-radius: 10px; padding: 0.5rem;">
+            <div class="col-3 d-flex align-items-center justify-content-center" style="padding: 0;">
+                <img src="{{ url_for('static', filename='image/icon/' + spend.category_id + '.png') }}" alt="{{ spend.category_id }}" style="max-height: 4rem;">
+            </div>
+            <div class="col-6 d-flex flex-column justify-content-center">
+                <h3 class="header_font mb-1 fs-6 smaller_font"><strong>{{ spend.category_id | replace('_', ' ') | title }}</strong></h3>
+                <p class="text_font mb-0 fs-6 smaller_font">${{ '%.2f'|format(spend.amount) }}</p>
+            </div>
+            <div class="col-3 d-flex align-items-center justify-content-center text_font fs-6 smaller_font">
+                <!-- You could calculate percentage spending here if total is passed -->
+            </div>
+        </div>
+        {% endfor %}
         <div class="container-fluid mb-4" style="background-color: #76c87d; border-radius: 10px; padding: 1rem;">
             <h2 class="header_font ms-2">
                 <strong>Top spendings</strong>

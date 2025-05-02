@@ -25,7 +25,7 @@ def login():
 
         if user and user.password == hash_password(password):
             login_user(user)
-            return redirect(url_for("index"))
+            return redirect(url_for("index", username=username))
         else:
             flash("Invalid username or password", "danger")
             return redirect(url_for("auth.login"))

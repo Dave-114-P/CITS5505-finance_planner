@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, send_file
+from flask import Blueprint, render_template, send_file, request
 from flask_login import login_required, current_user
 from datetime import datetime, timedelta
 from app import db
@@ -10,7 +10,17 @@ bp = Blueprint("main", __name__)
 
 @bp.route("/")
 def index():
-    return render_template("index.html")
+    top_spendings = []
+    username = None
+
+    if current_user.is_authenticated:
+        username = current_user.username
+        # top_spendings = Spending.get_3_largest_spendings(current_user.id)
+        # if not top_spendings:
+        #     return render_template("index.html", username=username)
+
+    return render_template("index.html", username=username)
+                           #, top_spendings=top_spendings)
 
 #Plotting line graph from server-side and send it as png file
 @bp.route("/plot.png")
