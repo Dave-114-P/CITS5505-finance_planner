@@ -1,20 +1,80 @@
-/* Custom styles to override Bootstrap */
-body {
-    background-color: #f8f9fa;
+/* -------- Global Styles -------- */
+html, body {
+    background: linear-gradient(135deg, #f0f8ff, #e0f7fa);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: #333;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* -------- Navbar Styles -------- */
+.navbar {
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 12px 20px;
 }
 
 .navbar-brand {
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 24px;
+    color: #333;
 }
 
-.active {
-    background-color: #d3d3d3 !important;
-    padding:0rem;
-    margin:0rem;
-  }
+.navbar-brand:hover {
+    color: #007bff;
+    text-decoration: none;
+}
 
+/* -------- Active Link Styles -------- */
+.active {
+    background-color: #007bff !important;
+    color: white !important;
+    border-radius: 6px;
+    padding: 6px 12px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.active:hover {
+    background-color: #0056b3 !important;
+}
+
+/* -------- Footer Styles -------- */
 footer {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px 0;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    border-top: 1px solid #ddd;
     position: relative;
     bottom: 0;
     width: 100%;
+}
+
+footer:hover {
+    background-color: rgba(255, 255, 255, 1);
+    color: #333;
+}
+
+/* -------- Buttons -------- */
+.btn-primary, .btn-lg {
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover, .btn-lg:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.btn-primary:active, .btn-lg:active {
+    transform: translateY(1px);
+    box-shadow: none;
 }
