@@ -9,23 +9,7 @@
         <h1 class="header_font">
             <strong> Good day, {{username}}! <!-- {{ current_user.username }} --> </strong> <!-- need backend or js -->
         </h1>
-        <div class="container-fluid justify-content-center mb-4" style="background-color: #76c87d; border-radius: 10px; padding: 1rem;"> <!-- Text section -->
-            <h2 class="header_font ms-2">
-                <strong>Statistics</strong>
-            </h2>
-            <div class="row justify-content-center">
-                <!-- tested with dummy finance.db-->
-                <div class="col-md-4 mt-2 mb-2 mx-2" style="background-color: #ddd0c2; border-radius: 10px; padding: 1rem;">
-                    <h3 class="header_font">Total Spent</h3> <!-- need backend or js -->
-                    <img src="{{ url_for('main.plot_png') }}" class="img-fluid mt-4" alt="Spending Chart">
-                </div>
-                <!-- income, no db need further discussion-->
-                <!-- <div class="col-md-4 mt-2 mb-2 mx-2" style="background-color: #ddd0c2; border-radius: 10px; padding: 1rem;">
-                    <h3 class="header_font">Total Income</h3>
-                    <canvas id="incomeChart"></canvas>
-                </div> -->
-            </div>
-        </div>
+        
         {% else %}
         <!-- Carousel -->
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="margin: 0; padding: 0; border-radius: 10px;margin-bottom: 4rem;">
