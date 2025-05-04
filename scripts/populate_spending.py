@@ -12,11 +12,11 @@ def populate_spendings():
         return
 
     sample_spendings = [
-        {"user_id": 1, "amount": 50.0, "category_id": 1, "date": datetime(2025, 5, 1), "description": "Groceries"},
-        {"user_id": 1, "amount": 120.0, "category_id": 2, "date": datetime(2025, 5, 2), "description": "Transportation"},
-        {"user_id": 1, "amount": 200.0, "category_id": 3, "date": datetime(2025, 5, 3), "description": "Entertainment"},
-        {"user_id": 2, "amount": 350.0, "category_id": 1, "date": datetime(2025, 4, 1), "description": "Rent"},
-        {"user_id": 2, "amount": 25.0, "category_id": 2, "date": datetime(2025, 4, 2), "description": "Snacks"},
+        {"user_id": 1, "amount": 50.0, "category_id": "food", "date": datetime(2025, 5, 1), "description": "Groceries"},
+        {"user_id": 1, "amount": 120.0, "category_id": "transportation", "date": datetime(2025, 5, 2), "description": "Transportation"},
+        {"user_id": 1, "amount": 200.0, "category_id": "entertainment", "date": datetime(2025, 5, 3), "description": "Entertainment"},
+        {"user_id": 2, "amount": 350.0, "category_id": "food", "date": datetime(2025, 4, 1), "description": "Rent"},
+        {"user_id": 2, "amount": 25.0, "category_id": "tuition_fees", "date": datetime(2025, 4, 2), "description": "Snacks"},
     ]
 
     # Add sample data to the database

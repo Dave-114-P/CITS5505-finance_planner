@@ -18,5 +18,5 @@ def visualise():
 def spending_data():
     # Fetch spending data for the current user
     spendings = Spending.query.filter_by(user_id=current_user.id).all()
-    data = [{"category": s.category, "amount": s.amount} for s in spendings]
+    data = [{"category": s.category_id, "amount": s.amount} for s in spendings]
     return jsonify(data)

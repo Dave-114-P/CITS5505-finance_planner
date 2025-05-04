@@ -140,63 +140,47 @@
     <!-- Map or top spending for logged in users -->
     <section>
         {% if current_user.is_authenticated %} <!-- Top spending -->
-        {% for spend in top_spendings %}
-        <div class="row justify-content-center align-items-center mx-auto mt-2" style="background-color: #ddd0c2; width: 90%; border-radius: 10px; padding: 0.5rem;">
-            <div class="col-3 d-flex align-items-center justify-content-center" style="padding: 0;">
-                <img src="{{ url_for('static', filename='image/icon/' + spend.category_id + '.png') }}" alt="{{ spend.category_id }}" style="max-height: 4rem;">
-            </div>
-            <div class="col-6 d-flex flex-column justify-content-center">
-                <h3 class="header_font mb-1 fs-6 smaller_font"><strong>{{ spend.category_id | replace('_', ' ') | title }}</strong></h3>
-                <p class="text_font mb-0 fs-6 smaller_font">${{ '%.2f'|format(spend.amount) }}</p>
-            </div>
-            <div class="col-3 d-flex align-items-center justify-content-center text_font fs-6 smaller_font">
-                <!-- You could calculate percentage spending here if total is passed -->
-            </div>
-        </div>
-        {% endfor %}
         <div class="container-fluid mb-4" style="background-color: #76c87d; border-radius: 10px; padding: 1rem;">
             <h2 class="header_font ms-2">
                 <strong>Top spendings</strong>
             </h2>
-            <!-- Highest fee -->
-            <div class="row justify-content-center align-items-center mx-auto mt-2" style="background-color: #ddd0c2; width: 90%; border-radius: 10px; padding: 0.5rem;">
-                <div class="col-3 d-flex align-items-center justify-content-center" style="padding: 0;"> <!-- Icon container -->
-                    <img src="{{ url_for('static', filename='image/icon/accommodation.png') }}" alt="accommodation" style="max-height: 4rem;">
+            {% if top_spendings and top_spendings|length > 0 %}
+                {% for spend in top_spendings %}
+                <div class="row justify-content-center align-items-center mx-auto mt-2" 
+                    style="background-color: #ddd0c2; width: 90%; border-radius: 10px; padding: 0.5rem;">
+                    
+                    <!-- Category Image -->
+                    <div class="col-3 d-flex align-items-center justify-content-center" style="padding: 0;">
+                        <img 
+                            src="{{ url_for('static', filename='image/icon/' + spend.category_id + '.png') }}" 
+                            alt="{{ spend.category_id | replace('_', ' ') | title }}" 
+                            style="max-height: 4rem;" 
+                        >
+                    </div>
+                    
+                    <!-- Category Info -->
+                    <div class="col-6 d-flex flex-column justify-content-center">
+                        <h3 class="header_font mb-1 fs-6 smaller_font">
+                            <strong>{{ spend.category_id | replace('_', ' ') | title }}</strong>
+                        </h3>
+                        <p class="text_font mb-0 fs-6 smaller_font">
+                            ${{ '%.2f'|format(spend.amount) }}
+                        </p>
+                    </div>
+                    
+                    <!-- Percentage Spending -->
+                    <div class="col-3 d-flex align-items-center justify-content-center text_font fs-6 smaller_font">
+                        {% if total and total > 0 %}
+                            <p>{{ '%.2f'|format((spend.amount / total) * 100) }}%</p>
+                        {% else %}
+                            <p>N/A</p>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="col-6 d-flex flex-column justify-content-center"> <!-- Spending container -->
-                    <h3 class="header_font mb-1 fs-6 smaller_font"><strong>Accommodation</strong></h3>
-                    <p class="text_font mb-0 fs-6 smaller_font">$1200</p>
-                </div>
-                <div class="col-3 d-flex align-items-center justify-content-center text_font fs-6 smaller_font">
-                    70%
-                </div>
-            </div>
-            <!-- Second highest fee -->
-            <div class="row justify-content-center align-items-center mx-auto mt-2" style="background-color: #ddd0c2; width: 90%; border-radius: 10px; padding: 0.5rem;">
-                <div class="col-3 d-flex align-items-center justify-content-center" style="padding: 0;"> <!-- Icon container -->
-                    <img src="{{ url_for('static', filename='image/icon/food.png') }}" alt="accommodation" style="max-height: 4rem;">
-                </div>
-                <div class="col-6 d-flex flex-column justify-content-center"> <!-- Spending container -->
-                    <h3 class="header_font mb-1 fs-6 smaller_font"><strong>Food & Beverage</strong></h3>
-                    <p class="text_font mb-0 fs-6 smaller_font">$400</p>
-                </div>
-                <div class="col-3 d-flex align-items-center justify-content-center text_font fs-6 smaller_font">
-                    20%
-                </div>
-            </div>
-            <!-- Third highest fee -->
-            <div class="row justify-content-center align-items-center mx-auto mt-2" style="background-color: #ddd0c2; width: 90%; border-radius: 10px; padding: 0.5rem;">
-                <div class="col-3 d-flex align-items-center justify-content-center" style="padding: 0;"> <!-- Icon container -->
-                    <img src="{{ url_for('static', filename='image/icon/transport.png') }}" alt="accommodation" style="max-height: 4rem;">
-                </div>
-                <div class="col-6 d-flex flex-column justify-content-center"> <!-- Spending container -->
-                    <h3 class="header_font mb-1 fs-6 smaller_font"><strong>Transportation</strong></h3>
-                    <p class="text_font mb-0 fs-6 smaller_font">$40</p>
-                </div>
-                <div class="col-3 d-flex align-items-center justify-content-center text_font fs-6 smaller_font">
-                    5%
-                </div>
-            </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-center text_font mt-3 fs-5">No spendings available to display.</p>
+            {% endif %}
         </div>
         {% else %}
         <!-- Map -->
@@ -254,47 +238,42 @@
         {% if current_user.is_authenticated %} <!-- Recent transaction -->
         <div class="container-fluid mb-4" style="background-color: #76c87d; border-radius: 10px; padding: 1rem;">
             <h2 class="header_font ms-2">
-                <strong>Recent transactions</strong>
+                <strong>Recent Transactions</strong>
             </h2>
-            <!-- Highest fee -->
-            <div class="row justify-content-center align-items-center mx-auto mt-2" style="background-color: #ddd0c2; width: 90%; border-radius: 10px; padding: 0.5rem;">
-                <div class="col-3 d-flex align-items-center justify-content-center" style="padding: 0;">
-                    <img src="{{ url_for('static', filename='image/icon/food.png') }}" alt="accommodation" style="max-height: 4rem;">
+        
+            {% if recent_transactions and recent_transactions|length > 0 %}
+                {% for transaction in recent_transactions %}
+                <div class="row justify-content-center align-items-center mx-auto mt-2" 
+                     style="background-color: #ddd0c2; width: 90%; border-radius: 10px; padding: 0.5rem;">
+                    
+                    <!-- Transaction Icon -->
+                    <div class="col-3 d-flex align-items-center justify-content-center" style="padding: 0;">
+                        <img 
+                            src="{{ url_for('static', filename='image/icon/' + transaction.category_id + '.png') }}" 
+                            alt="{{ transaction.category_id }}" 
+                            style="max-height: 4rem;" 
+                        >
+                    </div>
+                    
+                    <!-- Transaction Details -->
+                    <div class="col-6 d-flex flex-column justify-content-center">
+                        <h3 class="header_font mb-1 fs-6 smaller_font">
+                            <strong>{{ transaction.category_id | replace('_', ' ') | title }}</strong>
+                        </h3>
+                        <p class="text_font mb-0 fs-6 smaller_font">
+                            {{ transaction.date.strftime('%d %B %Y') }}
+                        </p>
+                    </div>
+                    
+                    <!-- Transaction Amount -->
+                    <div class="col-3 d-flex align-items-center justify-content-center text_font fs-6 smaller_font">
+                        ${{ '%.2f'|format(transaction.amount) }}
+                    </div>
                 </div>
-                <div class="col-6 d-flex flex-column justify-content-center"> <!-- need backend or js -->
-                    <h3 class="header_font mb-1 fs-6 smaller_font"><strong>Food & Beverage</strong></h3>
-                    <p class="text_font mb-0 fs-6 smaller_font">22 April 2025</p>
-                </div>
-                <div class="col-3 d-flex align-items-center justify-content-center text_font fs-6 smaller_font">
-                    $40
-                </div>
-            </div>
-            <!-- Second highest fee -->
-            <div class="row justify-content-center align-items-center mx-auto mt-2" style="background-color: #ddd0c2; width: 90%; border-radius: 10px; padding: 0.5rem;">
-                <div class="col-3 d-flex align-items-center justify-content-center" style="padding: 0;">
-                    <img src="{{ url_for('static', filename='image/icon/accommodation.png') }}" alt="accommodation" style="max-height: 4rem;">
-                </div>
-                <div class="col-6 d-flex flex-column justify-content-center"> <!-- need backend or js -->
-                    <h3 class="header_font mb-1 fs-6 smaller_font"><strong>Accommodation</strong></h3>
-                    <p class="text_font mb-0 fs-6 smaller_font">20 April 2025</p>
-                </div>
-                <div class="col-3 d-flex align-items-center justify-content-center text_font fs-6 smaller_font">
-                    $300
-                </div>
-            </div>
-            <!-- Third highest fee -->
-            <div class="row justify-content-center align-items-center mx-auto mt-2" style="background-color: #ddd0c2; width: 90%; border-radius: 10px; padding: 0.5rem;">
-                <div class="col-3 d-flex align-items-center justify-content-center" style="padding: 0;">
-                    <img src="{{ url_for('static', filename='image/icon/transport.png') }}" alt="accommodation" style="max-height: 4rem;">
-                </div>
-                <div class="col-6 d-flex flex-column justify-content-center"> <!-- need backend or js -->
-                    <h3 class="header_font mb-1 fs-6 smaller_font"><strong>Transportation</strong></h3>
-                    <p class="text_font mb-0 fs-6 smaller_font">15 April 2025</p>
-                </div>
-                <div class="col-3 d-flex align-items-center justify-content-center text_font fs-6 smaller_font">
-                    $20
-                </div>
-            </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-center text_font mt-3 fs-5">No recent transactions available.</p>
+            {% endif %}
         </div>
         {% else %}
         <!-- Last message -->

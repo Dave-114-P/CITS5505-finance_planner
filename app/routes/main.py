@@ -11,16 +11,40 @@ bp = Blueprint("main", __name__)
 @bp.route("/")
 def index():
     top_spendings = []
+    recent_transactions = []
     username = None
+    total = 0  # Initialize total to ensure it's always defined
 
     if current_user.is_authenticated:
         username = current_user.username
-        # top_spendings = Spending.get_3_largest_spendings(current_user.id)
-        # if not top_spendings:
-        #     return render_template("index.html", username=username)
 
-    return render_template("index.html", username=username)
-                           #, top_spendings=top_spendings)
+        # Fetch the top 3 largest spendings
+        top_spendings = Spending.get_3_largest_spendings(current_user.id)
+
+        # Fetch the 3 most recent transactions
+        recent_transactions = Spending.get_3_most_recent_transactions(current_user.id)
+
+        # Calculate the total amount from the top spendings if available
+        if isinstance(top_spendings, list) and len(top_spendings) > 0:
+            total = sum(spend.amount for spend in top_spendings)
+        elif isinstance(top_spendings, dict) and "message" in top_spendings:
+            # Handle case where fewer than 1 spending exists
+            return render_template(
+                "index.html",
+                username=username,
+                message=top_spendings["message"],
+                top_spendings=top_spendings.get("spendings", []),
+                recent_transactions=recent_transactions,
+                total=total
+            )
+
+    return render_template(
+        "index.html",
+        username=username,
+        top_spendings=top_spendings,
+        recent_transactions=recent_transactions,
+        total=total
+    )
 
 #Plotting line graph from server-side and send it as png file
 @bp.route("/plot.png")
