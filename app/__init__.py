@@ -31,7 +31,7 @@ def create_app():
     migrate.init_app(app, db)
 
     # Import and register blueprints (routes)
-    from app.routes import main, auth, upload, goals, visualise, share, estimation, transaction
+    from app.routes import main, auth, upload, goals, visualise, share, estimation, transaction, api
     app.register_blueprint(main.bp)
     app.register_blueprint(auth.bp)
     app.register_blueprint(upload.bp)
@@ -40,6 +40,7 @@ def create_app():
     app.register_blueprint(share.bp)
     app.register_blueprint(estimation.bp)
     app.register_blueprint(transaction.bp)
+    app.register_blueprint(api.bp)  # Register the API blueprint here
 
     @app.route("/")
     def index():
