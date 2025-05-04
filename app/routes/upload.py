@@ -12,13 +12,13 @@ bp = Blueprint("upload", __name__)
 @bp.route("/upload", methods=["GET", "POST"])
 @login_required
 def upload():
-    # Handle uploading of spending data
     if request.method == "POST":
         amount = float(request.form.get("amount"))
         category = request.form.get("category")
         date_str = request.form.get("date")
         description = request.form.get("description")
         date = datetime.strptime(date_str, "%Y-%m-%d")
+
         new_spending = Spending(
             user_id=current_user.id,
             amount=amount,
@@ -28,6 +28,10 @@ def upload():
         )
         db.session.add(new_spending)
         db.session.commit()
+
+        
         flash("Spending data uploaded successfully", "success")
-        return redirect(url_for("upload.upload"))
+        return redirect(url_for("est.estimation"))
+
+
     return render_template("upload.html")
