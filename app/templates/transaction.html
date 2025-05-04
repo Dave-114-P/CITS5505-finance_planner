@@ -2,13 +2,19 @@
 
 {% block title %}Fee Estimation{% endblock %}
 {% block content %}
-
-
+<!-- 
+    page: transaction
+    author: David Pan 
+-->
+<script>
+    let flow = '{{ flow|tojson }}';
+    let budgetWeek = "{{ budget_week|tojson }}";
+</script>
 
 <div class="container my-4">
     <div class="row g-3">
         <!-- Inflow/Outflow -->
-        <div class="col-md-3 r-card">
+        <div class="col-md-3 r-card px-3">
             <!-- Inflow -->
             <div class="d-flex justify-content-between my-2">
                 <span>Inflow</span><span id="inflow_num" class="text-danger">{{ flow.inflow }}</span>
@@ -20,13 +26,13 @@
             <hr class="ms-auto w-50 my-1">
             <!-- sum -->
             <div class="d-flex mb-2">
-                <span id="outflow_num" class="text-success ms-auto">null</span>
+                <span>Summed Outflow</span><span id="sumflow_num" class="text-success ms-auto"></span>
             </div>
         </div>
         <!-- Space holder -->
         <div class="col-md-1"></div>
         <!-- Budget -->
-        <div class="col-md-7 r-card2">
+        <div class="col-md-7 r-card2 px-4">
             <div class="d-flex justify-content-between mt-2">
                 <h3>Your budget</h3>
             </div>
@@ -45,7 +51,7 @@
     </div>
     
     <div class="row g-3 mt-3">
-        <div class="r-card">
+        <div class="r-card px-4">
             <!-- Tabs Navigation -->
             <ul class="nav nav-tabs justify-content-center" id="budgetTabs" role="tablist">
                 <li class="nav-item mx-auto">
@@ -79,18 +85,25 @@
 
             <!-- This Month -->
             <div class="tab-pane fade show active" id="this-month" role="tabpanel" aria-labelledby="this-month-tab">
-                <div class="date-header">23 <span class="month-label">Tuesday, April</span></div>
-                <div class="category-item position-relative">
-                    <!-- Placeholder icon for Transportation -->
-                    <i class="bi bi-car-front-fill"></i>
-                    <span>Transportation</span>
-                    <span class="amount text-danger">30</span>
+                <div class="date-header d-flex">
+                    <!-- <div class="my-auto"><h3 id="this-date" style="font-family: Georgia, serif;">{{ this.this_date }}</h3> </div><div><div><span id="this-day">{{ this.this_day }}</span></div> <div><span id="this-month">{{ this.this_month }}</span></div></div> -->
+                    <div class="my-auto"><h3 style="font-family: Georgia, serif;">{{ this.this_date }}</h3> </div>
+                    <div class="ms-2" style="font-family: 'Times New Roman', Times, serif;">
+                        <div>{{ this.this_day }}</div> <div class="text-center">{{ this.this_month }}</div>
+                    </div>
+                    <div class="ms-auto my-auto">100</div>
                 </div>
-                <div class="category-item position-relative">
+                <div class="category-item position-relative d-flex">
+                    <!-- Placeholder icon for Transportation -->
+                    <div style="width: 6em; height: 6em; overflow: hidden;" class="my-3 me-4"><img crossorigin="anonymous" src="https://media-public.canva.com/SXgec/MADCW8SXgec/2/t.png" draggable="false" alt="Transport Logistic Set Vehicles" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                    <span class="my-auto">Transportation</span>
+                    <span class="amount text-danger ms-auto my-auto">30</span>
+                </div>
+                <div class="category-item position-relative d-flex">
                     <!-- Placeholder icon for Food & Beverage -->
-                    <i class="bi bi-cup-straw"></i>
-                    <span>Food & Beverage</span>
-                    <span class="amount text-danger">10</span>
+                    <div style="width: 6em; height: 6em; overflow: hidden;" class="my-3 me-4"><img crossorigin="anonymous" src="https://media-public.canva.com/L3J3s/MAEoqgL3J3s/2/t.png" draggable="false" alt="Fast Food and Beverages in a Circle" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                    <span class="my-auto">Food & Beverage</span>
+                    <span class="amount text-danger ms-auto my-auto">10</span>
                 </div>
             </div>
 
@@ -105,9 +118,6 @@
         </div>
     </div>
 </div>
-<script>
-    let flow = '{{ flow|tojson }}';
-    let budgetWeek = "{{ budget_week|tojson }}";
-</script>
+
 <script src="{{ url_for('static', filename='../static/js/transaction.js') }}"></script>
 {% endblock %}

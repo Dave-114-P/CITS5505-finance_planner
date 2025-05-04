@@ -1,8 +1,12 @@
 function getFlow(){
     console.log(flow);
-    sumflow = flow['outflow'] - flow['inflow'];
+    let parsedFlow = JSON.parse(flow)
+    console.log(parsedFlow);
+    console.log('type: ', typeof(parsedFlow));
+    // console.log('type: ', typeof(parsedFlow['outflows']));
+    let sumflow = (parsedFlow.outflow - parsedFlow.inflow).toFixed(1);
     console.log(sumflow);
-    $('#outflow_num').text(sumflow);
+    $('#sumflow_num').text(sumflow);
 }
 
 function budget(){
