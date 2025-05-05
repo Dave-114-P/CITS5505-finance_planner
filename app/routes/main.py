@@ -24,20 +24,9 @@ def index():
         # Fetch the 3 most recent transactions
         recent_transactions = Spending.get_3_most_recent_transactions(current_user.id)
 
-        # Calculate the total amount from the top spendings if available
-        if isinstance(top_spendings, list) and len(top_spendings) > 0:
-            total = sum(spend.amount for spend in top_spendings)
-        elif isinstance(top_spendings, dict) and "message" in top_spendings:
-            # Handle case where fewer than 1 spending exists
-            return render_template(
-                "index.html",
-                username=username,
-                message=top_spendings["message"],
-                top_spendings=top_spendings.get("spendings", []),
-                recent_transactions=recent_transactions,
-                total=total
-            )
-
+        # Calculate the total amount of the top spendings
+        total = sum(spend.amount for spend in top_spendings)
+        
     return render_template(
         "index.html",
         username=username,
