@@ -2,5 +2,39 @@
 
 {% block title %}Fee Estimation{% endblock %}
 {% block content %}
-
+<section>
+    <!-- Top spending -->
+    <div class="container-fluid mb-4" style="background-color: #76c87d; border-radius: 10px; padding: 1rem;">
+        <h2 class="header_font ms-2">
+            
+        </h2>
+            <div class="row justify-content-center align-items-center mx-auto mt-2" 
+                style="background-color: #ddd0c2; width: 90%; border-radius: 10px; padding: 0.5rem;">
+                
+                <!-- Category Image -->
+                <div class="col-3 d-flex align-items-center justify-content-center" style="padding: 0;">
+                    <img 
+                        src="{{ url_for('static', filename='image/icon/accommodation.png') }}" 
+                        alt="" 
+                        style="max-height: 4rem;" 
+                    >
+                </div>
+                
+                <!-- Category Info -->
+                <div class="col-6 d-flex flex-column justify-content-center">
+                    <h3 class="header_font mb-1 fs-6 smaller_font">
+                        <strong></strong>
+                    </h3>
+                    <p class="text_font mb-0 fs-6 smaller_font">
+                    </p>
+                </div>
+                
+                <!-- Percentage Spending -->
+                <div class="col-3 d-flex align-items-center justify-content-center text_font fs-6 smaller_font">
+                    
+                </div>
+            </div>
+            <p class="text-center text_font mt-3 fs-5">No spendings available to display.</p>
+    </div>
+</section>
 {% endblock %}
