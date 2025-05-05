@@ -3,4 +3,111 @@
 {% block title %}Fee Estimation{% endblock %}
 {% block content %}
 
+
+
+<div class="container my-4">
+    <div class="row g-3">
+        <!-- Inflow/Outflow -->
+        <div class="col-md-3 r-card">
+            <!-- Inflow -->
+            <div class="d-flex justify-content-between my-2">
+                <span>Inflow</span><span id="inflow_num" class="text-danger">{{ flow.inflow }}</span>
+            </div>
+            <!-- Outflow -->
+            <div class="d-flex justify-content-between mt-2">
+                <span>Outflow</span><span id="outflow_num" class="text-success">{{ flow.outflow }}</span>
+            </div>
+            <hr class="ms-auto w-50 my-1">
+            <!-- sum -->
+            <div class="d-flex mb-2">
+                <span id="outflow_num" class="text-success ms-auto">null</span>
+            </div>
+        </div>
+        <!-- Space holder -->
+        <div class="col-md-1"></div>
+        <!-- Budget -->
+        <div class="col-md-7 r-card2">
+            <div class="d-flex justify-content-between mt-2">
+                <h3>Your budget</h3>
+            </div>
+            <!-- Info -->
+            <div class="d-flex mt-1">
+                <p>You have <b id="budget-last-week">{{ budget_week }}%</b> budget left for <b>7 days</b>.</p>
+            </div>
+            <!-- Progress Bar -->
+            <div id="progress" class="progress mb-3">
+                <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="15"></div>
+            </div>
+        </div>
+        <div class="col-md-1 d-flex">
+            <a href="#" class="circle-plus m-auto">+</a>
+        </div>
+    </div>
+    
+    <div class="row g-3 mt-3">
+        <div class="r-card">
+            <!-- Tabs Navigation -->
+            <ul class="nav nav-tabs justify-content-center" id="budgetTabs" role="tablist">
+                <li class="nav-item mx-auto">
+                    <a class="nav-link" id="last-month-tab" data-bs-toggle="tab" href="#last-month" role="tab" aria-controls="last-month" aria-selected="false">Last month</a>
+                </li>
+                <li class="nav-item mx-auto">
+                    <a class="nav-link active-tab" id="this-month-tab" data-bs-toggle="tab" href="#this-month" role="tab" aria-controls="this-month" aria-selected="true">This month</a>
+                </li>
+                <li class="nav-item mx-auto">
+                    <a class="nav-link" id="future-tab" data-bs-toggle="tab" href="#future" role="tab" aria-controls="future" aria-selected="false">Future</a>
+                </li>
+            </ul>
+            <!-- Tabs Content -->
+            <div class="tab-content mt-3" id="budgetTabsContent">
+            <!-- Last Month -->
+            <div class="tab-pane fade" id="last-month" role="tabpanel" aria-labelledby="last-month-tab">
+                <div class="date-header">16 <span class="month-label">Tuesday, April</span></div>
+                <div class="category-item position-relative">
+                    <!-- Placeholder icon for Transportation -->
+                    <i class="bi bi-car-front-fill"></i>
+                    <span>Transportation</span>
+                    <span class="amount text-danger">30</span>
+                </div>
+                <div class="category-item position-relative">
+                    <!-- Placeholder icon for Food & Beverage -->
+                    <i class="bi bi-cup-straw"></i>
+                    <span>Food & Beverage</span>
+                    <span class="amount text-danger">10</span>
+                </div>
+            </div>
+
+            <!-- This Month -->
+            <div class="tab-pane fade show active" id="this-month" role="tabpanel" aria-labelledby="this-month-tab">
+                <div class="date-header">23 <span class="month-label">Tuesday, April</span></div>
+                <div class="category-item position-relative">
+                    <!-- Placeholder icon for Transportation -->
+                    <i class="bi bi-car-front-fill"></i>
+                    <span>Transportation</span>
+                    <span class="amount text-danger">30</span>
+                </div>
+                <div class="category-item position-relative">
+                    <!-- Placeholder icon for Food & Beverage -->
+                    <i class="bi bi-cup-straw"></i>
+                    <span>Food & Beverage</span>
+                    <span class="amount text-danger">10</span>
+                </div>
+            </div>
+
+            <!-- Future -->
+            <div class="tab-pane fade" id="future" role="tabpanel" aria-labelledby="future-tab">
+                <div class="category-item position-relative">
+                    <span>Projected Expenses</span>
+                    <span class="amount text-danger">100</span>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let flow = '{{ flow|tojson }}';
+    let budgetWeek = "{{ budget_week|tojson }}";
+</script>
+<script src="{{ url_for('static', filename='../static/js/transaction.js') }}"></script>
 {% endblock %}

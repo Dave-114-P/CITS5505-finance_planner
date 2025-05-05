@@ -7,7 +7,7 @@ body {
     font-weight: bold;
 }
 
-.active {
+.navbar-nav .active {
     background-color: #d3d3d3 !important;
     padding:0rem;
     margin:0rem;
@@ -17,4 +17,46 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
+}
+
+/* transaction.html */
+.r-card{
+    padding-top: 1em;
+    padding-bottom: 1em;
+    border-radius: 1em;
+    border: 2px solid #555555;
+    box-shadow: #888888;
+}
+.r-card2{
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border-radius: 1em;
+    border: 2px solid #555555;
+    box-shadow: #888888;
+}
+#progress{
+    background-color: rgb(188, 241, 175);
+    
+}
+#progress-bar{
+    background-color: #86d88d;
+    font-weight: bold;
+    color: #333333;
+}
+.circle-plus {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    border: 2px solid #000;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #000;
+    text-decoration: none;
+}
+.circle-plus:hover {
+    background-color: #f0f0f0;
 }

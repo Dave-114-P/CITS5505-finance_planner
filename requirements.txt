@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 Flask==3.0.3; 
 Flask-SQLAlchemy==3.1.1; 
 Flask-Login==0.6.3; 
 pytest==8.3.3;
 dotenv==1.1.0;
+=======
+Flask==3.0.3
+Flask-SQLAlchemy==3.1.1
+Flask-Login==0.6.3
+python-dotenv==1.0.1
+pytest==8.3.3
+>>>>>>> 4e53b1577d144ed0cfcd7b050014e7995f330f74
