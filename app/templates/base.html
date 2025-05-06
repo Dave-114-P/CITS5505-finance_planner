@@ -41,7 +41,6 @@
                     <li class="nav-item {% if request.endpoint=='est.estimation' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('est.estimation') }}">Fee Estimation</a></li>
                     <li class="nav-item {% if request.endpoint=='trans.transaction' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('trans.transaction') }}">Transaction</a></li>
                     {% if current_user.is_authenticated %}
-                        <li class="nav-item {% if request.endpoint == 'upload.upload' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('upload.upload') }}">Upload</a></li>
                         <li class="nav-item {% if request.endpoint == 'goals.goals' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('goals.goals') }}">Goals</a></li>
                         <li class="nav-item {% if request.endpoint == 'visualise.visualise' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('visualise.visualise') }}">Visualise</a></li>
                         <li class="nav-item {% if request.endpoint == 'share.share' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('share.share') }}">Share</a></li>
