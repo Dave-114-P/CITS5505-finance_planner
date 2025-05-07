@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, session, url_fo
 from flask_login import login_required, current_user
 from app import db
 from app.models.spending import Spending
-from app.models.category import Category
+from app.models.categories import Category
 from datetime import datetime
 
 bp = Blueprint("upload", __name__)
