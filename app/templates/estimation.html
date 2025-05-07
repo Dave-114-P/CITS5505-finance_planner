@@ -8,9 +8,10 @@
     <div class="container-naked">
 
     {% if not selected_lifestyle %}
-    <!-- Lifestyle Selection Form -->
+    <!-- Lifestyle Selection Section -->
     <div class="mb-5">
         <h4>Please Select Your Lifestyle</h4>
+        <!-- Lifestyle selection form -->
         <form method="POST" action="{{ url_for('est.estimation') }}">
             <select name="lifestyle" class="form-select" required>
                 <option value="">-- Choose Lifestyle --</option>
@@ -24,7 +25,7 @@
     {% endif %}
 
     {% if selected_lifestyle %}
-    <!-- Lifestyle Display -->
+    <!-- Display selected lifestyle and description -->
     <div class="lifestyle-box {{ selected_lifestyle }} mb-5">
         {% if selected_lifestyle == "simple" %}
             <h3>🌿 Simple Life</h3>
@@ -36,12 +37,13 @@
             <h3>💎 Luxury Life</h3>
             <p>Enjoy lavish lifestyle and premium experiences.</p>
         {% endif %}
+        <!-- Button to change lifestyle -->
         <form method="POST" action="{{ url_for('est.change_lifestyle') }}">
             <button type="submit" class="btn btn-outline-light action-button">Change Lifestyle</button>
         </form>
     </div>
 
-    <!-- Flash messages -->
+    <!-- Display flash messages if any -->
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <ul class="flashes">
@@ -52,7 +54,7 @@
       {% endif %}
     {% endwith %}
 
-    <!-- Budget Bars -->
+    <!-- Show budget usage bars for each category -->
     {% for category in categories %}
     <div class="mb-4">
         <h5>{{ category.name }}</h5>
@@ -83,7 +85,7 @@
     </div>
     {% endfor %}
 
-    <!-- Upload spending button -->
+    <!-- Upload spending data button -->
     <div class="text-center mt-5">
         <a href="{{ url_for('upload.upload') }}" class="btn btn-primary btn-lg action-button">➕ Upload Spending Data</a>
     </div>
@@ -92,7 +94,7 @@
     </div>
 </div>
 
-<!-- Enhanced CSS Styles -->
+<!-- Custom CSS styles -->
 <style>
 .page-background {
     background: linear-gradient(135deg, #f0f8ff, #e0f7fa);
