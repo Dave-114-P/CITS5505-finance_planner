@@ -1,0 +1,212 @@
+/* General styles for the application */
+.header_font{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.5rem;
+}
+.text_font{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 0.75rem;
+}
+
+/* Custom styles to override Bootstrap */
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.myActive {
+    background-color: #d3d3d3 !important;
+    padding:0rem;
+    margin-top:0rem;
+}
+
+@media (max-width: 767.98px) {
+    .myActive {
+        margin-top: 0.5rem;
+    }
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Custom for the carousel */
+.title {
+    font-size: clamp(1.5rem, 5.5vw, 10rem);
+    font-weight: bold;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.messsage {
+    font-size: clamp(0.75rem,2.75vw,5rem);
+    color: black;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+/* This code avoid carousel height shrink suddenly when trasitting to a new one */
+
+.carousel-item {
+    display: none; /* Hide everything by default */
+    transition: transform 0.6s ease-in-out;
+}
+
+.carousel-item.active {
+    display: block; /* Only show the active slide */
+}
+
+/*Australian map*/
+.australia-map .land {
+    fill: #ccc; /* base color */
+    stroke: #333; /* border color */
+    stroke-width: 1;
+    transition: all 0.3s ease;
+  }
+  
+  /* When hovering any state */
+  .australia-map .land:hover {
+    fill: #00205B; /* highlight color */
+    stroke: #000; /* darker border when hover */
+  }
+  
+  /* Make all states semi-transparent when hovering any one */
+  .australia-map:hover .land {
+    opacity: 0.3;
+  }
+  
+  /* But keep the hovered state fully visible */
+  .australia-map .land:hover {
+    opacity: 1;
+  }
+  
+/* State's name property */
+.tooltip {
+    position: absolute;
+    background: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    pointer-events: none;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.reset-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 0.5rem;
+    background-color: #76c87d;
+    font-weight: bold;
+  }
+
+  .reset-button:hover {
+    background-color: #0056b3;
+  }
+
+ /* Ensure parent div is a flex container */
+ .parent {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allows wrapping for smaller screens */
+}
+
+/* Map and Text sections */
+.map-section, .text-section {
+    flex: 1; /* Both will take equal space */
+    padding: 10px; /* Optional padding */
+}
+
+/* Optional: Ensure the map doesn't overflow */
+.map-section svg {
+    max-width: 100%; /* Makes sure the SVG fits within its parent */
+    height: auto; /* Keeps aspect ratio intact */
+}
+
+/* Ensure that on smaller screens (less than 768px), the sections stack vertically */
+@media (max-width: 767px) {
+    .map-section {
+        order: 2; /* Make map come after text */
+    }
+
+    .text-section {
+        order: 1; /* Keep text in first position */
+    }
+    .map-section, .text-section {
+        flex: 100%; /* Take full width of parent */
+    }
+}
+
+.uni_link{
+    color: black;
+    text-decoration: none;
+    font-size: 0.75rem;
+}
+.uni_link:hover{
+    color: red;
+    text-decoration: underline;
+}
+.uni_link:visited{
+    color: #007bff;
+    text-decoration: underline;
+}
+.uni_link:active{
+    color: lightblue;
+    text-decoration: underline;
+}
+
+/* Responsive font size for smaller screens */
+@media (max-width: 767px) {
+    .smaller_font {
+        font-size:x-small !important;
+    }
+}
+
+/* Custom progress bar styles */
+.custom-progress {
+    position: relative;
+    background-color: #bcf1af;
+    border-radius: 20px;
+    height: 2.5rem; /* Increase height as needed */
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .custom-progress-fill {
+    background-color: #76c87d;
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.4s ease;
+  }
+  
+  .custom-progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    color: black;
+    z-index: 1;
+    font-size: 1rem;
+  }
+  
+  .income{
+    color: #76c87d;
+  }
+
+.cost{
+    color: #ff4d4d;
+}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Visualise Data{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h2>Your Spending Analytics</h2>
+        
+        <!-- Bar Chart: Spending by Category -->
+        <div class="chart-container mb-4">
+            <h3>Spending by Category Last 30 Days</h3>
+            <div id="last30DaysBarChartContainer" style="max-height: 500px; width: auto; overflow-y:visible;">
+                <canvas id="spendingChart" width="400" height="200"></canvas>
+            </div>
+            <p id="last30DaysNoBarData" class="text-muted" style="display: none;">No data available for the last 30 days.</p>
+        </div>
+
+        <!-- Pie Chart: Spending Breakdown (Current Month) -->
+        <div class="chart-container mb-4 mt-5">
+            <h3 style="margin: 0px;">Spending Breakdown (Current Month)</h3>
+            <div id="monthlySpendingChartContainer" style="display: flex; justify-content: center; align-items: center; height: 500px; padding: 0px; width: 100%;">
+                <canvas id="monthlySpendingChart" width="400" height="200"></canvas>
+            </div>
+            <p id="monthlySpendingNoData" class="text-muted" style="display: none;">No data available for the current month.</p>
+        </div>
+
+        <!-- Line Chart: Spending Over the Last 30 Days -->
+        <div class="chart-container mb-4 mt-5">
+            <h3>Spending Over the Last 30 Days</h3>
+            <div id="last30DaysChartContainer" style="max-height: 500px; width: auto; overflow-y:visible;">
+                <canvas id="last30DaysChart" width="400" height="200"></canvas>
+            </div>
+            <p id="last30DaysNoData" class="text-muted" style="display: none;">No data available for the last 30 days.</p>
+        </div>
+
+    </div>
+    
+
+    <!-- Chart.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom JavaScript for fetching and drawing charts -->
+    <script src="{{ url_for('static', filename='js/visualise.js') }}"></script>
+{% endblock %}

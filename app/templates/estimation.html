@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block title %}Lifestyle Estimation{% endblock %}
+
+{% block content %}
+<div class="page-background py-5">
+    <h2 class="mb-4 text-center">Lifestyle Estimation & Budget Tracker</h2>
+
+    <div class="container-naked">
+
+    {% if not selected_lifestyle %}
+    <!-- Lifestyle Selection Section -->
+    <div class="mb-5">
+        <h4>Please Select Your Lifestyle</h4>
+        <!-- Lifestyle selection form -->
+        <form method="POST" action="{{ url_for('est.estimation') }}">
+            <select name="lifestyle" class="form-select" required>
+                <option value="">-- Choose Lifestyle --</option>
+                <option value="simple">🌿 Simple Life</option>
+                <option value="quality">✨ Quality Life</option>
+                <option value="luxury">💎 Luxury Life</option>
+            </select>
+            <button type="submit" class="btn btn-primary mt-3 action-button">Confirm</button>
+        </form>
+    </div>
+    {% endif %}
+
+    {% if selected_lifestyle %}
+    <!-- Display selected lifestyle and description -->
+    <div class="lifestyle-box {{ selected_lifestyle }} mb-5">
+        {% if selected_lifestyle == "simple" %}
+            <h3>🌿 Simple Life</h3>
+            <p>Enjoy simple pleasures. Stay frugal and mindful.</p>
+        {% elif selected_lifestyle == "quality" %}
+            <h3>✨ Quality Life</h3>
+            <p>Balanced life with comfort and occasional indulgence.</p>
+        {% elif selected_lifestyle == "luxury" %}
+            <h3>💎 Luxury Life</h3>
+            <p>Enjoy lavish lifestyle and premium experiences.</p>
+        {% endif %}
+        <!-- Button to change lifestyle -->
+        <form method="POST" action="{{ url_for('est.change_lifestyle') }}">
+            <button type="submit" class="btn btn-outline-light action-button">Change Lifestyle</button>
+        </form>
+    </div>
+
+    <!-- Display flash messages if any -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="alert alert-{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Show budget usage bars for each category -->
+    {% for category in categories %}
+    <div class="mb-4">
+        <h5>{{ category.name }}</h5>
+        <div class="progress budget-bar">
+            <div class="progress-bar 
+                {% if category.percent < 60 %}
+                    bg-success
+                {% elif category.percent < 100 %}
+                    bg-warning
+                {% else %}
+                    bg-danger
+                {% endif %}" 
+                role="progressbar" 
+                style="width: {{ category.percent }}%;" 
+                aria-valuenow="{{ category.percent }}" aria-valuemin="0" aria-valuemax="100">
+                {{ category.percent | round(1) }}%
+            </div>
+        </div>
+        <small class="text-muted">
+            {% if category.percent < 60 %}
+                ✅ Great job staying within budget!
+            {% elif category.percent < 100 %}
+                ⚠️ Careful, you're close to your budget.
+            {% else %}
+                ❗ Budget exceeded. Try to cut back next time.
+            {% endif %}
+        </small>
+    </div>
+    {% endfor %}
+
+    <!-- Upload spending data button -->
+    <div class="text-center mt-5">
+        <a href="{{ url_for('upload.upload') }}" class="btn btn-primary btn-lg action-button">➕ Upload Spending Data</a>
+    </div>
+    {% endif %}
+
+    </div>
+</div>
+
+<!-- Custom CSS styles -->
+<style>
+.page-background {
+    background: linear-gradient(135deg, #f0f8ff, #e0f7fa);
+    min-height: 100vh;
+    padding: 60px 20px;
+}
+
+.container-naked {
+    max-width: 700px;
+    margin: auto;
+}
+
+h2 {
+    font-weight: bold;
+    color: #333;
+}
+
+.lifestyle-box {
+    padding: 20px;
+    border-radius: 12px;
+    color: white;
+    text-align: center;
+}
+
+.lifestyle-box.simple { background-color: #4caf50; }
+.lifestyle-box.quality { background-color: #2196f3; }
+.lifestyle-box.luxury { background-color: #d32f2f; }
+
+.budget-bar {
+    height: 26px;
+    background-color: #e0e0e0;
+    border-radius: 13px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    line-height: 26px;
+    font-weight: bold;
+    transition: width 0.4s ease;
+}
+
+.bg-success { background-color: #4caf50; }
+.bg-warning { background-color: #ff9800; }
+.bg-danger { background-color: #f44336; }
+
+.alert {
+    padding: 8px;
+    background-color: #dff0d8;
+    color: #3c763d;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.action-button {
+    transition: all 0.2s ease;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.action-button:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+</style>
+{% endblock %}

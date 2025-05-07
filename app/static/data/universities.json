@@ -1,0 +1,172 @@
+{
+  "New South Wales": {
+    "intro": "New South Wales offers a rich blend of natural beauty, dynamic cities, and coastal charm. Known for its iconic landmarks and diverse population, it provides a high standard of living with access to vibrant cultural and recreational opportunities.",
+    "cities": {
+      "Sydney": [
+        {
+          "family_of_four": "AU$8,754",
+          "single_person": "AU$5,212",
+          "details": "https://www.expatistan.com/cost-of-living/sydney"
+        }
+      ]
+    }
+  },
+  "South Australia": {
+    "intro": "South Australia is known for its relaxed lifestyle, beautiful wine regions, and vibrant festivals. With a lower cost of living than many other regions, it offers an affordable and enjoyable urban and regional experience.",
+    "cities": {
+      "Adelaide": [
+        {
+          "family_of_four": "AU$7,398",
+          "single_person": "AU$4,156",
+          "details": "https://www.expatistan.com/cost-of-living/adelaide"
+        }
+      ]
+    }
+  },
+  "Victoria": {
+    "intro": "Victoria features a blend of cosmopolitan city life and scenic landscapes. With lively arts scenes, coastal getaways, and bustling urban areas, it's a dynamic and diverse place to live.",
+    "cities": {
+      "Melbourne": [
+        {
+          "family_of_four": "AU$8,561",
+          "single_person": "AU$4,763",
+          "details": "https://www.expatistan.com/cost-of-living/melbourne"
+        }
+      ]
+    }
+  },
+  "Western Australia": {
+    "intro": "Western Australia is renowned for its vast landscapes, pristine beaches, and sunny climate. The state combines natural beauty with a laid-back lifestyle in its coastal cities.",
+    "cities": {
+      "Perth": [
+        {
+          "family_of_four": "AU$8,158",
+          "single_person": "AU$4,649",
+          "details": "https://www.expatistan.com/cost-of-living/perth"
+        }
+      ]
+    }
+  },
+  "Queensland": {
+    "intro": "Queensland is famous for its tropical weather, outdoor lifestyle, and friendly communities. With both vibrant urban centers and beautiful coastal areas, it provides a relaxed and active way of life.",
+    "cities": {
+      "Brisbane": [
+        {
+          "family_of_four": "AU$8,502",
+          "single_person": "AU$5,094",
+          "details": "https://www.expatistan.com/cost-of-living/brisbane"
+        }
+      ]
+    }
+  },
+  "Australian Capital Territory": {
+    "intro": "The ACT, home to the nation’s capital, offers a well-planned and clean environment. It boasts excellent public amenities, green spaces, and a balanced urban lifestyle.",
+    "cities": {
+      "Canberra": [
+        {
+          "family_of_four": "AU$7,016",
+          "single_person": "AU$3,906",
+          "details": "https://www.expatistan.com/cost-of-living/canberra"
+        }
+      ]
+    }
+  },
+  "Northern Territory": {
+    "intro": "Northern Territory is unique for its rugged outback, Aboriginal heritage, and relaxed pace of life. Cities like Darwin offer a warm climate and more affordable lifestyle options.",
+    "cities": {
+      "Darwin": [
+        {
+          "family_of_four": "AU$6,780",
+          "single_person": "AU$3,445",
+          "details": "https://www.expatistan.com/cost-of-living/darwin"
+        }
+      ]
+    }
+  },
+  "Tasmania": {
+    "intro": "Tasmania combines natural beauty with a peaceful lifestyle. Known for its clean environment and strong community feel, it offers a lower cost of living in a scenic setting.",
+    "cities": {
+      "Hobart": [
+        {
+          "family_of_four": "AU$6,815",
+          "single_person": "AU$3,706",
+          "details": "https://www.expatistan.com/cost-of-living/hobart"
+        }
+      ]
+    }
+  },
+  "comparisons": {
+    "Sydney": {
+      "Melbourne": "nearly the same",
+      "Perth": "4% more",
+      "Adelaide": "16% more",
+      "Darwin": "26% more",
+      "Hobart": "25% more",
+      "Brisbane": "9% more",
+      "Canberra": "23% more"
+    },
+    "Melbourne": {
+      "Sydney": "nearly the same",
+      "Adelaide": "15% more",
+      "Perth": "nearly the same",
+      "Darwin": "25% more",
+      "Hobart": "24% more",
+      "Brisbane": "8% more",
+      "Canberra": "22% more"
+    },
+    "Perth": {
+      "Sydney": "4% less",
+      "Melbourne": "nearly the same",
+      "Adelaide": "11% more",
+      "Darwin": "21% more",
+      "Hobart": "20% more",
+      "Brisbane": "4% more",
+      "Canberra": "18% more"
+    },
+    "Adelaide": {
+      "Sydney": "16% less",
+      "Melbourne": "15% less",
+      "Perth": "11% less",
+      "Darwin": "9% more",
+      "Hobart": "8% more",
+      "Brisbane": "6% less",
+      "Canberra": "6% more"
+    },
+    "Darwin": {
+      "Sydney": "26% less",
+      "Melbourne": "25% less",
+      "Perth": "21% less",
+      "Adelaide": "9% less",
+      "Hobart": "nearly the same",
+      "Brisbane": "14% less",
+      "Canberra": "nearly the same"
+    },
+    "Hobart": {
+      "Sydney": "25% less",
+      "Melbourne": "24% less",
+      "Perth": "20% less",
+      "Adelaide": "8% less",
+      "Darwin": "nearly the same",
+      "Brisbane": "13% less",
+      "Canberra": "nearly the same"
+    },
+    "Brisbane": {
+      "Sydney": "9% less",
+      "Melbourne": "8% less",
+      "Perth": "4% less",
+      "Adelaide": "6% more",
+      "Darwin": "14% more",
+      "Hobart": "13% more",
+      "Canberra": "13% more"
+    },
+    "Canberra": {
+      "Sydney": "23% less",
+      "Melbourne": "22% less",
+      "Perth": "18% less",
+      "Adelaide": "6% less",
+      "Darwin": "nearly the same",
+      "Hobart": "nearly the same",
+      "Brisbane": "13% less"
+    }
+  }
+}

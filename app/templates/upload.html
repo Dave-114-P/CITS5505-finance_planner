@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Spending{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center" style="padding: 0px;">
+        <div class="col-md-10" style="border-radius: 10px; padding: 10px; margin: 0px; background-color: #76c87d;">
+            <h2 class="text-center header_font" style="font-size: 3rem;">Upload Spending</h2>
+            <form method="POST" action="{{ url_for('upload.upload') }}">
+                <div class="mb-3">
+                    <label for="amount" class="form-label text_font" style="font-size: 2.5vh;">Amount ($)</label>
+                    <input type="number" step="0.01" class="form-control" id="amount" name="amount" required style="color: red;">
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label text_font" style="font-size: 2.5vh;">Category</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="" disabled selected>Select a category</option>
+                        <option value="accomodation">Accommodation</option>
+                        <option value="food">Food</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="personal">Personal</option>
+                        <option value="tuition_fees">Tuition Fees</option>                        
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="date" class="form-label text_font" style="font-size: 2.5vh;">Date</label>
+                    <input type="date" class="form-control" id="date" name="date" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label text_font" style="font-size: 2.5vh;">Description (Optional)</label>
+                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a href="{{ url_for('trans.transaction') }}" type="button" class="btn btn-primary me-2" 
+                       style="background-color: #ddd0c2; border: #ddd0c2; width: 150px; text-align: center;">BACK</a>
+                    <button type="submit" class="btn btn-primary" 
+                       style="background-color: #ddd0c2; border: #ddd0c2; width: 150px; text-align: center;">UPLOAD</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
