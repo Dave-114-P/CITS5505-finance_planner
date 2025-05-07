@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from flask_login import login_required, current_user
 from app import db
 from app.models.spending import Spending  # import Spending model
-from app.models.category import Category
+from app.models.categories import Category
 
 # Create Blueprint for estimation routes
 bp = Blueprint('est', __name__)

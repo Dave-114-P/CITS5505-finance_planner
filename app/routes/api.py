@@ -7,6 +7,7 @@ from sqlalchemy import func
 # Import your database models
 from app.models.spending import Spending  # Using the Spending class
 from app.models.categories import Category  # Category model
+from app.models.income import Income  # Income model
 
 # Define the blueprint
 bp = Blueprint("api", __name__, url_prefix="/api")
@@ -32,15 +33,15 @@ def monthly_spending_breakdown():
     return jsonify(spending_data)
 
 # API: Spending Over the Last 30 Days
-@bp.route("/spending_last_30_days", methods=["GET"])
+@bp.route("/data_last_30_days", methods=["GET"])
 @login_required  # Ensure the user is logged in
-def spending_last_30_days():
+def data_last_30_days():
     # Get the date range for the last 30 days
     today = datetime.now()
     thirty_days_ago = today - timedelta(days=30)
     
     # Query database for the current user's spending in the last 30 days
-    results = (
+    results_spend = (
         db.session.query(func.date(Spending.date).label("date"), func.sum(Spending.amount).label("total"))
         .filter(Spending.user_id == current_user.id)  # Filter by logged-in user
         .filter(Spending.date.between(thirty_days_ago, today))  # Filter by date range
@@ -48,7 +49,17 @@ def spending_last_30_days():
         .order_by(func.date(Spending.date))  # Order by date
         .all()
     )
+
+    results_income = (
+        db.session.query(func.date(Income.date).label("date"), func.sum(Income.amount).label("total"))
+        .filter(Income.user_id == current_user.id)  # Filter by logged-in user
+        .filter(Income.date.between(thirty_days_ago, today))  # Filter by date range
+        .group_by(func.date(Income.date))  # Group by date
+        .order_by(func.date(Income.date))  # Order by date
+        .all()
+    )
     
     # Convert results to a list of dictionaries
-    spending_data = [{"date": row[0], "amount": row[1]} for row in results]
-    return jsonify(spending_data)
+    data = [{"date": row[0], "amount": row[1], "type": "spending"} for row in results_spend]
+    data += [{"date": row[0], "amount": row[1], "type": "income"} for row in results_income]
+    return jsonify(data)

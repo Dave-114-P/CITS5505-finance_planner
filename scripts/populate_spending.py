@@ -5,26 +5,36 @@ from datetime import datetime
 def populate_spendings():
     from app.models.categories import Category
     """Populate the spendings table with sample data."""
+
     # Check if the categories table is populated
     categories = Category.query.all()
     if not categories:
         print("❌ Categories table is empty. Please populate it first!")
         return
 
+    # Map category names to their IDs
+    category_map = {category.category: category.id for category in categories}
+
+    # Sample spending data
     sample_spendings = [
-        {"user_id": 1, "amount": 50.0, "category_id": "food", "date": datetime(2025, 5, 1), "description": "Groceries"},
-        {"user_id": 1, "amount": 120.0, "category_id": "transportation", "date": datetime(2025, 5, 2), "description": "Transportation"},
-        {"user_id": 1, "amount": 200.0, "category_id": "entertainment", "date": datetime(2025, 5, 3), "description": "Entertainment"},
-        {"user_id": 2, "amount": 350.0, "category_id": "food", "date": datetime(2025, 4, 1), "description": "Rent"},
-        {"user_id": 2, "amount": 25.0, "category_id": "tuition_fees", "date": datetime(2025, 4, 2), "description": "Snacks"},
+        {"user_id": 1, "amount": 50.0, "category_name": "Food", "date": datetime(2025, 5, 1), "description": "Groceries"},
+        {"user_id": 1, "amount": 120.0, "category_name": "Transportation", "date": datetime(2025, 5, 2), "description": "Transportation"},
+        {"user_id": 1, "amount": 200.0, "category_name": "Entertainment", "date": datetime(2025, 5, 3), "description": "Entertainment"},
+        {"user_id": 2, "amount": 350.0, "category_name": "Food", "date": datetime(2025, 4, 1), "description": "Rent"},
+        {"user_id": 2, "amount": 25.0, "category_name": "Tuition fees", "date": datetime(2025, 4, 2), "description": "Snacks"},
     ]
 
     # Add sample data to the database
     for spending_data in sample_spendings:
+        category_id = category_map.get(spending_data["category_name"])
+        if not category_id:
+            print(f"⚠️ Category '{spending_data['category_name']}' not found. Skipping this spending.")
+            continue
+
         new_spending = Spending(
             user_id=spending_data["user_id"],
             amount=spending_data["amount"],
-            category_id=spending_data["category_id"],
+            category_id=category_id,  # Use category ID from the map
             date=spending_data["date"],
             description=spending_data.get("description")
         )
@@ -33,10 +43,11 @@ def populate_spendings():
     # Commit the changes
     db.session.commit()
     print("✅ Sample spendings populated successfully!")
+
 if __name__ == "__main__":
     # Initialize the Flask app
     app = create_app()
-     # Set up the application context
+    # Set up the application context
     with app.app_context():
         # Populate the spendings table
         populate_spendings()

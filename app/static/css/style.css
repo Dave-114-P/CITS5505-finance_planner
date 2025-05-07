@@ -203,4 +203,10 @@ footer {
     font-size: 1rem;
   }
   
-  
+  .income{
+    color: #76c87d;
+  }
+
+.cost{
+    color: #ff4d4d;
+}

@@ -128,7 +128,7 @@
             <h2 class="header_font ms-2">
                 <strong>Top spendings</strong>
             </h2>
-            {% if top_spendings and top_spendings|length > 0 %}
+            {% if top_spendings %}
                 {% for spend in top_spendings %}
                 <div class="row justify-content-center align-items-center mx-auto mt-2" 
                     style="background-color: #ddd0c2; width: 90%; border-radius: 10px; padding: 0.5rem;">
@@ -136,16 +136,16 @@
                     <!-- Category Image -->
                     <div class="col-3 d-flex align-items-center justify-content-center" style="padding: 0;">
                         <img 
-                            src="{{ url_for('static', filename='image/icon/' + spend.category_id + '.png') }}" 
-                            alt="{{ spend.category_id | replace('_', ' ') | title }}" 
-                            style="max-height: 4rem;" 
+                            src="{{ url_for('static', filename='image/icon/' + spend.category.icon) }}" 
+                            alt="{{ spend.category.category }}" 
+                            style="max-height: 4rem;"  
                         >
                     </div>
                     
                     <!-- Category Info -->
                     <div class="col-6 d-flex flex-column justify-content-center">
                         <h3 class="header_font mb-1 fs-6 smaller_font">
-                            <strong>{{ spend.category_id | replace('_', ' ') | title }}</strong>
+                            <strong>{{ spend.category.category }}</strong>
                         </h3>
                         <p class="text_font mb-0 fs-6 smaller_font">
                             ${{ '%.2f'|format(spend.amount) }}
@@ -233,8 +233,8 @@
                     <!-- Transaction Icon -->
                     <div class="col-3 d-flex align-items-center justify-content-center" style="padding: 0;">
                         <img 
-                            src="{{ url_for('static', filename='image/icon/' + transaction.category_id + '.png') }}" 
-                            alt="{{ transaction.category_id }}" 
+                            src="{{ url_for('static', filename='image/icon/' + transaction.category.icon) }}" 
+                            alt="{{ transaction.category.category }}" 
                             style="max-height: 4rem;" 
                         >
                     </div>
@@ -242,7 +242,7 @@
                     <!-- Transaction Details -->
                     <div class="col-6 d-flex flex-column justify-content-center">
                         <h3 class="header_font mb-1 fs-6 smaller_font">
-                            <strong>{{ transaction.category_id | replace('_', ' ') | title }}</strong>
+                            <strong>{{ transaction.category.category }}</strong>
                         </h3>
                         <p class="text_font mb-0 fs-6 smaller_font">
                             {{ transaction.date.strftime('%d %B %Y') }}

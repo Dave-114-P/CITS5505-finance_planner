@@ -8,23 +8,26 @@
         
         <!-- Bar Chart: Spending by Category -->
         <div class="chart-container mb-4">
-            <h3>Spending by Category</h3>
-            <canvas id="spendingChart" width="400" height="200"></canvas>
+            <h3>Spending by Category Last 30 Days</h3>
+            <div id="last30DaysBarChartContainer" style="max-height: 500px; width: auto; overflow-y:visible;">
+                <canvas id="spendingChart" width="400" height="200"></canvas>
+            </div>
+            <p id="last30DaysNoBarData" class="text-muted" style="display: none;">No data available for the last 30 days.</p>
         </div>
 
         <!-- Pie Chart: Spending Breakdown (Current Month) -->
-        <div class="chart-container mb-4">
-            <h3>Spending Breakdown (Current Month)</h3>
-            <div id="monthlySpendingChartContainer">
+        <div class="chart-container mb-4 mt-5">
+            <h3 style="margin: 0px;">Spending Breakdown (Current Month)</h3>
+            <div id="monthlySpendingChartContainer" style="display: flex; justify-content: center; align-items: center; height: 500px; padding: 0px; width: 100%;">
                 <canvas id="monthlySpendingChart" width="400" height="200"></canvas>
             </div>
             <p id="monthlySpendingNoData" class="text-muted" style="display: none;">No data available for the current month.</p>
         </div>
 
         <!-- Line Chart: Spending Over the Last 30 Days -->
-        <div class="chart-container mb-4">
+        <div class="chart-container mb-4 mt-5">
             <h3>Spending Over the Last 30 Days</h3>
-            <div id="last30DaysChartContainer">
+            <div id="last30DaysChartContainer" style="max-height: 500px; width: auto; overflow-y:visible;">
                 <canvas id="last30DaysChart" width="400" height="200"></canvas>
             </div>
             <p id="last30DaysNoData" class="text-muted" style="display: none;">No data available for the last 30 days.</p>
