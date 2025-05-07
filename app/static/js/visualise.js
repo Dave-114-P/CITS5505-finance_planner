@@ -173,52 +173,105 @@ $(document).ready(function () {
         }
     });
 
-    // Fetch spending data for the line chart (last 30 days)
-    $.get("/api/spending_last_30_days", function (data) {
+    // Fetch data for the last 30 days
+    $.get("/api/data_last_30_days", function (data) {
         if (data.length === 0) {
             // No data available for the last 30 days
             document.getElementById("last30DaysChartContainer").style.display = "none";
             document.getElementById("last30DaysNoData").style.display = "block";
-        } else {
-            const dates = data.map(item => item.date);
-            const amounts = data.map(item => item.amount);
+            return;
+        }
 
-            // Check if data has less than 30 days, and handle gracefully
-            if (dates.length === 0) {
-                dates.push("No Data");
-                amounts.push(0);
+        // Separate spending and income data by date
+        const spendingByDate = {};
+        const incomeByDate = {};
+
+        data.forEach(item => {
+            const date = item.date;
+            const amount = item.amount;
+
+            if (item.type === "spending") {
+                if (!spendingByDate[date]) {
+                    spendingByDate[date] = 0;
+                }
+                spendingByDate[date] += amount; // Accumulate spending for the date
+            } else if (item.type === "income") {
+                if (!incomeByDate[date]) {
+                    incomeByDate[date] = 0;
+                }
+                incomeByDate[date] += amount; // Accumulate income for the date
             }
+        });
 
-            // Create a line chart
-            const ctxLine = document.getElementById("last30DaysChart").getContext("2d");
-            new Chart(ctxLine, {
-                type: "line",
-                data: {
-                    labels: dates, // Dynamically handles available dates
-                    datasets: [{
-                        label: "Spending Over the Last 30 Days",
-                        data: amounts,
+        // Get all unique dates and sort them
+        const allDates = Array.from(new Set([...Object.keys(spendingByDate), ...Object.keys(incomeByDate)]))
+            .sort((a, b) => new Date(a) - new Date(b));
+
+        // Prepare cumulative datasets for spending and income
+        const spendingData = [];
+        const incomeData = [];
+        let cumulativeSpending = 0;
+        let cumulativeIncome = 0;
+
+        allDates.forEach(date => {
+            cumulativeSpending += spendingByDate[date] || 0; // Add the spending for the date or 0 if none
+            cumulativeIncome += incomeByDate[date] || 0; // Add the income for the date or 0 if none
+            spendingData.push(cumulativeSpending); // Push cumulative spending for the date
+            incomeData.push(cumulativeIncome); // Push cumulative income for the date
+        });
+
+        // Destroy the existing chart instance if it exists
+        if (window.last30DaysChart && typeof window.last30DaysChart.destroy === "function") {
+            window.last30DaysChart.destroy();
+        }
+
+        // Create a new chart with cumulative totals for spending and income
+        const ctxLine = document.getElementById("last30DaysChart").getContext("2d");
+        window.last30DaysChart = new Chart(ctxLine, {
+            type: "line",
+            data: {
+                labels: allDates, // Dates on the x-axis
+                datasets: [
+                    {
+                        label: "Cumulative Spending",
+                        data: spendingData,
                         fill: false,
-                        borderColor: "rgba(75, 192, 192, 1)",
+                        borderColor: "rgba(255, 99, 132, 1)", // Red for spending
                         tension: 0.1
-                    }]
-                },
-                options: {
-                    responsive: true, // Ensures the chart resizes dynamically
-                    maintainAspectRatio: false, // Ensures it uses the full width of its container
-                    scales: {
-                        x: {
-                            type: "category", // Set to category to handle fewer than 30 days
-                            time: {
-                                unit: "day"
-                            }
-                        },
-                        y: {
-                            beginAtZero: true
+                    },
+                    {
+                        label: "Cumulative Income",
+                        data: incomeData,
+                        fill: false,
+                        borderColor: "rgba(54, 162, 235, 1)", // Blue for income
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true, // Ensures the chart resizes dynamically
+                maintainAspectRatio: false, // Ensures it uses the full width of its container
+                scales: {
+                    x: {
+                        type: "category",
+                        title: {
+                            display: true,
+                            text: "Date"
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: "Cumulative Total"
                         }
                     }
                 }
-            });
-        }
+            }
+        });
+    }).catch(error => {
+        console.error("Error fetching data for the last 30 days:", error);
+        document.getElementById("last30DaysChartContainer").style.display = "none";
+        document.getElementById("last30DaysNoData").style.display = "block";
     });
 });
