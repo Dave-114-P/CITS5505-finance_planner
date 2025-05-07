@@ -6,9 +6,10 @@ class Category(db.Model):
 
     # Columns
     id = db.Column(db.Integer, primary_key=True)
-    category = db.Column(db.String(50), nullable=False, unique=False) 
-    budget = db.Column(db.Float, nullable=False)
-    lifestyle = db.Column(db.String(20), nullable=False)
+    category = db.Column(db.String(50), nullable=False, unique=True) 
+    budget_simple = db.Column(db.Float, nullable=False)
+    budget_quality = db.Column(db.Float, nullable=False)
+    budget_luxury = db.Column(db.Float, nullable=False)
     icon = db.Column(db.String(100), nullable=True)  # Optional image URL
 
     # Relationship with Spendings
@@ -17,9 +18,10 @@ class Category(db.Model):
     def __repr__(self):
         return f"<Category ID {self.id}: {self.category}>"
     
-    def __init__(self, id, category, budget, lifestyle, icon=None):
+    def __init__(self, id, category, budget_simple, budget_quality, budget_luxury, icon=None):
         self.id = id
         self.category = category
-        self.budget = budget
-        self.lifestyle = lifestyle
+        self.budget_simple = budget_simple
+        self.budget_quality = budget_quality
+        self.budget_luxury = budget_luxury
         self.icon = icon

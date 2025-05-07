@@ -1,0 +1,67 @@
+.page-background {
+    background: linear-gradient(135deg, #f0f8ff, #e0f7fa);
+    min-height: 100vh;
+    padding: 60px 20px;
+}
+
+.container-naked {
+    max-width: 700px;
+    margin: auto;
+}
+
+h2 {
+    font-weight: bold;
+    color: #333;
+}
+
+.lifestyle-box {
+    padding: 20px;
+    border-radius: 12px;
+    color: white;
+    text-align: center;
+}
+
+.lifestyle-box.simple { background-color: #4caf50; }
+.lifestyle-box.quality { background-color: #2196f3; }
+.lifestyle-box.luxury { background-color: #d32f2f; }
+
+.budget-bar {
+    height: 26px;
+    background-color: #e0e0e0;
+    border-radius: 13px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    line-height: 26px;
+    font-weight: bold;
+    transition: width 0.4s ease;
+}
+
+.bg-success { background-color: #4caf50; }
+.bg-warning { background-color: #ff9800; }
+.bg-danger { background-color: #f44336; }
+
+.alert {
+    padding: 8px;
+    background-color: #dff0d8;
+    color: #3c763d;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.action-button {
+    transition: all 0.2s ease;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.action-button:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}

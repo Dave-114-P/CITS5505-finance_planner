@@ -26,7 +26,7 @@ def estimation():
         return redirect(url_for('est.estimation'))
 
     # Fetch all spending categories
-    categories = Category.query.filter_by(lifestyle=selected_lifestyle).all()
+    categories = Category.query.all()
 
     # Prepare data for rendering: calculate spent amount and percentage
     category_data = []
@@ -35,9 +35,19 @@ def estimation():
         spendings = Spending.query.filter_by(user_id=current_user.id, category_id=category.id).all()
         total_spent = sum(s.amount for s in spendings)
 
-        # Calculate spending percentage (spent/budget * 100)
-        if category.budget and category.budget > 0:
-            percent = (total_spent / category.budget) * 100
+        # Determine the budget based on the user's lifestyle
+        if selected_lifestyle == "simple":
+            budget = category.budget_simple
+        elif selected_lifestyle == "quality":
+            budget = category.budget_quality
+        elif selected_lifestyle == "luxury":
+            budget = category.budget_luxury
+        else:
+            budget = 0  # Default to 0 if lifestyle is not set
+
+         # Calculate spending percentage (spent/budget * 100)
+        if budget and budget > 0:
+            percent = (total_spent / budget) * 100
         else:
             percent = 0
 
@@ -45,7 +55,7 @@ def estimation():
         category_data.append({
             'id': category.id,
             'name': category.category,
-            'budget': category.budget,
+            'budget': budget,
             'spent': total_spent,
             'percent': percent
         })

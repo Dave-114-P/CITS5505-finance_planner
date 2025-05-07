@@ -6,9 +6,73 @@
     <!-- Introductory for logged in and other users-->
     <section>
         {% if current_user.is_authenticated %}
-        <h1 class="header_font">
-            <strong> Good day, {{username}}! <!-- {{ current_user.username }} --> </strong> <!-- need backend or js -->
-        </h1>
+        <div class="container py-5" style="background: linear-gradient(to right, #e0f7fa, #f1f8e9); border-radius: 15px;">
+
+            <div class="p-5 mb-4 text-white rounded-3" style="background: linear-gradient(45deg, #42a5f5, #478ed1); box-shadow: 0 0 10px rgba(0,0,0,0.2);">
+              <div class="container-fluid py-3">
+                <h1 class="display-5 fw-bold">Welcome back, {{ current_user.username }} 👋</h1>
+                <p class="col-md-8 fs-5">Here's your personalized financial dashboard. Stay focused, track smart, and grow financially!</p>
+              </div>
+            </div>
+          
+            <!-- Info cards -->
+            <div class="row text-center mb-4">
+              <div class="col-md-4">
+                <div class="card shadow-sm border-0" style="background-color: #4caf50; color: white;">
+                  <div class="card-body">
+                    <h5 class="card-title">💸 Total Expenses</h5>
+                    <p class="card-text fs-3">${{ total_expense }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card shadow-sm border-0" style="background-color: #ffb300; color: white;">
+                  <div class="card-body">
+                    <h5 class="card-title">🎯 Goals Created</h5>
+                    <p class="card-text fs-3">{{ goals_created }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card shadow-sm border-0" style="background-color: #455a64; color: white;">
+                  <div class="card-body">
+                    <h5 class="card-title">📅 Active Days</h5>
+                    <p class="card-text fs-3">15</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Navigation -->
+            <div class="d-flex justify-content-around mb-5">
+              <a href="{{ url_for('upload.upload') }}" class="btn btn-outline-primary btn-lg fw-semibold">➕ Upload Data</a>
+              <a href="{{ url_for('visualise.visualise') }}" class="btn btn-outline-success btn-lg fw-semibold">📊 View Charts</a>
+              <a href="{{ url_for('share.share') }}" class="btn btn-outline-secondary btn-lg fw-semibold">🔗 Share Insights</a>
+            </div>
+          
+            <!-- Chart -->
+            <div class="card shadow mb-5">
+              <div class="card-body">
+                <h4 class="card-title text-center mb-4">📉 Weekly Spending Overview</h4>
+                <canvas id="spendingChart" height="100"></canvas>
+              </div>
+            </div>
+          
+            <!-- Tip -->
+            <div class="alert alert-info border-0 shadow-sm" role="alert">
+              <strong>💡 Financial Tip:</strong> <span id="tip-text">“Pay yourself first” – set aside savings before spending.</span>
+            </div>
+          
+            <!--reset-->
+            <div class="d-flex justify-content-around mb-5">
+              <a href="{{ url_for('upload.upload') }}" class="btn btn-outline-primary btn-lg fw-semibold">➕ Upload Data</a>
+              <a href="{{ url_for('visualise.visualise') }}" class="btn btn-outline-success btn-lg fw-semibold">📊 View Charts</a>
+              <a href="{{ url_for('share.share') }}" class="btn btn-outline-secondary btn-lg fw-semibold">🔗 Share Insights</a>
+              <form action="{{ url_for('main.reset_all') }}" method="POST">
+                <button type="submit" class="btn btn-danger btn-lg fw-semibold">🧹 Reset All (Expenses + Income)</button>
+            </form>
+          </div>
+        </div>
         
         {% else %}
         <!-- Carousel -->
@@ -124,7 +188,7 @@
     <!-- Map or top spending for logged in users -->
     <section>
         {% if current_user.is_authenticated %} <!-- Top spending -->
-        <div class="container-fluid mb-4" style="background-color: #76c87d; border-radius: 10px; padding: 1rem;">
+        <div class="container-fluid mb-4 mt-5" style="background-color: #76c87d; border-radius: 10px; padding: 1rem;">
             <h2 class="header_font ms-2">
                 <strong>Top spendings</strong>
             </h2>
@@ -278,30 +342,8 @@
     </section>
     
     <!-- Progress bar for logged in users or welcome message-->
+    {% if not current_user.is_authenticated %}
     <section>
-        {% if current_user.is_authenticated %}  <!-- Progress bar -->
-        <div class="container-fluid mb-4" style="background-color: #76c87d; border-radius: 10px; padding: 1rem;">
-            <h2 class="header_font ms-2">
-                <strong>Progress</strong>
-            </h2>
-            <div class="container mx-auto mt-3" style="background-color: white; border-radius: 10px; padding: 1rem;">
-                <div class="custom-progress mb-3">
-                    <div class="custom-progress-fill" style="width: 70%;"></div> <!-- Fill the progress bar --> <!-- need backend or js -->
-                    <span class="custom-progress-text">70%</span> <!-- Display the percentage --> <!-- need backend or js -->
-                </div>
-                <div class="text_font" style="text-align: justify; color: black; background-color: #ddd0c2; border-radius: 5px;padding: 10px;">
-                    You're doing great! You've already saved <span>70%</span> <!-- need backend--> of the recommended amount to kickstart your journey to Australia.
-                    We noticed a few areas where you spent a bit more this month:
-                    <ul style="list-style-type: disc; padding-left: 20px;">
-                        <li>Transportation</li> <!-- need backend or js -->
-                        <li>Food & Beverage</li> <!-- need backend or js -->
-                    </ul>
-                    💡Tip: Try cooking at home and using public transport to help you save even more!
-                    You're on the right track—small changes can make a big difference! <!-- need backend or js -->
-                </div>
-            </div>
-        </div>  
-        {% else %} <!-- Welcome message -->
         <div class="text-center">
             <h1 class="header_font">Welcome to Finance Planner</h1>
             <p class="lead text_font">Track your expenses, set savings goals, visualize your progress, and share tips with our community.</p>
@@ -311,6 +353,31 @@
                 <a href="{{ url_for('upload.upload') }}" class="btn btn-primary btn-lg">Start Managing Your Finances</a>
             {% endif %}
         </div>
-        {% endif %}
     </section>
+    {% endif %}  
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const labels = {{ labels | tojson }};
+        const data = {{ expense_data | tojson }};
+        const ctx = document.getElementById('spendingChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Spending',
+                    data: data,
+                    borderColor: 'rgba(33, 150, 243, 1)',
+                    backgroundColor: 'rgba(33, 150, 243, 0.2)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    </script>
 {% endblock %}

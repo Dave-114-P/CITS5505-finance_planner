@@ -1,10 +1,12 @@
-from flask import Blueprint, render_template, send_file, request
-from flask_login import login_required, current_user
-from datetime import datetime, timedelta
-from app import db
+from flask import Blueprint, render_template, request, session, redirect, url_for
+from flask_login import current_user, login_required
+from datetime import datetime
 from app.models.spending import Spending
-import matplotlib.pyplot as plt
-import io
+from app.models.goals import Goal
+from app.models.income import Income 
+from sqlalchemy import func
+from app import db
+
 
 bp = Blueprint("main", __name__)
 
@@ -14,6 +16,13 @@ def index():
     recent_transactions = []
     username = None
     total = 0  # Initialize total to ensure it's always defined
+    # Default fallback values for chart data
+    labels = ["Week 1", "Week 2", "Week 3", "Week 4"]
+    weekly_totals = [0, 0, 0, 0]
+    total_expense = 0
+    savings_percent = 0
+
+    goals_created = 0
 
     if current_user.is_authenticated:
         username = current_user.username
@@ -26,45 +35,43 @@ def index():
 
         # Calculate the total amount of the top spendings
         total = sum(spend.amount for spend in top_spendings)
+
+        # Sum up total expense
+        total_expense = (
+            Spending.query.with_entities(func.sum(Spending.amount))
+            .filter_by(user_id=current_user.id)
+            .scalar()
+        ) or 0.0
+
+        # Count user's goals
+        goals_created = Goal.query.filter_by(user_id=current_user.id).count()
+
+        # Get weekly spending in current month
+        now = datetime.now()
+        all_spending = Spending.query.filter_by(user_id=current_user.id).all()
+        for record in all_spending:
+            if record.date and record.date.month == now.month and record.date.year == now.year:
+                week_index = (record.date.day - 1) // 7
+                if 0 <= week_index < 4:
+                    weekly_totals[week_index] += record.amount
         
     return render_template(
         "index.html",
         username=username,
         top_spendings=top_spendings,
         recent_transactions=recent_transactions,
-        total=total
+        total=total,
+        labels=labels,
+        expense_data=weekly_totals,
+        total_expense=round(total_expense, 2),
+        savings_percent=savings_percent,
+        goals_created=goals_created
     )
 
-# #Plotting line graph from server-side and send it as png file
-# @bp.route("/plot.png")
-# @login_required
-# def plot_png():
-#     today = datetime.today().date()
-#     last_30 = today - timedelta(days=29)
-
-#     # Fetch current user's spending data for the last 30 days
-#     results = (
-#         db.session.query(Spending.date, db.func.sum(Spending.amount))
-#         .filter(Spending.user_id == current_user.id)
-#         .filter(Spending.date >= last_30)
-#         .group_by(Spending.date)
-#         .order_by(Spending.date)
-#         .all()
-#     )
-
-#     dates = [r[0] for r in results]
-#     totals = [r[1] for r in results]
-
-#     # Plot the data using matplotlib
-#     fig, ax = plt.subplots(figsize=(10, 4))
-#     ax.plot(dates, totals, marker="o", color="#76c87d")
-#     ax.set_title("Your Spending in the Last 30 Days")
-#     ax.set_xlabel("Date")
-#     ax.set_ylabel("Amount")
-#     fig.autofmt_xdate()
-
-#     # Convert plot to PNG image
-#     img = io.BytesIO()
-#     plt.savefig(img, format="png")
-#     img.seek(0)
-#     return send_file(img, mimetype="image/png")
+@bp.route("/reset_all", methods=["POST"])
+@login_required
+def reset_all():
+    Spending.query.filter_by(user_id=current_user.id).delete()
+    Income.query.filter_by(user_id=current_user.id).delete()
+    db.session.commit()
+    return redirect(url_for("main.index"))
