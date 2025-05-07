@@ -30,6 +30,16 @@ def upload():
             flash("Invalid category selected", "danger")
             return redirect(url_for("upload.upload"))
         
+        # Check if the amount is a valid number
+        try:
+            amount = float(amount)
+            if amount <= 0:
+                flash("Amount must be a positive number", "danger")
+                return render_template("income.html", amount=amount, category_name=category_name, date=date_str, description=description)
+        except ValueError:
+            flash("Invalid amount. Please enter a valid number.", "danger")
+            return render_template("income.html", amount=amount, category_name=category_name, date=date_str, description=description)
+
         # Convert the date string to a datetime object
         try:
             input_date = datetime.strptime(date_str, '%Y-%m-%d').date()  # Ensure the date is in the correct format
