@@ -6,7 +6,7 @@ class Category(db.Model):
 
     # Columns
     id = db.Column(db.Integer, primary_key=True)
-    category = db.Column(db.String(50), nullable=False, unique=True) 
+    category = db.Column(db.String(50), nullable=False, unique=False) 
     budget = db.Column(db.Float, nullable=False)
     lifestyle = db.Column(db.String(20), nullable=False)
     icon = db.Column(db.String(100), nullable=True)  # Optional image URL
