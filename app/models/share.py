@@ -7,7 +7,11 @@ class Share(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sender_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)  # Sender user ID
     receiver_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)  # Receiver user ID (nullable)
-    content_id = db.Column(db.Integer, nullable=False)  # Shared content ID
+    category = db.Column(db.String(50), nullable=True)  # Category (nullable)
+    title = db.Column(db.String(100), nullable=True)  # Title
+    content = db.Column(db.Text, nullable=True)  # Content
+    link = db.Column(db.String(255), nullable=True)  # Optional link
+    image = db.Column(db.String(255), nullable=True)  # Uploaded image filename
     is_public = db.Column(db.Boolean, default=False)  # Public or private
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)  # Share timestamp
 
