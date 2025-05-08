@@ -12,9 +12,6 @@ bp = Blueprint("upload", __name__)
 @bp.route("/upload", methods=["GET", "POST"])
 @login_required
 def upload():
-    selected_lifestyle = session.get('lifestyle', None)
-    
-    categories = Category.query.filter_by().all()
 
     if request.method == "POST":
         amount = float(request.form.get("amount"))
