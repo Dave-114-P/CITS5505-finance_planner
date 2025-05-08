@@ -1,17 +1,25 @@
-from flask import Blueprint, render_template, request, session, redirect, url_for
+from flask import Blueprint, render_template, request, session, redirect, url_for, flash
+from flask_wtf import FlaskForm
+from flask_wtf.csrf import CSRFProtect
 from flask_login import current_user, login_required
 from datetime import datetime
+from wtforms import SubmitField
 from app.models.spending import Spending
 from app.models.goals import Goal
-from app.models.income import Income 
+from app.models.income import Income
 from sqlalchemy import func
 from app import db
 
 
 bp = Blueprint("main", __name__)
 
+# Confirmation Form for Resetting All Data
+class ResetForm(FlaskForm):
+    confirm = SubmitField("Confirm Reset")
+
 @bp.route("/")
 def index():
+    form = ResetForm()
     top_spendings = []
     recent_transactions = []
     username = None
@@ -65,13 +73,21 @@ def index():
         expense_data=weekly_totals,
         total_expense=round(total_expense, 2),
         savings_percent=savings_percent,
-        goals_created=goals_created
+        goals_created=goals_created,
+        form=form,
     )
 
-@bp.route("/reset_all", methods=["POST"])
+@bp.route("/reset_all", methods=["GET", "POST"])
 @login_required
 def reset_all():
-    Spending.query.filter_by(user_id=current_user.id).delete()
-    Income.query.filter_by(user_id=current_user.id).delete()
-    db.session.commit()
-    return redirect(url_for("main.index"))
+    form = ResetForm(request.form)
+    if request.method == "POST" and form.validate():
+        Spending.query.filter_by(user_id=current_user.id).delete()
+        Income.query.filter_by(user_id=current_user.id).delete()
+        db.session.commit()
+        flash("All data has been reset successfully.", "success")
+        return redirect(url_for("main.index"))
+    elif request.method == "POST" and not form.validate():
+        flash("An error occurred. Please try again.", "danger")
+    
+    return render_template("reset_all.html", form=form)

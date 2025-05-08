@@ -1,29 +1,33 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from flask_login import login_required, current_user
+from app.forms.estimationform import LifestyleForm, ChangeLifestyleForm
 from app import db
-from app.models.spending import Spending  # import Spending model
+from app.models.spending import Spending
 from app.models.categories import Category
 
 # Create Blueprint for estimation routes
 bp = Blueprint('est', __name__)
 
-
+# Main estimation route
 @bp.route('/estimation', methods=['GET', 'POST'])
 @login_required
 def estimation():
-    
+    # Create instances of both forms
+    form = LifestyleForm()
+    change_form = ChangeLifestyleForm()  # Add the ChangeLifestyleForm
+
     # Get the selected lifestyle from session (if exists)
     selected_lifestyle = session.get('lifestyle', None)
 
-    # Handle lifestyle selection from form submission
-    if request.method == 'POST':
-        lifestyle = request.form.get('lifestyle')
-        if lifestyle in ['simple', 'quality', 'luxury']:
-            session['lifestyle'] = lifestyle
-            flash('Lifestyle selected successfully!', 'success')
-        else:
-            flash('Invalid lifestyle selection.', 'danger')
+    # Handle form submission for selecting a lifestyle
+    if form.validate_on_submit():
+        lifestyle = form.lifestyle.data
+        session['lifestyle'] = lifestyle
+        flash('Lifestyle selected successfully!', 'success')
         return redirect(url_for('est.estimation'))
+    elif request.method == 'POST' and not form.validate():
+        # If the form is invalid, flash the error messages
+        flash('Invalid lifestyle selection. Please try again.', 'danger')
 
     # Fetch all spending categories
     categories = Category.query.all()
@@ -31,11 +35,9 @@ def estimation():
     # Prepare data for rendering: calculate spent amount and percentage
     category_data = []
     for category in categories:
-        # Get all spending records for this user and category
         spendings = Spending.query.filter_by(user_id=current_user.id, category_id=category.id).all()
         total_spent = sum(s.amount for s in spendings)
 
-        # Determine the budget based on the user's lifestyle
         if selected_lifestyle == "simple":
             budget = category.budget_simple
         elif selected_lifestyle == "quality":
@@ -43,15 +45,10 @@ def estimation():
         elif selected_lifestyle == "luxury":
             budget = category.budget_luxury
         else:
-            budget = 0  # Default to 0 if lifestyle is not set
+            budget = 0
 
-         # Calculate spending percentage (spent/budget * 100)
-        if budget and budget > 0:
-            percent = (total_spent / budget) * 100
-        else:
-            percent = 0
+        percent = (total_spent / budget) * 100 if budget > 0 else 0
 
-        # Append data to be passed to the template
         category_data.append({
             'id': category.id,
             'name': category.category,
@@ -61,17 +58,21 @@ def estimation():
         })
 
     # Render the template with lifestyle and category data
-    return render_template("estimation.html", 
-                           selected_lifestyle=selected_lifestyle, 
-                           categories=category_data)
+    return render_template(
+        "estimation.html", 
+        selected_lifestyle=selected_lifestyle, 
+        categories=category_data, 
+        form=form,
+        change_form=change_form  # Pass the change_form to the template
+    )
 
+# Route to reset the selected lifestyle
 @bp.route('/estimation/change_lifestyle', methods=['POST'])
 @login_required
 def change_lifestyle():
-    """
-    Reset the selected lifestyle. 
-    Allows user to choose a new lifestyle again.
-    """
-    session.pop('lifestyle', None)
-    flash('Lifestyle has been reset. Please select again.', 'info')
+    change_form = ChangeLifestyleForm()
+
+    if change_form.validate_on_submit():
+        session.pop('lifestyle', None)
+        flash('Lifestyle has been reset. Please select again.', 'info')
     return redirect(url_for('est.estimation'))

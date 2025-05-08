@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from flask_wtf.csrf import CSRFProtect
 
 # Initialize SQLAlchemy for spending and category
 db = SQLAlchemy()
@@ -23,6 +24,9 @@ def create_app():
         "category": "sqlite:///category.db"
     }
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    # Enable CSRF Protection
+    csrf = CSRFProtect(app)
 
     # Initialize databases
     db.init_app(app)
@@ -64,7 +68,6 @@ def create_app():
     # Create database tables if they don't exist
     with app.app_context():
         db.create_all()
-
 
     # Define user loader
     from app.models.user import User
