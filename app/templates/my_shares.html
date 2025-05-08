@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}My Shares{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>📌 My Shares</h2>
+
+    <!-- Sent Shares -->
+    <div class="mb-5">
+        <h3>📤 Shares I Sent</h3>
+        {% if sent %}
+            <ul class="list-group">
+                {% for share in sent %}
+                <li class="list-group-item">
+                    <div>
+                        <strong>📂 {{ share.category if share.category else 'None' }}</strong> — {{ share.timestamp.strftime('%Y-%m-%d %H:%M') }}
+                        <br>
+                        <strong>Title:</strong> {{ share.title or "No Title" }}<br>
+                        <strong>Type:</strong> {{ "Public" if share.is_public else "Private to User ID " ~ share.receiver_id }}
+                    </div>
+                    <div class="mt-2">
+                        <a href="{{ url_for('share.view_share', share_id=share.id) }}" class="btn btn-sm btn-primary">View</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No shares sent.</p>
+        {% endif %}
+    </div>
+
+    <!-- Received Shares -->
+    <div class="mb-5">
+        <h3>📥 Shares I Received</h3>
+        {% if received %}
+            <ul class="list-group">
+                {% for share in received %}
+                <li class="list-group-item">
+                    <div>
+                        <strong>📂 {{ share.category if share.category else 'None' }}</strong> — {{ share.timestamp.strftime('%Y-%m-%d %H:%M') }}
+                        <br>
+                        <strong>From:</strong> User ID {{ share.sender_id }}<br>
+                        <strong>Title:</strong> {{ share.title or "No Title" }}
+                    </div>
+                    <div class="mt-2">
+                        <a href="{{ url_for('share.view_share', share_id=share.id) }}" class="btn btn-sm btn-primary">View</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No shares received.</p>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}
