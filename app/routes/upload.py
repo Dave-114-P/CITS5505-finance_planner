@@ -14,7 +14,7 @@ bp = Blueprint("upload", __name__)
 def upload():
     selected_lifestyle = session.get('lifestyle', None)
     
-    categories = Category.query.filter_by(lifestyle=selected_lifestyle).all()
+    categories = Category.query.filter_by().all()
 
     if request.method == "POST":
         amount = float(request.form.get("amount"))
