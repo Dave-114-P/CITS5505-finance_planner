@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
 
+
 # Initialize SQLAlchemy for spending and category
 db = SQLAlchemy()
 migrate = Migrate()
