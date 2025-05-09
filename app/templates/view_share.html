@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}View Share{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>📌 Share Details</h2>
+
+    <!-- Share Card -->
+    <div class="card mb-4 shadow">
+        {% if share.image %}
+        <img src="{{ url_for('static', filename='uploads/' + share.image) }}" class="card-img-top" alt="Share Image">
+        {% endif %}
+        <div class="card-body">
+            <h4 class="card-title">{{ share.title or "No Title" }}</h4>
+            <p class="text-muted mb-1">Category: {{ share.category or "None" }}</p>
+            <p class="card-text">{{ share.content or "No Content" }}</p>
+
+            {% if share.link %}
+            <p><a href="{{ share.link }}" target="_blank">🔗 Visit Link</a></p>
+            {% endif %}
+
+            <p class="text-muted">
+                Posted by <strong>User {{ share.sender_id }}</strong> on {{ share.timestamp.strftime('%Y-%m-%d %H:%M') }} |
+                <strong>{{ "Public" if share.is_public else "Private to User ID " ~ share.receiver_id }}</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="{{ url_for('share.share') }}" class="btn btn-secondary mb-4">← Back to Shares</a>
+
+    <!-- Comments Section -->
+    <h3>💬 Comments</h3>
+<hr>
+
+{% for comment in comments %}
+<div class="mb-3">
+    <div class="p-3 border rounded">
+        <strong>👤 User {{ comment.user_id }}</strong>
+        <small class="text-muted">({{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }})</small><br>
+        {{ comment.content }}
+
+        <!-- Reply button (submit with parent_id) -->
+        <form method="POST" class="mt-2">
+            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+            <div class="mb-2">
+                <textarea class="form-control" name="comment" rows="2" placeholder="Reply..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-sm btn-outline-primary">Reply</button>
+        </form>
+
+        <!-- Show replies (nested comments) -->
+        {% if comment.replies %}
+            <div class="mt-3 ps-4 border-start">
+                {% for reply in comment.replies %}
+                    <p>
+                        <strong>👤 User {{ reply.user_id }}</strong>
+                        <small class="text-muted">({{ reply.timestamp.strftime('%Y-%m-%d %H:%M') }})</small><br>
+                        {{ reply.content }}
+                    </p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+
+<!-- Add top-level comment -->
+<h4 class="mt-5">Add a Comment</h4>
+<form method="POST">
+    <input type="hidden" name="parent_id" value="">
+    <div class="mb-3">
+        <textarea class="form-control" name="comment" rows="3" placeholder="Write something..." required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Comment</button>
+</form>
+    </div>
+</div>
+{% endblock %}

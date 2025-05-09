@@ -1,35 +1,137 @@
 {% extends "base.html" %}
-
-{% block title %}Community Forum{% endblock %}
+{% block title %}Share{% endblock %}
 
 {% block content %}
-    <div class="row justify-content-center" style="background-color: #e8f5e9; min-height: 100vh; padding: 20px 0;">
-        <div class="col-md-8">
-            <h2 class="text-center" style="color: #2e7d32;">Community Forum</h2>
+<div class="container mt-4">
+    <h2>Share Center</h2>
 
-            <form method="POST" action="{{ url_for('share.share') }}" class="p-4 rounded shadow-sm" style="background-color: #ffffff;">
-                <div class="mb-3">
-                    <label for="title" class="form-label" style="color: #2e7d32;">Post Title</label>
-                    <input type="text" class="form-control" id="title" name="title" required>
-                </div>
-                <div class="mb-3">
-                    <label for="content" class="form-label" style="color: #2e7d32;">Content</label>
-                    <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="btn w-100" style="background-color: #4caf50; color: white;">Create Post</button>
-            </form>
+    <!-- Tabs -->
+    <ul class="nav nav-tabs" id="shareTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="send-tab" data-bs-toggle="tab" data-bs-target="#send" type="button" role="tab">Send Share</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="public-tab" data-bs-toggle="tab" data-bs-target="#public" type="button" role="tab">Public Shares</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="my-tab" data-bs-toggle="tab" data-bs-target="#my" type="button" role="tab">My Shares</button>
+        </li>
+    </ul>
 
-            <h3 class="mt-5" style="color: #2e7d32;">Recent Posts</h3>
+    <div class="tab-content mt-4" id="shareTabContent">
+        <!-- Send Share -->
+        <div class="tab-pane fade show active" id="send" role="tabpanel">
+<h4>Send a New Share</h4>
+<form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="receiver" class="form-label">Receiver (username or email)</label>
+        <input type="text" class="form-control" id="receiver" name="receiver" placeholder="Leave blank for public share">
+    </div>
 
-            {% for post in posts %}
-                <div class="card mt-3 shadow-sm" style="border: 1px solid #a5d6a7;">
-                    <div class="card-body" style="background-color: #f1f8e9;">
-                        <h5 class="card-title" style="color: #388e3c;">{{ post.title }}</h5>
-                        <p class="card-text">{{ post.content }}</p>
-                        <p class="card-text"><small class="text-muted">Posted on {{ post.created_at }}</small></p>
-                    </div>
-                </div>
+    <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select class="form-select" id="category" name="category" required>
+            {% for category in categories %}
+            <option value="{{ category.category }}">{{ category.category }}</option>
             {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" placeholder="Enter your share title" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="content" class="form-label">Content</label>
+        <textarea class="form-control" id="content" name="content" rows="3" placeholder="Write your thoughts or details here..."></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="image" class="form-label">Upload Image</label>
+        <input type="file" class="form-control" id="image" name="image">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Share Type</label>
+        <div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="is_public" value="off" checked>
+                <label class="form-check-label">Private</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="is_public" value="on">
+                <label class="form-check-label">Public</label>
+            </div>
         </div>
     </div>
+
+    <button type="submit" class="btn btn-primary">Share</button>
+</form>
+
+        </div>
+
+        <!-- Public Shares -->
+        <div class="tab-pane fade" id="public" role="tabpanel">
+            <h4>Public Shares</h4>
+            {% if public_shares %}
+                <div class="row">
+                    {% for share in public_shares %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm">
+                            {% if share.image %}
+                            <img src="{{ url_for('static', filename='uploads/' + share.image) }}" class="card-img-top" alt="Share Image">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ share.title }} 
+                                    <small class="text-muted">[{{ share.category }}]</small>
+                                </h5>
+                                <p class="card-text">{{ share.content }}</p>
+                                <p class="card-text">
+                                    <small class="text-muted">👤 User {{ share.sender_id }} | {{ share.timestamp.strftime('%Y-%m-%d %H:%M') }}</small><br>
+                                    <small class="text-muted">💬 {{ share.comments | length }} Comments</small>
+                                </p>
+                                <a href="{{ url_for('share.view_share', share_id=share.id) }}" class="btn btn-sm btn-outline-primary">View & Comment</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No public shares yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- My Shares -->
+        <div class="tab-pane fade" id="my" role="tabpanel">
+            <h4>My Shares</h4>
+            {% if sent_shares %}
+                <ul class="list-group mb-4">
+                    {% for share in sent_shares %}
+                    <li class="list-group-item">
+                        <strong>Sent →</strong> Content ID {{ share.content_id }} ({{ "Public" if share.is_public else "Private to User ID " ~ share.receiver_id }})
+                        <a href="{{ url_for('share.view_share', share_id=share.id) }}" class="ms-2">View</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No sent shares.</p>
+            {% endif %}
+
+            {% if received_shares %}
+                <h5>Received Shares</h5>
+                <ul class="list-group">
+                    {% for share in received_shares %}
+                    <li class="list-group-item">
+                        <strong>From User ID {{ share.sender_id }}</strong> - Content ID {{ share.content_id }}
+                        <a href="{{ url_for('share.view_share', share_id=share.id) }}" class="ms-2">View</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No received shares.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
