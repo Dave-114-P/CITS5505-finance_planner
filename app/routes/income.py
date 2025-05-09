@@ -20,7 +20,7 @@ def income():
     form.category.choices = category_choices
 
     # Handle form submission
-    if request.method == "POST" and form.validate():
+    if request.method == "POST" and form.validate_on_submit():
         amount = form.amount.data
         category_name = form.category.data
         date = form.date.data
@@ -45,7 +45,7 @@ def income():
         flash("Income uploaded successfully", "success")
         return redirect(url_for("income.income"))
 
-    elif request.method == "POST" and not form.validate():
+    elif request.method == "POST" and not form.validate_on_submit():
         # If the form is invalid, flash the errors
         flash("Please correct the errors in the form.", "danger")
 

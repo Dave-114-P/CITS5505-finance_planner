@@ -37,7 +37,7 @@ def upload():
         db.session.commit()
         flash("Spending uploaded successfully", "success")
         return redirect(url_for("upload.upload"))
-    elif request.method == "POST" and not form.validate():
+    elif request.method == "POST" and not form.validate_on_submit():
         flash("Please correct the errors in the form.", "danger")
 
     return render_template("upload.html", form=form)

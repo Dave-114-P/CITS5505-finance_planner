@@ -14,7 +14,7 @@ def goals():
     form = GoalForm(request.form)
 
     # Handle form submission
-    if request.method == "POST" and form.validate():
+    if request.method == "POST" and form.validate_on_submit():
         target_amount = form.target_amount.data
         years = form.years.data
         monthly_plan = target_amount / (years * 12)  # Simple calculation

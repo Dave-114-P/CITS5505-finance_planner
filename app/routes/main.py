@@ -81,13 +81,13 @@ def index():
 @login_required
 def reset_all():
     form = ResetForm(request.form)
-    if request.method == "POST" and form.validate():
+    if request.method == "POST" and form.validate_on_submit():
         Spending.query.filter_by(user_id=current_user.id).delete()
         Income.query.filter_by(user_id=current_user.id).delete()
         db.session.commit()
         flash("All data has been reset successfully.", "success")
         return redirect(url_for("main.index"))
-    elif request.method == "POST" and not form.validate():
+    elif request.method == "POST" and not form.validate_on_submit():
         flash("An error occurred. Please try again.", "danger")
     
     return render_template("reset_all.html", form=form)
