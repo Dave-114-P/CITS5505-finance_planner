@@ -5,7 +5,7 @@
 <div class="container mt-4">
     <h2>📌 Share Details</h2>
 
-    <!-- Share Card -->
+    <!-- Share Info -->
     <div class="card mb-4 shadow">
         {% if share.image %}
         <img src="{{ url_for('static', filename='uploads/' + share.image) }}" class="card-img-top" alt="Share Image">
@@ -14,11 +14,6 @@
             <h4 class="card-title">{{ share.title or "No Title" }}</h4>
             <p class="text-muted mb-1">Category: {{ share.category or "None" }}</p>
             <p class="card-text">{{ share.content or "No Content" }}</p>
-
-            {% if share.link %}
-            <p><a href="{{ share.link }}" target="_blank">🔗 Visit Link</a></p>
-            {% endif %}
-
             <p class="text-muted">
                 Posted by <strong>User {{ share.sender_id }}</strong> on {{ share.timestamp.strftime('%Y-%m-%d %H:%M') }} |
                 <strong>{{ "Public" if share.is_public else "Private to User ID " ~ share.receiver_id }}</strong>
@@ -26,10 +21,9 @@
         </div>
     </div>
 
-    <!-- Back Button -->
     <a href="{{ url_for('share.share') }}" class="btn btn-secondary mb-4">← Back to Shares</a>
 
-    <!-- Comments Section -->
+    <!-- Comment Section -->
     <h3>💬 Comments</h3>
     <hr>
 
@@ -40,25 +34,46 @@
             <small class="text-muted">({{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }})</small><br>
             {{ comment.content }}
 
-            <!-- Reply button (submit with parent_id) -->
+            {% if comment.user_id == current_user.id %}
+            <button class="btn btn-sm btn-outline-secondary ms-2" data-bs-toggle="modal"
+                data-bs-target="#editModal" data-comment-id="{{ comment.id }}"
+                data-content="{{ comment.content }}">✏️ Edit</button>
+            <form method="POST" action="{{ url_for('share.delete_comment', comment_id=comment.id) }}" class="d-inline">
+                {{ delete_forms[comment.id].hidden_tag() }}
+                {{ delete_forms[comment.id].submit(class="btn btn-sm btn-outline-danger ms-2", value="🗑️ Delete") }}
+            </form>
+            {% endif %}
+
+            <!-- Reply Form -->
             <form method="POST" class="mt-2">
                 {{ form.hidden_tag() }}
-                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                {{ form.parent_id(value=comment.id) }}
                 <div class="mb-2">
-                    {{ form.comment(class="form-control", rows="2", placeholder="Reply...") }}
+                    {{ form.content(class="form-control", rows=2, placeholder="Reply...") }}
                 </div>
                 {{ form.submit(class="btn btn-sm btn-outline-primary") }}
             </form>
 
-            <!-- Show replies (nested comments) -->
+            <!-- Replies -->
             {% if comment.replies %}
             <div class="mt-3 ps-4 border-start">
                 {% for reply in comment.replies %}
-                <p>
+                <div class="mb-2">
                     <strong>👤 User {{ reply.user_id }}</strong>
                     <small class="text-muted">({{ reply.timestamp.strftime('%Y-%m-%d %H:%M') }})</small><br>
                     {{ reply.content }}
-                </p>
+
+                    {% if reply.user_id == current_user.id %}
+                    <button class="btn btn-sm btn-outline-secondary ms-2" data-bs-toggle="modal"
+                        data-bs-target="#editModal" data-comment-id="{{ reply.id }}"
+                        data-content="{{ reply.content }}">✏️ Edit</button>
+                    <form method="POST" action="{{ url_for('share.delete_comment', comment_id=reply.id) }}"
+                        class="d-inline">
+                        {{ delete_forms[reply.id].hidden_tag() }}
+                        {{ delete_forms[reply.id].submit(class="btn btn-sm btn-outline-danger ms-2", value="🗑️ Delete") }}
+                    </form>
+                    {% endif %}
+                </div>
                 {% endfor %}
             </div>
             {% endif %}
@@ -66,15 +81,74 @@
     </div>
     {% endfor %}
 
-    <!-- Add top-level comment -->
+    <!-- Add Top-level Comment -->
     <h4 class="mt-5">Add a Comment</h4>
     <form method="POST">
         {{ form.hidden_tag() }}
-        <input type="hidden" name="parent_id" value="">
+        {{ form.parent_id(value="") }}
         <div class="mb-3">
-            {{ form.comment(class="form-control", rows="3", placeholder="Write something...") }}
+            {{ form.content(class="form-control", rows=3, placeholder="Write something...") }}
         </div>
         {{ form.submit(class="btn btn-primary") }}
     </form>
 </div>
+
+<!-- Modal: Edit Comment -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="editCommentForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit Comment</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <textarea class="form-control" id="editCommentContent" name="content" rows="4" required></textarea>
+          <input type="hidden" id="editCommentId" name="comment_id">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const modal = document.getElementById('editModal');
+  modal.addEventListener('show.bs.modal', function (e) {
+    const btn = e.relatedTarget;
+    document.getElementById('editCommentId').value = btn.getAttribute('data-comment-id');
+    document.getElementById('editCommentContent').value = btn.getAttribute('data-content');
+  });
+
+  document.getElementById('editCommentForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const id = document.getElementById('editCommentId').value;
+    const content = document.getElementById('editCommentContent').value;
+
+    fetch(`/share/comment/edit/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token() }}'
+      },
+      body: JSON.stringify({ content: content })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        const target = document.querySelector(`[data-comment-id="${id}"]`);
+        const block = target.closest('.p-3, .mb-2');
+        block.querySelector('br').nextSibling.textContent = content;
+        bootstrap.Modal.getInstance(modal).hide();
+      } else {
+        alert("Failed to update.");
+      }
+    });
+  });
+});
+</script>
 {% endblock %}
