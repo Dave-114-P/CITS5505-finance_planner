@@ -1,4 +1,3 @@
-<!-- templates/register.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,12 +13,14 @@
 <body>
 
   <div class="left-panel">
-    <img src="{{ url_for('static', filename='image/TitleRegister.png') }}" alt="Register Logo">
+    <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Register Logo">
     <p>Tell us about yourself!</p>
   </div>
   
   <div class="right-panel">
-    <form class="register-form" method="POST" action="/register">
+    <!-- Use Flask-WTF for CSRF protection -->
+    <form class="register-form" method="POST" action="{{ url_for('auth.register') }}">
+      {{ form.hidden_tag() }} <!-- CSRF Token -->
       <h2 class="mb-4">Create your account</h2>
 
       <div class="container-fluid mt-3">
@@ -33,39 +34,71 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-    </div>
-  
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
       </div>
   
       <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+        {{ form.username.label(class="form-label") }}
+        {{ form.username(class="form-control", placeholder="Enter your username") }}
+        {% for error in form.username.errors %}
+          <small class="text-danger">{{ error }}</small>
+        {% endfor %}
       </div>
   
       <div class="form-group">
-        <label>Gender</label>
+        {{ form.email.label(class="form-label") }}
+        {{ form.email(class="form-control", placeholder="Enter your email") }}
+        {% for error in form.email.errors %}
+          <small class="text-danger">{{ error }}</small>
+        {% endfor %}
+      </div>
+  
+      <div class="form-group">
+        {{ form.gender.label(class="form-label") }}
         <div class="gender-options d-flex gap-3">
-          <div><input type="radio" name="gender" id="male" value="male" required> <label for="male">Male</label></div>
-          <div><input type="radio" name="gender" id="female" value="female" required> <label for="female">Female</label></div>
-          <div><input type="radio" name="gender" id="prefer" value="prefer not to say" required> <label for="prefer">Prefer not to say</label></div>
-        </div>
+            <div>
+              <!-- Male Option -->
+              <input type="radio" name="gender" id="male" value="male" required>
+              <label for="male">Male</label>
+            </div>
+            <div>
+              <!-- Female Option -->
+              <input type="radio" name="gender" id="female" value="female" required>
+              <label for="female">Female</label>
+            </div>
+            <div>
+              <!-- Prefer not to say Option -->
+              <input type="radio" name="gender" id="prefer" value="prefer not to say" required>
+              <label for="prefer">Prefer not to say</label>
+            </div>
+          
+            <!-- Error Handling for Gender Field -->
+            {% for error in form.gender.errors %}
+              <small class="text-danger">{{ error }}</small>
+            {% endfor %}
+          </div>
+          {% for error in form.gender.errors %}
+            <small class="text-danger">{{ error }}</small>
+          {% endfor %}
       </div>
   
       <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+        {{ form.password.label(class="form-label") }}
+        {{ form.password(class="form-control", placeholder="Enter your password") }}
+        {% for error in form.password.errors %}
+          <small class="text-danger">{{ error }}</small>
+        {% endfor %}
       </div>
   
       <div class="form-group">
-        <label for="confirm_password">Confirm your password</label>
-        <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+        {{ form.confirm_password.label(class="form-label") }}
+        {{ form.confirm_password(class="form-control", placeholder="Confirm your password") }}
+        {% for error in form.confirm_password.errors %}
+          <small class="text-danger">{{ error }}</small>
+        {% endfor %}
       </div>
   
       <div class="text-end">
-        <button type="submit" class="btn btn-custom">Create account</button>
+        {{ form.submit(class="btn btn-custom") }}
       </div>
     </form>
   </div>

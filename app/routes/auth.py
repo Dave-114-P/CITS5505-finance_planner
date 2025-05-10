@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required
 from app import db
 from app.models.user import User
 import hashlib
+from app.forms.authform import LoginForm, RegisterForm
 
 # Define blueprint for auth routes
 bp = Blueprint("auth", __name__)
@@ -14,9 +15,11 @@ def hash_password(password):
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     # Handle user login
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
+    form = LoginForm()
+
+    if request.method == "POST" and form.validate_on_submit():  # Use Flask-WTF's validate_on_submit
+        username = form.username.data
+        password = form.password.data
         user = User.query.filter_by(username=username).first()
 
         # Check if user exists and password matches (hash)
@@ -28,16 +31,19 @@ def login():
             flash("Invalid username or password", "danger")
             return redirect(url_for("auth.login"))
 
-    return render_template("login.html")
+    return render_template("login.html", form=form)
+
 
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     # Handle user registration
-    if request.method == "POST":
-        username = request.form.get("username")
-        email = request.form.get("email")
-        gender = request.form.get("gender")
-        password = request.form.get("password")
+    form = RegisterForm()
+
+    if request.method == "POST" and form.validate_on_submit():  # Use Flask-WTF's validate_on_submit
+        username = form.username.data
+        email = form.email.data
+        gender = form.gender.data
+        password = form.password.data
 
         # Check if username or email already exists
         existing_user = User.query.filter(
@@ -61,7 +67,8 @@ def register():
         flash("Registration successful! Please log in.", "success")
         return redirect(url_for("auth.login"))
 
-    return render_template("register.html")
+    return render_template("register.html", form=form)
+
 
 @bp.route("/logout")
 @login_required

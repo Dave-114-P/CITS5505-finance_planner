@@ -3,38 +3,50 @@
 {% block title %}Upload Spending{% endblock %}
 
 {% block content %}
-    <div class="row justify-content-center" style="padding: 0px;">
-        <div class="col-md-10" style="border-radius: 10px; padding: 10px; margin: 0px; background-color: #76c87d;">
-            <h2 class="text-center header_font" style="font-size: 3rem;">Upload Income</h2>
-            <form method="POST" action="{{ url_for('income.income') }}">
-                <div class="mb-3">
-                    <label for="amount" class="form-label text_font" style="font-size: 2.5vh;">Amount ($)</label>
-                    <input type="number" step="0.01" class="form-control" id="amount" name="amount" style="color: #8ec23b;;" required>
-                </div>
-                <div class="mb-3">
-                    <label for="category" class="form-label text_font" style="font-size: 2.5vh;">Category</label>
-                    <select class="form-select" id="category" name="category" required>
-                        <option value="" disabled selected>Select a category</option>
-                        <option value="Interest">Interest</option>
-                        <option value="Salary">Salary</option>
-                        <option value="Cashback">Cash back</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="date" class="form-label text_font" style="font-size: 2.5vh;">Date</label>
-                    <input type="date" class="form-control" id="date" name="date" required>
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label text_font" style="font-size: 2.5vh;">Description (Optional)</label>
-                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <a href="{{ url_for('trans.transaction') }}" type="button" class="btn btn-primary me-2" 
-                       style="background-color: #ddd0c2; border: #ddd0c2; width: 150px; text-align: center;">BACK</a>
-                    <button type="submit" class="btn btn-primary" 
-                       style="background-color: #ddd0c2; border: #ddd0c2; width: 150px; text-align: center;">UPLOAD</button>
-                </div>
-            </form>
-        </div>
+<div class="row justify-content-center" style="padding: 0px;">
+    <div class="col-md-10" style="border-radius: 10px; padding: 10px; margin: 0px; background-color: #76c87d;">
+        <h2 class="text-center header_font" style="font-size: 3rem;">Upload Income</h2>
+        <form method="POST" action="{{ url_for('income.income') }}">
+            {{ form.hidden_tag() }} <!-- CSRF Token -->
+
+            <div class="mb-3">
+                {{ form.amount.label(class="form-label text_font", style="font-size: 2.5vh;") }}
+                {{ form.amount }}
+                {% for error in form.amount.errors %}
+                    <small class="text-danger">{{ error }}</small>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.category.label(class="form-label text_font", style="font-size: 2.5vh;") }}
+                {{ form.category }}
+                {% for error in form.category.errors %}
+                    <small class="text-danger">{{ error }}</small>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.date.label(class="form-label text_font", style="font-size: 2.5vh;") }}
+                {{ form.date }}
+                {% for error in form.date.errors %}
+                    <small class="text-danger">{{ error }}</small>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.description.label(class="form-label text_font", style="font-size: 2.5vh;") }}
+                {{ form.description }}
+                {% for error in form.description.errors %}
+                    <small class="text-danger">{{ error }}</small>
+                {% endfor %}
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <a href="{{ url_for('trans.transaction') }}" type="button" class="btn btn-primary me-2" 
+                   style="background-color: #ddd0c2; border: #ddd0c2; width: 150px; text-align: center;">BACK</a>
+                {{ form.submit }}
+            </div>
+        </form>
     </div>
+</div>
 {% endblock %}

@@ -98,6 +98,11 @@
                             <p class="text_font mb-0 fs-6 smaller_font income">
                                 ${{ income.amount }}
                             </p>
+                            {% if income.description %}
+                                <p class="text_font mb-0 fs-6 smaller_font description">
+                                    {{ income.description }}
+                                </p>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}

@@ -245,3 +245,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+// Function to show confirmation dialog
+function confirmReset() {
+    return confirm("⚠️ You will lose all your current settings. Are you sure you want to reset?");
+}

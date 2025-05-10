@@ -1,10 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, session, url_for, flash
+from app.forms.spendform import UploadSpendingForm
+from flask import Blueprint, render_template, redirect, url_for, flash,request
 from flask_login import login_required, current_user
-from app import db
 from app.models.spending import Spending
 from app.models.categories import Category
-from app.models.incategory import Categoryin
-from app.models.income import Income
+from app import db
 from datetime import datetime
 
 bp = Blueprint("upload", __name__)
@@ -12,53 +11,25 @@ bp = Blueprint("upload", __name__)
 @bp.route("/upload", methods=["GET", "POST"])
 @login_required
 def upload():
-    selected_lifestyle = session.get('lifestyle', None)
-    
-    categories = Category.query.filter_by().all()
-
-    if request.method == "POST":
-        amount = float(request.form.get("amount"))
-        category_name = request.form.get("category")  # Get category name from the form
-        date_str = request.form.get("date")
-        description = request.form.get("description")
-        date = datetime.strptime(date_str, "%Y-%m-%d")
+    form = UploadSpendingForm()
+    if form.validate_on_submit():  # Handles POST and validation
+        amount = form.amount.data
+        category_name = form.category.data
+        date = form.date.data
+        description = form.description.data
 
         # Fetch the category_id based on the category name
         category = Category.query.filter_by(category=category_name).first()
 
         if not category:
             flash("Invalid category selected", "danger")
-            return redirect(url_for("upload.upload"))
-        
-        # Check if the amount is a valid number
-        try:
-            amount = float(amount)
-            if amount <= 0:
-                flash("Amount must be a positive number", "danger")
-                return render_template("income.html", amount=amount, category_name=category_name, date=date_str, description=description)
-        except ValueError:
-            flash("Invalid amount. Please enter a valid number.", "danger")
-            return render_template("income.html", amount=amount, category_name=category_name, date=date_str, description=description)
+            return render_template("upload.html", form=form)
 
-        # Convert the date string to a datetime object
-        try:
-            input_date = datetime.strptime(date_str, '%Y-%m-%d').date()  # Ensure the date is in the correct format
-        except ValueError:
-            # Handle invalid date format
-            return "Invalid date format. Please enter a valid date in the format YYYY-MM-DD."
-
-        # Get today's date
-        today = datetime.utcnow().date()
-
-        # Check if the input date is not more than today
-        if input_date > today:
-            flash("The date cannot be in the future. Please select a valid date.")
-            return redirect(url_for("upload.upload"))
-        
+        # Save the spending entry to the database
         new_spending = Spending(
             user_id=current_user.id,
             amount=amount,
-            category_id=category.id,  # Use the category ID here
+            category_id=category.id,
             date=date,
             description=description
         )
@@ -66,4 +37,7 @@ def upload():
         db.session.commit()
         flash("Spending uploaded successfully", "success")
         return redirect(url_for("upload.upload"))
-    return render_template("upload.html")
+    elif request.method == "POST" and not form.validate_on_submit():
+        flash("Please correct the errors in the form.", "danger")
+
+    return render_template("upload.html", form=form)

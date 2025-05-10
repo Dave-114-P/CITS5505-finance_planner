@@ -16,12 +16,14 @@
         <h4>Please Select Your Lifestyle</h4>
         <!-- Lifestyle selection form -->
         <form method="POST" action="{{ url_for('est.estimation') }}">
-            <select name="lifestyle" class="form-select" required>
-                <option value="">-- Choose Lifestyle --</option>
-                <option value="simple">🌿 Simple Life</option>
-                <option value="quality">✨ Quality Life</option>
-                <option value="luxury">💎 Luxury Life</option>
-            </select>
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.lifestyle.label }}<br>
+                {{ form.lifestyle(class="form-select") }}
+                {% for error in form.lifestyle.errors %}
+                    <small class="text-danger">{{ error }}</small>
+                {% endfor %}
+            </div>
             <button type="submit" class="btn btn-primary mt-3 action-button">Confirm</button>
         </form>
     </div>
@@ -42,7 +44,10 @@
         {% endif %}
         <!-- Button to change lifestyle -->
         <form method="POST" action="{{ url_for('est.change_lifestyle') }}">
-            <button type="submit" class="btn btn-outline-light action-button">Change Lifestyle</button>
+            {{ change_form.hidden_tag() }}
+            <button type="submit" class="btn btn-outline-light action-button">
+                Change Lifestyle
+            </button>
         </form>
     </div>
 

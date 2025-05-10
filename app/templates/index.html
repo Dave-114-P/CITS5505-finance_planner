@@ -44,17 +44,23 @@
             </div>
           
             <!-- Navigation -->
-            <div class="d-flex justify-content-around mb-5">
-              <a href="{{ url_for('upload.upload') }}" class="btn btn-outline-primary btn-lg fw-semibold">➕ Upload Data</a>
-              <a href="{{ url_for('visualise.visualise') }}" class="btn btn-outline-success btn-lg fw-semibold">📊 View Charts</a>
-              <a href="{{ url_for('share.share') }}" class="btn btn-outline-secondary btn-lg fw-semibold">🔗 Share Insights</a>
+            <div class="d-flex flex-column flex-md-row justify-content-around mb-5">
+                <a href="{{ url_for('upload.upload') }}" class="btn btn-outline-primary btn-lg fw-semibold mb-2 mb-md-0">➕ Upload Data</a>
+                <a href="{{ url_for('visualise.visualise') }}" class="btn btn-outline-success btn-lg fw-semibold mb-2 mb-md-0">📊 View Charts</a>
+                <a href="{{ url_for('share.share') }}" class="btn btn-outline-secondary btn-lg fw-semibold mb-2 mb-md-0">🔗 Share Insights</a>
+                <form action="{{ url_for('main.reset_all') }}" method="POST" class="mb-2 mb-md-0" onsubmit="return confirmReset();">
+                    {{ form.hidden_tag() }} <!-- CSRF Protection -->
+                    <button type="submit" class="btn btn-danger btn-lg fw-semibold">
+                        🧹 Reset All
+                    </button>
+                </form>
             </div>
           
             <!-- Chart -->
             <div class="card shadow mb-5">
               <div class="card-body">
                 <h4 class="card-title text-center mb-4">📉 Weekly Spending Overview</h4>
-                <canvas id="spendingChart" height="100"></canvas>
+                <canvas id="spendingChart2" height="100"></canvas>
               </div>
             </div>
           
@@ -62,16 +68,6 @@
             <div class="alert alert-info border-0 shadow-sm" role="alert">
               <strong>💡 Financial Tip:</strong> <span id="tip-text">“Pay yourself first” – set aside savings before spending.</span>
             </div>
-          
-            <!--reset-->
-            <div class="d-flex justify-content-around mb-5">
-              <a href="{{ url_for('upload.upload') }}" class="btn btn-outline-primary btn-lg fw-semibold">➕ Upload Data</a>
-              <a href="{{ url_for('visualise.visualise') }}" class="btn btn-outline-success btn-lg fw-semibold">📊 View Charts</a>
-              <a href="{{ url_for('share.share') }}" class="btn btn-outline-secondary btn-lg fw-semibold">🔗 Share Insights</a>
-              <form action="{{ url_for('main.reset_all') }}" method="POST">
-                <button type="submit" class="btn btn-danger btn-lg fw-semibold">🧹 Reset All (Expenses + Income)</button>
-            </form>
-          </div>
         </div>
         
         {% else %}
@@ -359,8 +355,12 @@
     <script>
         const labels = {{ labels | tojson }};
         const data = {{ expense_data | tojson }};
-        const ctx = document.getElementById('spendingChart').getContext('2d');
-        new Chart(ctx, {
+        const ctx = document.getElementById('spendingChart2').getContext('2d');
+        let chartInstnace = Chart.getChart(ctx); // Get the chart instance if it exists
+        if (chartInstnace) {
+            chartInstnace.destroy(); // Destroy the existing chart instance
+        }
+        chartInstnace = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: labels,

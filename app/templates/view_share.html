@@ -31,49 +31,50 @@
 
     <!-- Comments Section -->
     <h3>💬 Comments</h3>
-<hr>
+    <hr>
 
-{% for comment in comments %}
-<div class="mb-3">
-    <div class="p-3 border rounded">
-        <strong>👤 User {{ comment.user_id }}</strong>
-        <small class="text-muted">({{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }})</small><br>
-        {{ comment.content }}
+    {% for comment in comments %}
+    <div class="mb-3">
+        <div class="p-3 border rounded">
+            <strong>👤 User {{ comment.user_id }}</strong>
+            <small class="text-muted">({{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }})</small><br>
+            {{ comment.content }}
 
-        <!-- Reply button (submit with parent_id) -->
-        <form method="POST" class="mt-2">
-            <input type="hidden" name="parent_id" value="{{ comment.id }}">
-            <div class="mb-2">
-                <textarea class="form-control" name="comment" rows="2" placeholder="Reply..." required></textarea>
-            </div>
-            <button type="submit" class="btn btn-sm btn-outline-primary">Reply</button>
-        </form>
+            <!-- Reply button (submit with parent_id) -->
+            <form method="POST" class="mt-2">
+                {{ form.hidden_tag() }}
+                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                <div class="mb-2">
+                    {{ form.comment(class="form-control", rows="2", placeholder="Reply...") }}
+                </div>
+                {{ form.submit(class="btn btn-sm btn-outline-primary") }}
+            </form>
 
-        <!-- Show replies (nested comments) -->
-        {% if comment.replies %}
+            <!-- Show replies (nested comments) -->
+            {% if comment.replies %}
             <div class="mt-3 ps-4 border-start">
                 {% for reply in comment.replies %}
-                    <p>
-                        <strong>👤 User {{ reply.user_id }}</strong>
-                        <small class="text-muted">({{ reply.timestamp.strftime('%Y-%m-%d %H:%M') }})</small><br>
-                        {{ reply.content }}
-                    </p>
+                <p>
+                    <strong>👤 User {{ reply.user_id }}</strong>
+                    <small class="text-muted">({{ reply.timestamp.strftime('%Y-%m-%d %H:%M') }})</small><br>
+                    {{ reply.content }}
+                </p>
                 {% endfor %}
             </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
-</div>
-{% endfor %}
+    {% endfor %}
 
-<!-- Add top-level comment -->
-<h4 class="mt-5">Add a Comment</h4>
-<form method="POST">
-    <input type="hidden" name="parent_id" value="">
-    <div class="mb-3">
-        <textarea class="form-control" name="comment" rows="3" placeholder="Write something..." required></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit Comment</button>
-</form>
-    </div>
+    <!-- Add top-level comment -->
+    <h4 class="mt-5">Add a Comment</h4>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <input type="hidden" name="parent_id" value="">
+        <div class="mb-3">
+            {{ form.comment(class="form-control", rows="3", placeholder="Write something...") }}
+        </div>
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
 </div>
 {% endblock %}

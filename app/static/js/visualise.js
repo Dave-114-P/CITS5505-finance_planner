@@ -1,3 +1,5 @@
+let chartInstanceBar; // Global variable to hold the chart instance
+let chartInstancePie; // Global variable to hold the pie chart instance
 // JavaScript for fetching and drawing charts using Chart.js
 $(document).ready(function () {
     // Fetch spending data for the bar chart
@@ -43,10 +45,16 @@ $(document).ready(function () {
             // Dynamically assign colors based on the dataset size
             const backgroundColors = colors.slice(0, labels.length);
             const borderColorsDynamic = borderColors.slice(0, labels.length);
-    
+            
+            if (chartInstanceBar) {
+                console.log("Destroying existing chart instance for spendingChart.");
+                chartInstanceBar.destroy();
+            }
+
             // Step 4: Create a bar chart
-            const ctxBar = document.getElementById("spendingChart").getContext("2d");
-            new Chart(ctxBar, {
+            const canvas = document.getElementById("spendingChart_visual");
+            const ctxBar = canvas.getContext("2d");
+            chartInstanceBar = new Chart(ctxBar, {
                 type: "bar",
                 data: {
                     labels: labels, // Categories
@@ -114,9 +122,15 @@ $(document).ready(function () {
             canvas.style.width = "100vh"; // Set width
             canvas.style.height = "50vh"; // Set height
 
+            if (chartInstancePie) {
+                console.log("Destroying existing chart instance for spendingChart.");
+                chartInstancePie.destroy();
+            }
+
             // Create a pie chart
             const ctxPie = canvas.getContext("2d");
-            new Chart(ctxPie, {
+            
+            chartInstancePie = new Chart(ctxPie, {
                 type: "pie",
                 data: {
                     labels: labels, // Dynamically handles available categories
