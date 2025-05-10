@@ -74,7 +74,7 @@ def index():
         total_expense=round(total_expense, 2),
         savings_percent=savings_percent,
         goals_created=goals_created,
-        form=form,
+        form=form
     )
 
 @bp.route("/reset_all", methods=["GET", "POST"])
@@ -91,3 +91,9 @@ def reset_all():
         flash("An error occurred. Please try again.", "danger")
     
     return render_template("reset_all.html", form=form)
+
+@bp.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
+    # Placeholder for profile management logic
+    return render_template("profile.html")

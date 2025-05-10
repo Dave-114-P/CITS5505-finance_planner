@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 header_font" style="font-size: 10vh;">Profile</h1>
+    <div class="card">
+        <div class="card-body">
+            <!-- Display Current User Info -->
+            <div class="mb-4">
+                <h5 class="header_font" style="font-size: 5vh;">Current Details:</h5>
+                <p class="text_font" style="font-size: 2.5vh;"><strong>Username:</strong> {{ current_user.username }}</p>
+                <p class="text_font" style="font-size: 2.5vh;"><strong>Email:</strong> {{ current_user.email }}</p>
+                <p class="text_font" style="font-size: 2.5vh;"><strong>Gender:</strong> {{ current_user.gender }}</p>
+            </div>
+            <hr>
+            <!-- Form to Update User Info -->
+            <h5 class="mb-3 header_font" style="font-size: 5vh;">Update Your Details</h5>
+            <form method="POST" action="{{ url_for('profile.profile') }}">
+                {{ form.hidden_tag() }} <!-- CSRF Token -->
+                
+                <div class="mb-3">
+                    <label for="username" class="form-label text_font" style="font-size: 2.5vh;">Username</label>
+                    {{ form.username(class="form-control text_font", id="username", value=current_user.username) }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="email" class="form-label text_font" style="font-size: 2.5vh;">Email Address</label>
+                    {{ form.email(class="form-control text_font", id="email", value=current_user.email) }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="gender" class="form-label text_font" style="font-size: 2.5vh;">Gender</label>
+                    {{ form.gender(class="form-select text_font", id="gender", value=current_user.gender) }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password" class="form-label text_font" style="font-size: 2.5vh;">New Password</label>
+                    {{ form.password(class="form-control text_font", id="password", placeholder="Enter new password (optional)") }}
+                </div>
+                
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary text_font">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% if success_message %}
+        <div class="alert alert-success mt-3">
+            {{ success_message }}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

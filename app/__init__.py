@@ -43,7 +43,8 @@ def create_app():
     migrate.init_app(app, db)
 
     # Import and register blueprints (routes)
-    from app.routes import main, auth, upload, goals, visualise, share, estimation, transaction, api, income
+    from app.routes import main, auth, upload, goals, visualise, share, estimation, transaction, api, income, profile
+    app.register_blueprint(profile.bp)  # Register the profile blueprint
     app.register_blueprint(main.bp)
     app.register_blueprint(auth.bp)
     app.register_blueprint(upload.bp)
