@@ -10,8 +10,15 @@ class Config:
     # Secret key for session management and CSRF protection
     SECRET_KEY = os.getenv("SECRET_KEY", "123")
 
-    # SQLite database URI
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URI", "sqlite:///finance.db")
-
     # Disable SQLAlchemy modification tracking for better performance
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+class DevelopmentConfig(Config):
+    # Database URI for development environment
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URI", "sqlite:///finance.db")
+
+class TestingConfig(Config):
+    # Database URI for testing environment
+    SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URI", "sqlite:///test.db")
+    TESTING = True  # Enable testing mode
+    DEBUG = True  # Enable debug mode for development

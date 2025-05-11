@@ -1,41 +1,68 @@
-# Unit tests for login/register functionality
-
-import pytest
+import unittest
 from app import create_app, db
+from app.config import TestingConfig
+from app.models.user import User
 
-@pytest.fixture
-def app():
-    # Create a test Flask app
-    app = create_app()
-    app.config["TESTING"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
-    with app.app_context():
+
+class AuthTestCase(unittest.TestCase):
+    def setUp(self):
+        self.app = create_app(TestingConfig)
+        self.client = self.app.test_client()
+        self.app_context = self.app.app_context()
+        self.app_context.push()
         db.create_all()
-        yield app
+
+    def tearDown(self):
+        db.session.remove()
         db.drop_all()
+        self.app_context.pop()
 
-@pytest.fixture
-def client(app):
-    return app.test_client()
+    def get_csrf_token(self, endpoint="/register"):
+        response = self.client.get(endpoint)
+        response_text = response.data.decode()
 
-def test_register(client):
-    # Test user registration
-    response = client.post("/register", data={
-        "username": "testuser",
-        "email": "test@example.com",
-        "password": "password123"
-    }, follow_redirects=True)
-    assert b"Registration successful" in response.data
+        # Debugging: Print the response to inspect the HTML
+        print(response_text)
 
-def test_login(client):
-    # Test user login
-    client.post("/register", data={
-        "username": "testuser",
-        "email": "test@example.com",
-        "password": "password123"
-    })
-    response = client.post("/login", data={
-        "username": "testuser",
-        "password": "password123"
-    }, follow_redirects=True)
-    assert b"Welcome to Finance Planner" in response.data
+        if 'name="csrf_token" value="' not in response_text:
+            raise ValueError(f"CSRF token not found in the response for endpoint {endpoint}!")
+
+        csrf_token = response_text.split('name="csrf_token" value="')[1].split('"')[0]
+        return csrf_token
+
+    def test_register(self):
+        csrf_token = self.get_csrf_token("/register")
+        response = self.client.post("/register", data={
+            "username": "testuser",
+            "email": "test@example.com",
+            "password": "password123",
+            "confirm_password": "password123",
+            "csrf_token": csrf_token
+        }, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Registration successful", response.data)
+
+    def test_login(self):
+        # Register a user
+        csrf_token = self.get_csrf_token("/register")
+        self.client.post("/register", data={
+            "username": "testuser",
+            "email": "test@example.com",
+            "password": "password123",
+            "confirm_password": "password123",
+            "csrf_token": csrf_token
+        })
+
+        # Fetch CSRF token for login
+        csrf_token = self.get_csrf_token("/login")
+        response = self.client.post("/login", data={
+            "username": "testuser",
+            "password": "password123",
+            "csrf_token": csrf_token
+        }, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Welcome to Finance Planner", response.data)
+
+
+if __name__ == "__main__":
+    unittest.main()

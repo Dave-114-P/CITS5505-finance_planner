@@ -67,6 +67,8 @@ def register():
 
         flash("Registration successful! Please log in.", "success")
         return redirect(url_for("auth.login"))
+    else:
+        print("POST Data:", request.form)
 
     return render_template("register.html", form=form)
 
