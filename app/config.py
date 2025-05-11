@@ -22,3 +22,5 @@ class TestingConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URI", "sqlite:///test.db")
     TESTING = True  # Enable testing mode
     DEBUG = True  # Enable debug mode for development
+    WTF_CSRF_ENABLED = False  # Ensure CSRF is enabled for testing
+    SECRET_KEY = "test-secret-key"

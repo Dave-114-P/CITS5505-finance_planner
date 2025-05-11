@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from flask_login import login_user, logout_user, login_required
 from app import db
 from app.models.user import User
@@ -67,6 +67,11 @@ def register():
 
         flash("Registration successful! Please log in.", "success")
         return redirect(url_for("auth.login"))
+    else:
+        # Debugging: Print form errors in the console
+        print(f"Form errors: {form.errors}")
+        # Return a 400 Bad Request response if validation fails
+        return render_template("register.html", form=form), 400
 
     return render_template("register.html", form=form)
 

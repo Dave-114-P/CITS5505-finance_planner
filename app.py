@@ -1,7 +1,7 @@
 # Entry point for the Finance Planner app
 
 from app import create_app
-from app.config import DevelopmentConfig, TestingConfig
+from app.config import DevelopmentConfig
 from app import db
 from flask_migrate import Migrate
 
