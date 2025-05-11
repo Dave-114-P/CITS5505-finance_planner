@@ -21,6 +21,7 @@
     <!-- Use Flask-WTF for CSRF protection -->
     <form class="register-form" method="POST" action="{{ url_for('auth.register') }}">
       {{ form.hidden_tag() }} <!-- CSRF Token -->
+      <input id="csrf_token" name="csrf_token" type="hidden" value="some_csrf_token_value">
       <h2 class="mb-4">Create your account</h2>
 
       <div class="container-fluid mt-3">
