@@ -21,9 +21,6 @@ class AuthTestCase(unittest.TestCase):
         response = self.client.get(endpoint)
         response_text = response.data.decode()
 
-        # Debugging: Print the response to inspect the HTML
-        print(response_text)
-
         if 'name="csrf_token" value="' not in response_text:
             raise ValueError(f"CSRF token not found in the response for endpoint {endpoint}!")
 
