@@ -17,4 +17,6 @@ if __name__ == "__main__":
         db.create_all()
         from scripts import populate_categories
         populate_categories.populate_categories()
+        from scripts import populate_categoriesin
+        populate_categoriesin.populate_categoriesin()
     app.run(debug=True)

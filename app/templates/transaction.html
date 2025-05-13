@@ -84,8 +84,8 @@
                         <!-- Category Image -->
                         <div class="col-3 d-flex align-items-center justify-content-center" style="padding: 0;">
                             <img 
-                                src="{{ url_for('static', filename='image/icon/' + income.category_id + '.png') }}" 
-                                alt="{{ income.category_id | replace('_', ' ') | title }}" 
+                                src="{{ url_for('static', filename='image/icon/' + income.category.icon) }}" 
+                                alt="{{ income.category.category | replace('_', ' ') | title }}" 
                                 style="max-height: 4rem;" 
                             >
                         </div>
@@ -93,7 +93,7 @@
                         <!-- Income Info -->
                         <div class="col-9 d-flex flex-column justify-content-center">
                             <h3 class="header_font mb-1 fs-6 smaller_font">
-                                <strong>{{ income.category_id | replace('_', ' ') | title }}</strong>
+                                <strong>{{ income.category.category | replace('_', ' ') | title }}</strong>
                             </h3>
                             <p class="text_font mb-0 fs-6 smaller_font income">
                                 ${{ income.amount }}

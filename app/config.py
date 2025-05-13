@@ -16,11 +16,12 @@ class Config:
 class DevelopmentConfig(Config):
     # Database URI for development environment
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URI", "sqlite:///finance.db")
+    WTF_CSRF_ENABLED = True  # Enable CSRF protection
 
 class TestingConfig(Config):
     # Database URI for testing environment
     SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URI", "sqlite:///test.db")
     TESTING = True  # Enable testing mode
     DEBUG = True  # Enable debug mode for development
-    WTF_CSRF_ENABLED = False  # Ensure CSRF is enabled for testing
+    WTF_CSRF_ENABLED = True  # Ensure CSRF is enabled for testing
     SECRET_KEY = "test-secret-key"

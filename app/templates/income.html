@@ -11,7 +11,7 @@
 
             <div class="mb-3">
                 {{ form.amount.label(class="form-label text_font", style="font-size: 2.5vh;") }}
-                {{ form.amount }}
+                {{ form.amount(style="color:#76c87d;") }}
                 {% for error in form.amount.errors %}
                     <small class="text-danger">{{ error }}</small>
                 {% endfor %}
