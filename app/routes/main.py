@@ -91,9 +91,3 @@ def reset_all():
         flash("An error occurred. Please try again.", "danger")
     
     return render_template("reset_all.html", form=form)
-
-@bp.route("/profile", methods=["GET", "POST"])
-@login_required
-def profile():
-    # Placeholder for profile management logic
-    return render_template("profile.html")
