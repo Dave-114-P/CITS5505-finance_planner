@@ -71,7 +71,7 @@ def register():
         # Debugging: Print form errors in the console
         print(f"Form errors: {form.errors}")
         # Return a 400 Bad Request response if validation fails
-        return render_template("register.html", form=form)
+        return render_template("register.html", form=form), 400
 
 
 @bp.route("/logout")
