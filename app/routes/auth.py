@@ -82,7 +82,7 @@ def logout():
     flash("You have been logged out.", "info")
     return redirect(url_for("index"))
 
-from flask import session, abort, current_app
+from flask import current_app
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 
 
