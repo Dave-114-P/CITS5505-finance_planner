@@ -45,10 +45,25 @@
                         <li class="nav-item {% if request.endpoint == 'goals.goals' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('goals.goals') }}">Goals</a></li>
                         <li class="nav-item {% if request.endpoint == 'visualise.visualise' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('visualise.visualise') }}">Visualise</a></li>
                         <li class="nav-item {% if request.endpoint == 'share.share' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('share.share') }}">Share</a></li>
-                        <li class="nav-item {% if request.endpoint == 'auth.logout' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {% if current_user.gender == "male" %}
+                                    <img src="{{ url_for('static', filename='image/user-icon-male.png') }}" alt="User Image" class="rounded-circle" width="30" height="30">
+                                {% elif current_user.gender == "female" %}
+                                    <img src="{{ url_for('static', filename='image/user-icon-female.png') }}" alt="User Image" class="rounded-circle" width="30" height="30">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename='image/user-icon.png') }}" alt="User Image" class="rounded-circle" width="30" height="30">
+                                {% endif %}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">                                
+                                <li><a class="dropdown-item" href="{{ url_for('main.profile') }}">Profile</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Sign Out</a></li>
+                            </ul>
+                        </li>
                     {% else %}
-                        <li class="nav-item skip"><a class="nav-link" href="{{ url_for('auth.login') }}">Login</a></li>
-                        <li class="nav-item skip"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
                     {% endif %}
                 </ul>
             </div>

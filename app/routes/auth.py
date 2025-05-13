@@ -2,15 +2,15 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required
 from app import db
 from app.models.user import User
-import hashlib
+from werkzeug.security import generate_password_hash, check_password_hash
 from app.forms.authform import LoginForm, RegisterForm
 
 # Define blueprint for auth routes
 bp = Blueprint("auth", __name__)
 
-# Helper function to hash password (SHA-256, simple version for now)
+# Enhance password security
 def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
+    return generate_password_hash(password)
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
@@ -21,9 +21,10 @@ def login():
         username = form.username.data
         password = form.password.data
         user = User.query.filter_by(username=username).first()
+        print(user)
 
         # Check if user exists and password matches (hash)
-        if user and user.password == hash_password(password):
+        if user and check_password_hash(user.password, password):
             login_user(user)
             flash("Login successful!", "success")
             return redirect(url_for("index"))
