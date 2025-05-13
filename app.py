@@ -6,7 +6,7 @@ from app import db
 from flask_migrate import Migrate
 
 # Create the Flask app instance with the configuration
-app = create_app(DevelopmentConfig)
+app = create_app()
 migrate = Migrate(app, db)
 
 if __name__ == "__main__":

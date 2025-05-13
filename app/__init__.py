@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
 import os
+from app.config import DevelopmentConfig
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -12,11 +13,11 @@ login_manager = LoginManager()
 # CSRF Protection
 csrf = CSRFProtect()
 
-def create_app(config):
+def create_app(config=None):
     app = Flask(__name__)
 
     if config is None:
-        config_name = os.getenv("FLASK_CONFIG", "app.config.DevelopmentConfig")
+        config_name = DevelopmentConfig
         app.config.from_object(config_name)
     else:
         app.config.from_object(config)
