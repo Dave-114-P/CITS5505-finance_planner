@@ -8,7 +8,7 @@ load_dotenv()
 
 class Config:
     # Secret key for session management and CSRF protection
-    SECRET_KEY = os.getenv("SECRET_KEY", "123")
+    SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key")
 
     # Disable SQLAlchemy modification tracking for better performance
     SQLALCHEMY_TRACK_MODIFICATIONS = False
