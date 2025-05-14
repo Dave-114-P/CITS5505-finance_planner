@@ -24,4 +24,4 @@ class TestingConfig(Config):
     TESTING = True  # Enable testing mode
     DEBUG = True  # Enable debug mode for development
     WTF_CSRF_ENABLED = False  # Ensure CSRF is enabled for testing
-    SECRET_KEY = "test-secret-key"
+    SECRET_KEY = os.getenv("SECRET_KEY", "test-secret-key")

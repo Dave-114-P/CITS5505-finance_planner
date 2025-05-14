@@ -82,8 +82,9 @@ def logout():
     flash("You have been logged out.", "info")
     return redirect(url_for("index"))
 
-from flask import current_app
+from flask import current_app,abort
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
+import logging
 
 
 @bp.route("/forgot-password", methods=["GET", "POST"])
@@ -122,15 +123,19 @@ def reset_password_form(token):
     serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
 
     try:
-        user_id = serializer.loads(token, max_age=3600)
-    except SignatureExpired:
+        user_id = serializer.loads(token, max_age=3)  # Token is valid for 5 minutes
+    except SignatureExpired as e:
+        logging.warning(f"Token expired: {e}")
         flash("The password reset link has expired. Please request a new one.", "danger")
         return redirect(url_for("auth.forgot_password"))
-    except BadSignature:
+    except BadSignature as e:
+        logging.warning(f"Invalid token: {e}")
         flash("Invalid password reset link.", "danger")
         return redirect(url_for("auth.forgot_password"))
 
-    user = User.query.get_or_404(user_id)
+    user = db.session.get(User, user_id)
+    if not user:
+        abort(404)
 
     # Initialize the form
     form = ResetPasswordForm()
