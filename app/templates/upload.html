@@ -6,11 +6,11 @@
     <div class="col-md-10" style="border-radius: 10px; padding: 10px; margin: 0px; background-color: #76c87d;">
         <h2 class="text-center header_font" style="font-size: 3rem;">Upload Spending</h2>
         <form method="POST" action="{{ url_for('upload.upload') }}">
-            {{ form.hidden_tag() }} <!-- CSRF Token -->
+            {{ form.hidden_tag() }}
 
             <div class="mb-3">
                 {{ form.amount.label(class="form-label text_font", style="font-size: 2.5vh;") }}
-                {{ form.amount }}
+                {{ form.amount(class="form-control") }}
                 {% for error in form.amount.errors %}
                     <small class="text-danger">{{ error }}</small>
                 {% endfor %}
@@ -18,7 +18,7 @@
 
             <div class="mb-3">
                 {{ form.category.label(class="form-label text_font", style="font-size: 2.5vh;") }}
-                {{ form.category }}
+                {{ form.category(class="form-control") }}
                 {% for error in form.category.errors %}
                     <small class="text-danger">{{ error }}</small>
                 {% endfor %}
@@ -26,7 +26,7 @@
 
             <div class="mb-3">
                 {{ form.date.label(class="form-label text_font", style="font-size: 2.5vh;") }}
-                {{ form.date }}
+                {{ form.date(class="form-control") }}
                 {% for error in form.date.errors %}
                     <small class="text-danger">{{ error }}</small>
                 {% endfor %}
@@ -34,16 +34,16 @@
 
             <div class="mb-3">
                 {{ form.description.label(class="form-label text_font", style="font-size: 2.5vh;") }}
-                {{ form.description }}
+                {{ form.description(class="form-control") }}
                 {% for error in form.description.errors %}
                     <small class="text-danger">{{ error }}</small>
                 {% endfor %}
             </div>
 
             <div class="d-flex justify-content-end">
-                <a href="{{ url_for('trans.transaction') }}" type="button" class="btn btn-primary me-2" 
+                <a href="{{ url_for('trans.transaction') }}" type="button" class="btn btn-primary me-2"
                    style="background-color: #ddd0c2; border: #ddd0c2; width: 150px; text-align: center;">BACK</a>
-                {{ form.submit }}
+                {{ form.submit(class="btn btn-primary") }}
             </div>
         </form>
     </div>
