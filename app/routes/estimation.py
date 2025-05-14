@@ -32,7 +32,7 @@ def estimation():
         flash('Invalid lifestyle selection. Please try again.', 'danger')
 
     # Fetch all spending categories
-    categories = Category.query.all()
+    categories = Category.query.filter(Category.category != "Tuition fees").all()
 
     # Prepare data for rendering: calculate spent amount and percentage
     category_data = []

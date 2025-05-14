@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
-    gender = db.Column(db.String(10), nullable=True)
+    gender = db.Column(db.String(10), nullable=False)
     role = db.Column(db.String(20), default="user")
 
     # One-to-many relationships

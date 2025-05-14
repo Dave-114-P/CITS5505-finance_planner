@@ -123,7 +123,7 @@ def reset_password_form(token):
     serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
 
     try:
-        user_id = serializer.loads(token, max_age=3)  # Token is valid for 5 minutes
+        user_id = serializer.loads(token, max_age=300)  # Token is valid for 5 minutes
     except SignatureExpired as e:
         logging.warning(f"Token expired: {e}")
         flash("The password reset link has expired. Please request a new one.", "danger")

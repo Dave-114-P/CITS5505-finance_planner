@@ -15,8 +15,17 @@ if __name__ == "__main__":
     with app.app_context():
         db.drop_all()
         db.create_all()
-        from scripts import populate_categories
-        populate_categories.populate_categories()
-        from scripts import populate_categoriesin
+        from scripts import (
+            populate_dummy_users,
+            populate_categoriesin,
+            populate_income,
+            populate_spending,
+            populate_categories,
+        )
+        # Populate the database with sample data
+        populate_dummy_users.populate_users()
         populate_categoriesin.populate_categoriesin()
-    app.run(host='192.168.172.22',port=5000,debug=True)
+        populate_categories.populate_categories()
+        populate_income.populate_incomes()
+        populate_spending.populate_spendings()
+    app.run(host='192.168.1.103',port=5000,debug=True)

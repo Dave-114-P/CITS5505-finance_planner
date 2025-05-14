@@ -50,9 +50,4 @@ def populate_categories():
             print(f"❌ Error adding category ID={entry['id']}, Name={entry['category']}: {e}")
 
     print("Database URI being used:", db.engine.url)
-
-if __name__ == "__main__":
-    app = create_app()
-    with app.app_context():
-        populate_categories()
 #python -m scripts.populate_categories run this command in terminal to populate the categories table in the database
