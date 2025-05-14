@@ -4,6 +4,8 @@ from app.forms.estimationform import LifestyleForm, ChangeLifestyleForm
 from app import db
 from app.models.spending import Spending
 from app.models.categories import Category
+from sqlalchemy import extract
+from datetime import datetime
 
 # Create Blueprint for estimation routes
 bp = Blueprint('est', __name__)
@@ -34,8 +36,14 @@ def estimation():
 
     # Prepare data for rendering: calculate spent amount and percentage
     category_data = []
+    current_month = datetime.now().month
+    current_year = datetime.now().year
     for category in categories:
-        spendings = Spending.query.filter_by(user_id=current_user.id, category_id=category.id).all()
+        # Filter spendings for the current month and year
+        spendings = Spending.query.filter_by(user_id=current_user.id, category_id=category.id)\
+                              .filter(extract('month', Spending.date) == current_month)\
+                              .filter(extract('year', Spending.date) == current_year)\
+                              .all()
         total_spent = sum(s.amount for s in spendings)
 
         if selected_lifestyle == "simple":
