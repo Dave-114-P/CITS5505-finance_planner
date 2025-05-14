@@ -13,10 +13,9 @@ if __name__ == "__main__":
     # Run the app in debug mode for development
     # Use the app's context to drop and create all tables
     with app.app_context():
-        db.drop_all()
-        db.create_all()
+        
         from scripts import populate_categories
         populate_categories.populate_categories()
         from scripts import populate_categoriesin
         populate_categoriesin.populate_categoriesin()
-    app.run(debug=True)
+    app.run(host='192.168.172.22',port=5000,debug=True)
