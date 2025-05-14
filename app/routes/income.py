@@ -10,14 +10,10 @@ bp = Blueprint("income", __name__)
 
 @bp.route("/income", methods=["GET", "POST"])
 @login_required
-def income():
-    # Fetch all categories to populate the category dropdown
-    categories = Categoryin.query.all()
-    category_choices = [(c.category, c.category) for c in categories]
+def income():   
 
     # Create an instance of the form and populate the category choices dynamically
     form = IncomeForm(request.form)
-    form.category.choices = category_choices
 
     # Handle form submission
     if request.method == "POST" and form.validate_on_submit():

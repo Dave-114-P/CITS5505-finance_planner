@@ -58,7 +58,10 @@ def share():
         db.session.commit()
         flash("Share successful.", "success")
         return redirect(url_for("share.share"))
-
+    else:
+        # Handle validation errors
+        for error in form.image.errors:
+            flash(error, "danger")
     # Check the share data
     public_shares = Share.query.filter_by(is_public=True).order_by(Share.timestamp.desc()).all()
     sent_shares = Share.query.filter_by(sender_id=current_user.id).order_by(Share.timestamp.desc()).all()
