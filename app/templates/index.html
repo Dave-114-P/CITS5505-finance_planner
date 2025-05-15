@@ -26,14 +26,49 @@
                     </div>
                 </div>
                 <div class="col-md-6">
+                <a href="{{ url_for('goals.goals') }}" style="text-decoration: none;">
                     <div class="card shadow-sm border-0" style="background-color: #ffb300; color: white;">
                     <div class="card-body">
                         <h5 class="card-title">&#127919; Goals Created</h5>
                         <p class="card-text fs-3">{{ goals_created }}</p>
                     </div>
                     </div>
+                </a>
                 </div>
             </div>
+
+
+                {% if user_goals %}
+                <div class="card mt-4 shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title text-center mb-3">&#127942; Your Savings Goals</h4>
+                    <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Target Amount ($)</th>
+                            <th>Years</th>
+                            <th>Monthly Plan ($)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for goal in user_goals %}
+                        <tr>
+                            <td>{{ goal.target_amount }}</td>
+                            <td>{{ goal.years }}</td>
+                            <td>{{ "%.2f"|format(goal.monthly_plan) }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                    <form method="POST" action="{{ url_for('goals.reset_goals') }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-danger mt-3">Reset All Goals</button>
+                    </form>
+            </div>
+        </div>
+                {% endif %}
           
             <!-- Navigation -->
             <div class="d-flex flex-column flex-md-row justify-content-around mb-5">
