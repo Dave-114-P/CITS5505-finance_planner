@@ -29,4 +29,4 @@ if __name__ == "__main__":
         populate_categories.populate_categories()
         populate_income.populate_incomes()
         populate_spending.populate_spendings()
-    app.run(host='192.168.1.103',port=5000,debug=True)
+    app.run(host='127.0.0.1',port=5000,debug=True)

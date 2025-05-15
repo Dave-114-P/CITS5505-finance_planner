@@ -17,15 +17,15 @@ def populate_categoriesin():
         
         try:
             # Check if the category already exists
-            existing_category = Categoryin.query.filter_by(id=id).first()
+            existing_category = Categoryin.query.filter_by(category=category_name).first()
             if not existing_category:
-                new_category = Categoryin(id=id, category=category_name, icon=icon_name)
+                new_category = Categoryin( category=category_name, icon=icon_name)
                 db.session.add(new_category)
                 db.session.commit()
-                print(f"✅ Added category: ID={id}, Name={category_name}, Icon={icon_name}")
+                print(f"✅ Added category: Name={category_name}, Icon={icon_name}")
             else:
-                print(f"⚠️ Category already exists: ID={id}, Name={category_name}, Icon={icon_name}")
+                print(f"⚠️ Category already exists: Name={category_name}, Icon={icon_name}")
         except Exception as e:
-            print(f"❌ Error adding category ID={id}, Name={category_name}, Icon={icon_name}: {str(e)}")
+            print(f"❌ Error adding category Name={category_name}, Icon={icon_name}: {str(e)}")
 
     print("Database URI being used:", db.engine.url)
