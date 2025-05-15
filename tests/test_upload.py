@@ -2,7 +2,6 @@ import unittest
 from datetime import date, timedelta
 from app import create_app, db
 from app.models import User, Spending, Category
-from flask_login import login_user
 from app.config import TestingConfig
 
 class TestUploadRoute(unittest.TestCase):
