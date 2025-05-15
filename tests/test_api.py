@@ -103,7 +103,35 @@ class TestSpendingRoutes(unittest.TestCase):
         # Verify the response
         self.assertEqual(response.json, expected_response)
 
-        
+    @patch("app.db.session.query")
+    def test_monthly_spending_breakdown_with_unauthorised_login(self, mock_query):
+        """Test the /monthly_spending_breakdown route with valid data."""
+        # Mock the query results
+        mock_results = [("Food", 150.0), ("Transportation", 50.0)]
+        mock_query.return_value.join.return_value.filter.return_value.filter.return_value.group_by.return_value.all.return_value = mock_results
+
+        # Perform a GET request
+        response = self.client.get("/api/monthly_spending_breakdown")
+        print(response.status_code, response.headers.get("Location"))
+        # Verify the response
+        self.assertEqual(response.status_code, 302)
+
+    @patch("app.db.session.query")
+    def test_data_last_30_days_with_unauthorised_login(self, mock_query):
+        """Test the /data_last_30_days route with valid data."""
+        # Mock the spending query results
+        mock_spending_results = [
+            ( "2025-04-02", 150.0),
+            ( "2025-03-01", 50.0),
+            ( "2024-07-25", 75.0),
+        ]
+
+        # Configure the mock query behavior
+        mock_query.return_value.filter.return_value.filter.return_value.group_by.return_value.order_by.return_value.all.return_value = mock_spending_results
+
+        # Perform a GET request
+        response = self.client.get("/api/data_last_30_days")
+        self.assertEqual(response.status_code, 302)
 
 if __name__ == "__main__":
     unittest.main()
