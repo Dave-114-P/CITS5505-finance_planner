@@ -51,3 +51,6 @@ if __name__ == "__main__":
     with app.app_context():
         # Populate the incomes table
         populate_incomes()
+
+#python -m scripts.populate_income run this command in terminal to populate the categories table in the database
+        

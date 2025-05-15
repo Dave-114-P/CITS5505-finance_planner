@@ -5,7 +5,7 @@ class Categoryin(db.Model):
     __tablename__ = "categoriesin"
 
     # Columns
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(50), primary_key=True)
     category = db.Column(db.String(50), nullable=False, unique=True)
     icon = db.Column(db.String(100), nullable=True)  # Optional image URL
 

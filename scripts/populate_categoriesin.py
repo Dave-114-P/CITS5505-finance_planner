@@ -6,23 +6,23 @@ def populate_categoriesin():
 
     # Predefined categories
     predefined_categories = {
-        "salary":"Salary",
-        "interest":"Interest",
-        "cashback":"Cashback"
+        "salary": ("Salary", "salary.png"),
+        "interest": ("Interest", "interest.png"),
+        "cashback": ("Cashback", "cashback.png")
     }
 
-    for id, category_name in predefined_categories.items():
+    for id, (category_name, icon_name) in predefined_categories.items():
         try:
-                # Check if the category already exists
-                existing_category = Categoryin.query.filter_by(id=id).first()
-                if not existing_category:
-                    new_category = Categoryin(id=id, category=category_name)
-                    db.session.add(new_category)
-                    db.session.commit()
-                    print(f"✅ Added category: ID={id}, Name={category_name}")
-                else:
-                    print(f"⚠️ Category already exists: ID={id}, Name={category_name}")
+            existing_category = Categoryin.query.filter_by(id=id).first()
+            if not existing_category:
+                new_category = Categoryin(id=id, category=category_name, icon=icon_name)
+                db.session.add(new_category)
+                db.session.commit()
+                print(f"✅ Added category: ID={id}, Name={category_name}")
+            else:
+                print(f"⚠️ Category already exists: ID={id}, Name={category_name}")
         except Exception as e:
+            db.session.rollback()
             print(f"❌ Error adding category ID={id}, Name={category_name}: {str(e)}")
 
     print("Database URI being used:", db.engine.url)

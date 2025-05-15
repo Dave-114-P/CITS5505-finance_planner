@@ -51,3 +51,5 @@ if __name__ == "__main__":
     with app.app_context():
         # Populate the spendings table
         populate_spendings()
+
+#python -m scripts.populate_spending run this command in terminal to populate the categories table in the database
