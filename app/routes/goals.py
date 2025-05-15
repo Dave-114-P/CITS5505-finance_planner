@@ -31,8 +31,10 @@ def goals():
 
         flash(f"Goal set! Save ${monthly_plan:.2f} per month to reach your target.", "success")
         return redirect(url_for("goals.goals"))
-    elif request.method == "POST" and not form.validate():
+    else:
         # Show error messages if the form is invalid
-        flash("Please correct the errors in the form.", "danger")
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(error, "danger")
 
     return render_template("goals.html", form=form)
