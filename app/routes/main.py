@@ -19,7 +19,6 @@ class ResetForm(FlaskForm):
 
 @bp.route("/")
 def index():
-    form = ResetForm()
     top_spendings = []
     recent_transactions = []
     username = None
@@ -73,15 +72,17 @@ def index():
         expense_data=weekly_totals,
         total_expense=round(total_expense, 2),
         savings_percent=savings_percent,
-        goals_created=goals_created,
-        form=form
+        goals_created=goals_created
     )
 
 @bp.route("/reset_all", methods=["GET", "POST"])
 @login_required
 def reset_all():
     form = ResetForm(request.form)
-    if request.method == "POST" and form.validate_on_submit():
+    if request.method == "POST":
+        if not form.validate_on_submit():
+            flash("An error occurred. Please try again.", "danger")
+            return render_template("reset_all.html", form=form)
         try:
             # Check if there is any data to reset
             spendings = Spending.query.filter_by(user_id=current_user.id).all()
@@ -101,7 +102,5 @@ def reset_all():
         except Exception as e:
             db.session.rollback()  # Rollback the transaction in case of errors
             flash("An error occurred while resetting data. Please try again.", "danger")
-    elif request.method == "POST" and not form.validate_on_submit():
-        flash("An error occurred. Please try again.", "danger")
     
     return render_template("reset_all.html", form=form)
