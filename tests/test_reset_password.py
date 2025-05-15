@@ -25,7 +25,7 @@ class AuthTestCase(unittest.TestCase):
         db.create_all()
 
         # Example user for tests
-        self.user = User(username="testuser", email="test@example.com")
+        self.user = User(username="testuser", email="test@example.com",gender="prefer not to say")
         self.user.set_password("password123")
         db.session.add(self.user)
         db.session.commit()

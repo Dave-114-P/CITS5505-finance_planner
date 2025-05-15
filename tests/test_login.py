@@ -23,8 +23,9 @@ class LoginTestCase(unittest.TestCase):
         dummy_user = User(
             username="testuser",
             email="test@example.com",
-            password=generate_password_hash("password123")  # Hash the password
+            gender="prefer not to say"
         )
+        dummy_user.set_password("password123")  # Hash the password
         db.session.add(dummy_user)
         db.session.commit()
 
