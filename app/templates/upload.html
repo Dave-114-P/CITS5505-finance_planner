@@ -10,7 +10,7 @@
 
             <div class="mb-3">
                 {{ form.amount.label(class="form-label text_font", style="font-size: 2.5vh;") }}
-                {{ form.amount(style="color:red;") }}
+                {{ form.amount(style="color:red;", class="form-control") }}
                 {% for error in form.amount.errors %}
                     <small class="text-danger">{{ error }}</small>
                 {% endfor %}
@@ -18,7 +18,7 @@
 
             <div class="mb-3">
                 {{ form.category.label(class="form-label text_font", style="font-size: 2.5vh;") }}
-                {{ form.category }}
+                {{ form.category(class="form-control") }}
                 {% for error in form.category.errors %}
                     <small class="text-danger">{{ error }}</small>
                 {% endfor %}
@@ -26,7 +26,7 @@
 
             <div class="mb-3">
                 {{ form.date.label(class="form-label text_font", style="font-size: 2.5vh;") }}
-                {{ form.date }}
+                {{ form.date(class="form-control") }}
                 {% for error in form.date.errors %}
                     <small class="text-danger">{{ error }}</small>
                 {% endfor %}
@@ -34,7 +34,7 @@
 
             <div class="mb-3">
                 {{ form.description.label(class="form-label text_font", style="font-size: 2.5vh;") }}
-                {{ form.description }}
+                {{ form.description(class="form-control") }}
                 {% for error in form.description.errors %}
                     <small class="text-danger">{{ error }}</small>
                 {% endfor %}
