@@ -82,11 +82,25 @@ def index():
 def reset_all():
     form = ResetForm(request.form)
     if request.method == "POST" and form.validate_on_submit():
-        Spending.query.filter_by(user_id=current_user.id).delete()
-        Income.query.filter_by(user_id=current_user.id).delete()
-        db.session.commit()
-        flash("All data has been reset successfully.", "success")
-        return redirect(url_for("main.index"))
+        try:
+            # Check if there is any data to reset
+            spendings = Spending.query.filter_by(user_id=current_user.id).all()
+            incomes = Income.query.filter_by(user_id=current_user.id).all()
+
+            if not spendings and not incomes:
+                flash("No data to reset.", "info")
+                return redirect(url_for("main.index"))
+
+            # Delete all spending and income data for the user
+            Spending.query.filter_by(user_id=current_user.id).delete()
+            Income.query.filter_by(user_id=current_user.id).delete()
+            db.session.commit()
+
+            flash("All data has been reset successfully.", "success")
+            return redirect(url_for("main.index"))
+        except Exception as e:
+            db.session.rollback()  # Rollback the transaction in case of errors
+            flash("An error occurred while resetting data. Please try again.", "danger")
     elif request.method == "POST" and not form.validate_on_submit():
         flash("An error occurred. Please try again.", "danger")
     

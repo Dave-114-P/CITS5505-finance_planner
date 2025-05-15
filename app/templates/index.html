@@ -40,7 +40,7 @@
                 <a href="{{ url_for('upload.upload') }}" class="btn btn-outline-primary btn-lg fw-semibold mb-2 mb-md-0">&#10133; Upload Data</a>
                 <a href="{{ url_for('visualise.visualise') }}" class="btn btn-outline-success btn-lg fw-semibold mb-2 mb-md-0">&#128202; View Charts</a>
                 <a href="{{ url_for('share.share') }}" class="btn btn-outline-secondary btn-lg fw-semibold mb-2 mb-md-0">&#128279; Share Insights</a>
-                <form action="{{ url_for('main.reset_all') }}" method="POST" class="mb-2 mb-md-0" onsubmit="return confirmReset();">
+                <form action="{{ url_for('main.reset_all') }}" class="mb-2 mb-md-0">
                     {{ form.hidden_tag() }} <!-- CSRF Protection -->
                     <button type="submit" class="btn btn-danger btn-lg fw-semibold">
                         &#129529; Reset All
