@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash
 from flask_wtf import FlaskForm
-from flask_wtf.csrf import CSRFProtect
+from wtforms.validators import DataRequired
 from flask_login import current_user, login_required
 from datetime import datetime
 from wtforms import SubmitField
@@ -15,7 +15,7 @@ bp = Blueprint("main", __name__)
 
 # Confirmation Form for Resetting All Data
 class ResetForm(FlaskForm):
-    confirm = SubmitField("Confirm Reset")
+    confirm = SubmitField("Confirm Reset", validators=[DataRequired()])
 
 @bp.route("/")
 def index():
@@ -78,11 +78,11 @@ def index():
 @bp.route("/reset_all", methods=["GET", "POST"])
 @login_required
 def reset_all():
-    form = ResetForm(request.form)
+    form = ResetForm()
     if request.method == "POST":
         if not form.validate_on_submit():
             flash("An error occurred. Please try again.", "danger")
-            return render_template("reset_all.html", form=form)
+            return render_template("reset_all.html", form=form), 200
         try:
             # Check if there is any data to reset
             spendings = Spending.query.filter_by(user_id=current_user.id).all()
