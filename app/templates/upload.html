@@ -42,9 +42,9 @@
 
             <div class="d-flex justify-content-end">
                 <a href="{{ url_for('trans.transaction') }}" type="button" class="btn btn-primary me-2" 
-                   style="background-color: #ddd0c2; border: #ddd0c2; width: 150px; text-align: center;">BACK</a>
+                   style="background-color: #ddd0c2; border: #ddd0c2; width: 150px; text-align: center;" id="back_transaction_spending">BACK</a>
                 <a href="{{ url_for('income.income') }}" type="button" class="btn btn-primary me-2" 
-                   style="background-color: #ddd0c2; border: #ddd0c2; width: 150px; text-align: center;">INCOME</a>
+                   style="background-color: #ddd0c2; border: #ddd0c2; width: 150px; text-align: center;" id="switch_income">INCOME</a>
                 {{ form.submit }}
             </div>
         </form>

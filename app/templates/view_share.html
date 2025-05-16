@@ -87,7 +87,7 @@
         {{ form.hidden_tag() }}
         {{ form.parent_id(value="") }}
         <div class="mb-3">
-            {{ form.content(class="form-control", rows=3, placeholder="Write something...") }}
+            {{ form.content(class="form-control", rows=3, placeholder="Write something...", id="new_comment_field") }}
             {% if form.content.errors %}
               <div class="text-danger">
                   {% for error in form.content.errors %}

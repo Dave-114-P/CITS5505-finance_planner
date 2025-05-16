@@ -25,7 +25,7 @@ class FinancePlannerTest(unittest.TestCase):
         time.sleep(1)
 
         # ---------- Test 2: Registration ----------
-        driver.get(f"{self.base_url}/register")
+        driver.find_element(By.ID, "nav_register").click()
         time.sleep(1)
         driver.find_element(By.ID, "username").send_keys("testuser3")
         driver.find_element(By.ID, "email").send_keys("testuser3@example.com")
@@ -35,8 +35,17 @@ class FinancePlannerTest(unittest.TestCase):
         driver.find_element(By.NAME, "submit").click()
         time.sleep(2)
 
+        driver.find_element(By.ID, "sign_up_here").click()
+        time.sleep(1)
+        driver.find_element(By.ID, "username").send_keys("anotheruser")
+        driver.find_element(By.ID, "email").send_keys("anotheruser@example.com")
+        driver.find_element(By.ID, "male").click()
+        driver.find_element(By.ID, "password").send_keys("anothertestpassword")
+        driver.find_element(By.ID, "confirm_password").send_keys("anothertestpassword")
+        driver.find_element(By.NAME, "submit").click()
+        time.sleep(2)
+
         # ---------- Test 3: Login ----------
-        driver.get(f"{self.base_url}/login")
         time.sleep(1)
         driver.find_element(By.ID, "username").send_keys("testuser3")
         driver.find_element(By.ID, "password").send_keys("testpassword")
@@ -46,7 +55,7 @@ class FinancePlannerTest(unittest.TestCase):
         # self.assertIn("Welcome", driver.page_source)
 
         # ---------- Test 4: Share a Post ----------
-        driver.get(f"{self.base_url}/share")
+        driver.find_element(By.ID, "nav_share").click()
         time.sleep(1)
 
         # Fill receiver (dummy username)
@@ -60,6 +69,9 @@ class FinancePlannerTest(unittest.TestCase):
         # Title and content
         driver.find_element(By.NAME, "title").send_keys("Test Share Title")
         driver.find_element(By.NAME, "content").send_keys("Test share content")
+
+        # Scroll down to make the comment button visible
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
         # Select first radio button for public/private
         time.sleep(2)
@@ -78,7 +90,11 @@ class FinancePlannerTest(unittest.TestCase):
         time.sleep(2)
 
         # ---------- Test 5: Upload a Spending Record ----------
-        driver.get(f"{self.base_url}/upload")
+        driver.find_element(By.ID, "nav_transaction").click()
+        time.sleep(1)
+        driver.find_element(By.ID, "dropdownMenuButton").click()
+        time.sleep(1)
+        driver.find_element(By.ID, "add_spending").click()
         time.sleep(1)
 
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "amount"))).send_keys("123.45")
@@ -89,18 +105,36 @@ class FinancePlannerTest(unittest.TestCase):
         driver.find_element(By.NAME, "submit").click()
         time.sleep(2)
          # ---------- Test 6: Visualisation Page ----------
-        driver.get(f"{self.base_url}/visualise")
+        driver.find_element(By.ID, "nav_visualise").click()
         time.sleep(1)
         canvas_elements = driver.find_elements(By.TAG_NAME, "canvas")
         self.assertTrue(len(canvas_elements) > 0, "No charts found on /visualise page")
+        # Scroll down to see the charts
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)
+        # Scroll back up to the top
+        driver.execute_script("window.scrollTo(0, 0);")
+        time.sleep(1)
 
         # ---------- Test 7: Profile Page ----------
-        driver.get(f"{self.base_url}/profile")
+        driver.find_element(By.ID, "nav_user").click()
+        time.sleep(1)
+        driver.find_element(By.ID, "nav_profile").click()
         time.sleep(1)
         self.assertIn("Profile", driver.page_source)
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(1)
+        # Scroll back up to the top
+        driver.execute_script("window.scrollTo(0, 0);")
+        time.sleep(1)
 
         # ---------- Test 8: Upload Income ----------
-        driver.get(f"{self.base_url}/income")
+        driver.find_element(By.ID, "nav_home").click()
+        time.sleep(1)
+        driver.find_element(By.ID, "upload_spending_from_home").click()
+        time.sleep(1)
+        driver.find_element(By.ID, "switch_income").click()
         time.sleep(1)
 
         driver.find_element(By.NAME, "amount").send_keys("888.88")
@@ -112,7 +146,7 @@ class FinancePlannerTest(unittest.TestCase):
         time.sleep(2)
 
         # ---------- Test 9: Estimation Page (Choose or Change Lifestyle) ----------
-        driver.get(f"{self.base_url}/estimation")
+        driver.find_element(By.ID, "nav_fee_estimation").click()
         time.sleep(1)
 
         # Case 1: First-time selection
@@ -120,7 +154,11 @@ class FinancePlannerTest(unittest.TestCase):
             driver.find_element(By.NAME, "lifestyle").send_keys(Keys.ARROW_DOWN)
             driver.find_element(By.NAME, "lifestyle").send_keys(Keys.RETURN)
             driver.find_element(By.CLASS_NAME, "action-button").click()
-            time.sleep(2)
+            time.sleep(1)
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            driver.execute_script("window.scrollTo(0, 0);")
+            time.sleep(1)
         else:
             # Case 2: Already selected → change it
             if driver.find_elements(By.CLASS_NAME, "action-button"):
@@ -129,10 +167,14 @@ class FinancePlannerTest(unittest.TestCase):
                 driver.find_element(By.NAME, "lifestyle").send_keys(Keys.ARROW_DOWN)
                 driver.find_element(By.NAME, "lifestyle").send_keys(Keys.RETURN)
                 driver.find_element(By.CLASS_NAME, "action-button").click()
-                time.sleep(2)
+                time.sleep(1)
+                driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                time.sleep(1)
+                driver.execute_script("window.scrollTo(0, 0);")
+                time.sleep(1)
 
         # ---------- Test 10: View a Public Share & Add/Edit Comment ----------
-        driver.get(f"{self.base_url}/share")
+        driver.find_element(By.ID, "nav_share").click()
         time.sleep(2)
 
         # Switch to "Public Shares" tab
@@ -147,9 +189,12 @@ class FinancePlannerTest(unittest.TestCase):
             time.sleep(2)
 
             # Post a comment before editing
-            comment_box = driver.find_element(By.NAME, "content")
+            comment_box = driver.find_element(By.ID, "new_comment_field")
             comment_box.send_keys("Comment to be edited")
-            time.sleep(10)
+            time.sleep(1)
+            # Scroll down to make the comment button visible
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
             driver.find_element(By.ID, "add_comment").click()
             time.sleep(2)
 

@@ -68,10 +68,10 @@
 
             <!-- Navigation -->
             <div class="d-flex flex-column flex-md-row justify-content-around mb-5">
-                <a href="{{ url_for('upload.upload') }}" class="btn btn-outline-primary btn-lg fw-semibold mb-2 mb-md-0">&#10133; Upload Data</a>
-                <a href="{{ url_for('visualise.visualise') }}" class="btn btn-outline-success btn-lg fw-semibold mb-2 mb-md-0">&#128202; View Charts</a>
-                <a href="{{ url_for('share.share') }}" class="btn btn-outline-secondary btn-lg fw-semibold mb-2 mb-md-0">&#128279; Share Insights</a>
-                <a href="{{ url_for('main.reset_all') }}" class="btn btn-danger btn-lg fw-semibold mb-2 mb-md-0">&#129529; Reset All</a>
+                <a href="{{ url_for('upload.upload') }}" class="btn btn-outline-primary btn-lg fw-semibold mb-2 mb-md-0" id="upload_spending_from_home">&#10133; Upload Data</a>
+                <a href="{{ url_for('visualise.visualise') }}" class="btn btn-outline-success btn-lg fw-semibold mb-2 mb-md-0" id="view_chart_from_home">&#128202; View Charts</a>
+                <a href="{{ url_for('share.share') }}" class="btn btn-outline-secondary btn-lg fw-semibold mb-2 mb-md-0" id="view_share_from_home">&#128279; Share Insights</a>
+                <a href="{{ url_for('main.reset_all') }}" class="btn btn-danger btn-lg fw-semibold mb-2 mb-md-0" id="reset_all_income_and_spending">&#129529; Reset All</a>
             </div>
           
             <!-- Chart -->

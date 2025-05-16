@@ -29,4 +29,16 @@ if __name__ == "__main__":
         populate_categories.populate_categories()
         populate_income.populate_incomes()
         populate_spending.populate_spendings()
+        
+    # When deployed, these lines should be used
+    # with app.app_context():
+    #     db.create_all()
+    #     from scripts import (
+    #        populate_categoriesin,
+    #        populate_categories
+    #     )
+    #     populate_categoriesin.populate_categoriesin()
+    #     populate_categories.populate_categories()
+    # Start the Flask development server
+
     app.run(host='127.0.0.1',port=5000,debug=True)

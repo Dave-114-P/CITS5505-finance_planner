@@ -38,14 +38,14 @@
             </button>
             <div class="navbar-collapse collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item {% if request.endpoint=='main.index' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
-                    <li class="nav-item {% if request.endpoint=='est.estimation' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('est.estimation') }}">Fee Estimation</a></li>
-                    <li class="nav-item {% if request.endpoint=='trans.transaction' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('trans.transaction') }}">Transaction</a></li>
+                    <li class="nav-item {% if request.endpoint=='main.index' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('main.index') }}" id="nav_home">Home</a></li>
+                    <li class="nav-item {% if request.endpoint=='est.estimation' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('est.estimation') }}" id="nav_fee_estimation">Fee Estimation</a></li>
+                    <li class="nav-item {% if request.endpoint=='trans.transaction' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('trans.transaction') }}" id="nav_transaction">Transaction</a></li>
                     {% if current_user.is_authenticated %}
-                        <li class="nav-item {% if request.endpoint == 'goals.goals' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('goals.goals') }}">Goals</a></li>
-                        <li class="nav-item {% if request.endpoint == 'visualise.visualise' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('visualise.visualise') }}">Visualise</a></li>
-                        <li class="nav-item {% if request.endpoint == 'share.share' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('share.share') }}">Share</a></li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item {% if request.endpoint == 'goals.goals' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('goals.goals') }}" id="nav_goals">Goals</a></li>
+                        <li class="nav-item {% if request.endpoint == 'visualise.visualise' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('visualise.visualise') }}" id="nav_visualise">Visualise</a></li>
+                        <li class="nav-item {% if request.endpoint == 'share.share' %}myActive{% endif %}"><a class="nav-link" href="{{ url_for('share.share') }}" id="nav_share">Share</a></li>
+                        <li class="nav-item dropdown" id="nav_user">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {% if current_user.gender == "male" %}
                                     <img src="{{ url_for('static', filename='image/user-icon-male.png') }}" alt="User Image" class="rounded-circle" width="30" height="30">
@@ -56,14 +56,14 @@
                                 {% endif %}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">                                
-                                <li><a class="dropdown-item" href="{{ url_for('profile.profile') }}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('profile.profile') }}" id="nav_profile">Profile</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Sign Out</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}" id="nav_sign_out">Sign Out</a></li>
                             </ul>
                         </li>
                     {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}" id="nav_login">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}" id="nav_register">Register</a></li>
                     {% endif %}
                 </ul>
             </div>
