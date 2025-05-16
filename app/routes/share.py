@@ -28,3 +28,13 @@ def share():
         return redirect(url_for("share.share"))
     posts = Post.query.all()
     return render_template("share.html", posts=posts)
+
+
+@bp.route("/like/<int:post_id>", methods=["POST"])
+@login_required
+def like(post_id):
+    post = Post.query.get_or_404(post_id)
+    post.likes += 1
+    db.session.commit()
+    flash("Liked!", "info")
+    return redirect(url_for("share.share"))
