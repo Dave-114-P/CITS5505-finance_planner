@@ -1,3 +1,17 @@
+"""Selenium test script for Finance Planner web application.
+Please running the server by calling `python app.py` before executing this script.
+This script automates the following test cases:
+1. Home Page: Verify the title and navigation.
+2. Registration: Test user registration with valid data.
+3. Login: Test user login with valid credentials.
+4. Share a Post: Test sharing a private post to anotheruser.
+5. Upload a Spending Record: Test uploading a spending record.
+6. Visualisation Page: Verify the presence of charts.
+7. Profile Page: Verify the profile page.
+8. Upload Income: Test uploading an income record.
+9. Estimation Page: Test lifestyle selection and change.
+10. View a Public Share & Add/Edit Comment: Test viewing a public share and adding/editing a comment if there's a public share."""
+
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
