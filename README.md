@@ -32,7 +32,7 @@ python -m venv venv
 - On Windows:
     ```bash
     venv\Scripts\activate
-    ```powerShell
+    ```bash
     powershell -ExecutionPolicy Bypass
     /venv/Scripts/activate
 
