@@ -30,6 +30,7 @@ def index():
     savings_percent = 0
 
     goals_created = 0
+    user_goals = []
 
     if current_user.is_authenticated:
         username = current_user.username
@@ -53,6 +54,9 @@ def index():
         # Count user's goals
         goals_created = Goal.query.filter_by(user_id=current_user.id).count()
 
+         # Load all user goals for dashboard display
+        user_goals = Goal.query.filter_by(user_id=current_user.id).all()
+
         # Get weekly spending in current month
         now = datetime.now()
         all_spending = Spending.query.filter_by(user_id=current_user.id).all()
@@ -72,7 +76,8 @@ def index():
         expense_data=weekly_totals,
         total_expense=round(total_expense, 2),
         savings_percent=savings_percent,
-        goals_created=goals_created
+        goals_created=goals_created,
+        user_goals=user_goals,
     )
 
 @bp.route("/reset_all", methods=["GET", "POST"])
