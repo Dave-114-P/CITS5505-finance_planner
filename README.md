@@ -32,9 +32,11 @@ python -m venv venv
 - On Windows:
     ```bash
     venv\Scripts\activate
+    ```
     ```bash
     powershell -ExecutionPolicy Bypass
     /venv/Scripts/activate
+    ```
 
 ### Install Dependencies
 ```bash
