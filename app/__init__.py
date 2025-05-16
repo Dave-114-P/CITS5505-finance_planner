@@ -3,48 +3,40 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
+import os
+from app.config import DevelopmentConfig
 
-
-# Initialize SQLAlchemy for spending and category
+# Initialize extensions
 db = SQLAlchemy()
 migrate = Migrate()
-
-# Initialize login manager
 login_manager = LoginManager()
+# CSRF Protection
+csrf = CSRFProtect()
 
-def create_app():
+def create_app(config=None):
     app = Flask(__name__)
 
-    # Load configuration
-    from app.config import Config
-    app.config.from_object(Config)
+    if config is None:
+        config_name = DevelopmentConfig
+        app.config.from_object(config_name)
+    else:
+        app.config.from_object(config)
 
-    # Setup multiple database binds
-    app.config["SQLALCHEMY_BINDS"] = {
-        "spending": "sqlite:///spending.db",
-        "category": "sqlite:///category.db"
-    }
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    # Load configuration from the config module
+    app.config.from_object(config)
 
-    # Enable CSRF Protection
-    csrf = CSRFProtect(app)
-
-    # Initialize databases
+    # Initialize extensions
     db.init_app(app)
-
-    # Initialize migration (optional: bind to one db or global db)
-    migrate.init_app(app,db)
-
-    # Initialize login manager
+    migrate.init_app(app, db)
+    csrf.init_app(app)  # Initialize CSRF protection
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
 
-    # Initialize Flask-Migrate with app
-    migrate.init_app(app, db)
-
-    # Import and register blueprints (routes)
-    from app.routes import main, auth, upload, goals, visualise, share, estimation, transaction, api, income, profile
-    app.register_blueprint(profile.bp)  # Register the profile blueprint
+    # Import and register blueprints
+    from app.routes import (
+        main, auth, upload, goals, visualise,
+        share, estimation, transaction, api, income, profile
+    )
     app.register_blueprint(main.bp)
     app.register_blueprint(auth.bp)
     app.register_blueprint(upload.bp)
@@ -54,27 +46,32 @@ def create_app():
     app.register_blueprint(estimation.bp)
     app.register_blueprint(transaction.bp)
     app.register_blueprint(income.bp)
-    app.register_blueprint(api.bp)  # Register the API blueprint here
+    app.register_blueprint(api.bp)
+    app.register_blueprint(profile.bp)
 
+    # Define a root route
     @app.route("/")
     def index():
         return render_template("index.html")
 
-    from app.models.user import User  # # # Move the import here to avoid circular import issues
-    from app.models.spending import Spending  # # # Move the import here to avoid circular import issues
-    from app.models.categories import Category  # # # Move the import here to avoid circular import issues
-    from app.models.goals import Goal  # # # Move the import here to avoid circular import issues
-    from app.models.post import Post  # # # Move the import here to avoid circular import issues
-    from app.models.incategory import Categoryin  # # # Move the import here to avoid circular import issues
-    from app.models.income import Income  # # # Move the import here to avoid circular import issues
-    # Create database tables if they don't exist
-    with app.app_context():
-        db.create_all()
+    # Import models (to initialize tables and avoid circular imports)
+    from app.models import (
+        User, Spending, Category, Goal, Post,
+        Categoryin, Income
+    )
 
-    # Define user loader
-    from app.models.user import User
+    # Define user loader for Flask-Login
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+    
+    # Health check endpoint
+    @app.route("/health")
+    def health():
+        return {"status": "ok"}, 200
+    
+     # Import routes after initializing app and db
+    with app.app_context():
+        db.create_all()
 
     return app

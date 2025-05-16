@@ -1,16 +1,21 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from app import db
 from datetime import datetime, timedelta
 from collections import defaultdict
 from flask_login import login_required, current_user
 from app.models.spending import Spending
 from app.models.income import Income
 from calendar import monthrange
+from app.forms.deleteform import DeleteForm
 
 bp = Blueprint("trans", __name__)
 
 @bp.route("/transaction", methods=["GET", "POST"])
 @login_required
 def transaction():
+
+    form = DeleteForm()
+
     # Fetch spendings and incomes for the current user
     spendings = Spending.query.filter_by(user_id=current_user.id).order_by(Spending.date.desc()).all()
     incomes = Income.query.filter_by(user_id=current_user.id).order_by(Income.date.desc()).all()
@@ -85,7 +90,8 @@ def transaction():
                            current_month=current_month,
                            current_year=current_year,
                            last_month=last_month,
-                           last_month_year=last_month_year)
+                           last_month_year=last_month_year,
+                           form=form)
 
 def group_transactions_by_month(transactions):
     categorized = defaultdict(list)
@@ -121,3 +127,37 @@ def filter_transactions(transactions, period='month'):
             filtered.append(transaction)
 
     return filtered
+
+
+
+@bp.route("/transaction/delete/<int:transaction_id>/<string:transaction_type>", methods=["POST", "GET"])
+@login_required
+def delete_transaction(transaction_id, transaction_type):
+
+    form = DeleteForm()
+    if request.method == "POST":
+        if not form.validate_on_submit():
+            flash("An error occurred. Please try again.", "danger")
+            return redirect(url_for("trans.transaction"))
+        # Check if the transaction type is valid
+        if transaction_type == "income":
+            transaction = Income.query.get_or_404(transaction_id)
+        elif transaction_type == "spending":
+            transaction = Spending.query.get_or_404(transaction_id)
+        else:
+            flash("Invalid transaction type.", "danger")
+            return redirect(url_for("trans.transaction"))
+
+        # Check if the current user owns the transaction
+        if transaction.user_id != current_user.id:
+            flash("You do not have permission to delete this transaction.", "danger")
+            return redirect(url_for("trans.transaction"))
+
+        # Delete the transaction
+        db.session.delete(transaction)
+        db.session.commit()
+        flash("Transaction deleted successfully.", "success")
+        return redirect(url_for("trans.transaction"))
+    else:
+        # Render the confirmation page
+        return render_template("delete_transaction.html", form=form)

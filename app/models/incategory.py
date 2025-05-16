@@ -15,7 +15,6 @@ class Categoryin(db.Model):
     def __repr__(self):
         return f"<Category ID {self.id}: {self.category}>"
     
-    def __init__(self, category, id, icon=None):
-        self.id = id
+    def __init__(self, category, icon=None):
         self.category = category
         self.icon = icon

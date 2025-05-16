@@ -3,7 +3,7 @@
 ## Overview
 Finance Planner is a web application built with Flask and Bootstrap to help users manage their finances. It includes features such as:
 - User authentication
-- Expense tracking
+- Expense, Income tracking
 - Savings goals
 - Data visualization
 - Community forum
@@ -32,7 +32,9 @@ python -m venv venv
 - On Windows:
     ```bash
     venv\Scripts\activate
-    ```
+    ```powerShell
+    powershell -ExecutionPolicy Bypass
+    /venv/Scripts/activate
 
 ### Install Dependencies
 ```bash
@@ -47,7 +49,7 @@ FLASK_ENV=development
 DATABASE_URI=sqlite:///finance.db
 ```
 
-### Run the Application
+### Run the Application with python to avoid database errors - caused by mismatched database
 ```bash
 python app.py
 ```
@@ -61,5 +63,5 @@ Open your browser and navigate to: [http://127.0.0.1:5000](http://127.0.0.1:5000
 - **User Authentication**: Login, register, and logout functionality.
 - **Expense Tracking**: Upload spending data and budget estimates.
 - **Savings Goals**: Set and track your savings goals.
-- **Data Visualization**: View financial data through interactive charts.
+- **Data Visualization**: View financial data through responsive charts.
 - **Community Forum**: Share advice and connect with others.

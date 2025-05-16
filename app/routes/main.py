@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash
 from flask_wtf import FlaskForm
-from flask_wtf.csrf import CSRFProtect
+from wtforms.validators import DataRequired
 from flask_login import current_user, login_required
 from datetime import datetime
 from wtforms import SubmitField
@@ -15,11 +15,10 @@ bp = Blueprint("main", __name__)
 
 # Confirmation Form for Resetting All Data
 class ResetForm(FlaskForm):
-    confirm = SubmitField("Confirm Reset")
+    confirm = SubmitField("Confirm Reset", validators=[DataRequired()])
 
 @bp.route("/")
 def index():
-    form = ResetForm()
     top_spendings = []
     recent_transactions = []
     username = None
@@ -31,6 +30,7 @@ def index():
     savings_percent = 0
 
     goals_created = 0
+    user_goals = []
 
     if current_user.is_authenticated:
         username = current_user.username
@@ -54,6 +54,9 @@ def index():
         # Count user's goals
         goals_created = Goal.query.filter_by(user_id=current_user.id).count()
 
+         # Load all user goals for dashboard display
+        user_goals = Goal.query.filter_by(user_id=current_user.id).all()
+
         # Get weekly spending in current month
         now = datetime.now()
         all_spending = Spending.query.filter_by(user_id=current_user.id).all()
@@ -74,26 +77,35 @@ def index():
         total_expense=round(total_expense, 2),
         savings_percent=savings_percent,
         goals_created=goals_created,
-        form=form
+        user_goals=user_goals,
     )
 
 @bp.route("/reset_all", methods=["GET", "POST"])
 @login_required
 def reset_all():
-    form = ResetForm(request.form)
-    if request.method == "POST" and form.validate_on_submit():
-        Spending.query.filter_by(user_id=current_user.id).delete()
-        Income.query.filter_by(user_id=current_user.id).delete()
-        db.session.commit()
-        flash("All data has been reset successfully.", "success")
-        return redirect(url_for("main.index"))
-    elif request.method == "POST" and not form.validate_on_submit():
-        flash("An error occurred. Please try again.", "danger")
+    form = ResetForm()
+    if request.method == "POST":
+        if not form.validate_on_submit():
+            flash("An error occurred. Please try again.", "danger")
+            return render_template("reset_all.html", form=form), 200
+        try:
+            # Check if there is any data to reset
+            spendings = Spending.query.filter_by(user_id=current_user.id).all()
+            incomes = Income.query.filter_by(user_id=current_user.id).all()
+
+            if not spendings and not incomes:
+                flash("No data to reset.", "info")
+                return redirect(url_for("main.index"))
+
+            # Delete all spending and income data for the user
+            Spending.query.filter_by(user_id=current_user.id).delete()
+            Income.query.filter_by(user_id=current_user.id).delete()
+            db.session.commit()
+
+            flash("All data has been reset successfully.", "success")
+            return redirect(url_for("main.index"))
+        except Exception as e:
+            db.session.rollback()  # Rollback the transaction in case of errors
+            flash("An error occurred while resetting data. Please try again.", "danger")
     
     return render_template("reset_all.html", form=form)
-
-@bp.route("/profile", methods=["GET", "POST"])
-@login_required
-def profile():
-    # Placeholder for profile management logic
-    return render_template("profile.html")

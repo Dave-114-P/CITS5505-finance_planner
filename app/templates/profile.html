@@ -27,16 +27,37 @@
                 <div class="mb-3">
                     <label for="email" class="form-label text_font" style="font-size: 2.5vh;">Email Address</label>
                     {{ form.email(class="form-control text_font", id="email", value=current_user.email) }}
+                    {% if form.email.errors %}
+                        <div class="text-danger">
+                            {% for error in form.email.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
                 
                 <div class="mb-3">
                     <label for="gender" class="form-label text_font" style="font-size: 2.5vh;">Gender</label>
                     {{ form.gender(class="form-select text_font", id="gender", value=current_user.gender) }}
+                    {% if form.gender.errors %}
+                        <div class="text-danger">
+                            {% for error in form.gender.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
                 
                 <div class="mb-3">
                     <label for="password" class="form-label text_font" style="font-size: 2.5vh;">New Password</label>
                     {{ form.password(class="form-control text_font", id="password", placeholder="Enter new password (optional)") }}
+                    {% if form.password.errors %}
+                        <div class="text-danger">
+                            {% for error in form.password.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
                 
                 <div class="text-center">

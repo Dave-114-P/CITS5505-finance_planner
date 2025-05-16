@@ -35,6 +35,13 @@
                 <div class="mb-3">
                     {{ form.category.label(class="form-label") }}
                     {{ form.category(class="form-select") }}
+                    {% if form.category.errors %}
+                        <div class="text-danger">
+                            {% for error in form.category.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-3">

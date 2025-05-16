@@ -51,17 +51,6 @@
         </form>
     </div>
 
-    <!-- Display flash messages if any -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul class="flashes">
-          {% for category, message in messages %}
-            <li class="alert alert-{{ category }}">{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-
     <!-- Show budget usage bars for each category -->
     {% for category in categories %}
     <div class="mb-4">

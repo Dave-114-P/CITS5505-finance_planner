@@ -87,9 +87,16 @@
         {{ form.hidden_tag() }}
         {{ form.parent_id(value="") }}
         <div class="mb-3">
-            {{ form.content(class="form-control", rows=3, placeholder="Write something...") }}
+            {{ form.content(class="form-control", rows=3, placeholder="Write something...", id="new_comment_field") }}
+            {% if form.content.errors %}
+              <div class="text-danger">
+                  {% for error in form.content.errors %}
+                      {{ error }}
+                  {% endfor %}
+              </div>
+            {% endif %}
         </div>
-        {{ form.submit(class="btn btn-primary") }}
+        {{ form.submit(class="btn btn-primary", id="add_comment") }}
     </form>
 </div>
 
@@ -107,7 +114,7 @@
           <input type="hidden" id="editCommentId" name="comment_id">
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Save</button>
+          <button id="change_comment" type="submit" class="btn btn-primary">Save</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         </div>
       </form>
