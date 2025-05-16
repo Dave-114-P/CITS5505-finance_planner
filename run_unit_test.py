@@ -1,3 +1,10 @@
+""" Unit test runner for the 'tests' directory.
+This script discovers and runs all unit tests in the specified directory.
+It will test all 16 files matching the pattern 'test_*.py'.
+The test results will be displayed in the console, and the script will exit with a status code
+indicating success (0) or failure (1).
+"""
+
 import unittest
 
 # Discover and run all test cases in the 'tests' directory
