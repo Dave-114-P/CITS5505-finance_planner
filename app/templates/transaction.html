@@ -91,7 +91,7 @@
                         </div>
 
                         <!-- Income Info -->
-                        <div class="col-9 d-flex flex-column justify-content-center">
+                        <div class="col-6 d-flex flex-column justify-content-center">
                             <h3 class="header_font mb-1 fs-6 smaller_font">
                                 <strong>{{ income.category.category | replace('_', ' ') | title }}</strong>
                             </h3>
@@ -103,6 +103,16 @@
                                     {{ income.description }}
                                 </p>
                             {% endif %}
+                        </div>
+
+                        <!-- Edit and Delete Buttons -->
+                        <div class="col-3 d-flex flex-column justify-content-center">
+                            <a href="{{ url_for('income.income', income_id=income.id) }}" 
+                                class="btn btn-primary btn-sm mb-1" style="width: 4rem; text-align: center;">Edit</a>
+                            <form action="{{ url_for('trans.delete_transaction', transaction_id=income.id, transaction_type='income') }}" method="POST" style="display: inline;">
+                                {{ form.hidden_tag() }}
+                                <button type="submit" class="btn btn-danger btn-sm" style="width: 4rem; text-align: center;">Delete</button>
+                            </form>
                         </div>
                     </div>
                 {% endfor %}
@@ -134,21 +144,36 @@
                         </div>
 
                         <!-- Spending Info -->
-                        <div class="col-9 d-flex flex-column justify-content-center">
+                        <div class="col-6 d-flex flex-column justify-content-center">
                             <h3 class="header_font mb-1 fs-6 smaller_font">
                                 <strong>{{ spending.category.category | replace('_', ' ') | title }}</strong>
                             </h3>
                             <p class="text_font mb-0 fs-6 smaller_font cost">
                                 ${{ spending.amount }}
                             </p>
+                            {% if spending.description %}
+                                <p class="text_font mb-0 fs-6 smaller_font description">
+                                    {{ spending.description }}
+                                </p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Edit and Delete Buttons -->
+                        <div class="col-3 d-flex flex-column justify-content-center">
+                            <a href="{{ url_for('upload.upload', spending_id=spending.id) }}" 
+                            class="btn btn-primary btn-sm mb-1" style="width: 4rem; text-align: center;">Edit</a>
+                            <form action="{{ url_for('trans.delete_transaction', transaction_id=spending.id, transaction_type='spending') }}" method="POST" style="display: inline;">
+                                {{ form.hidden_tag() }}
+                                <button type="submit" class="btn btn-danger btn-sm" style="width: 4rem; text-align: center;">Delete</button>
+                            </form>
                         </div>
                     </div>
                 {% endfor %}
             </div>
         {% endif %}
     </div>
-    {% else %}
+{% else %}
     <p class="text-center text_font mt-3 fs-5">No transactions available for the selected month.</p>
-    {% endif %}
+{% endif %}
 </section>
 {% endblock %}

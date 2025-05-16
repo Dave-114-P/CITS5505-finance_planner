@@ -5,7 +5,7 @@
 <div class="row justify-content-center" style="padding: 0px;">
     <div class="col-md-10" style="border-radius: 10px; padding: 10px; margin: 0px; background-color: #76c87d;">
         <h2 class="text-center header_font" style="font-size: 3rem;">Upload Spending</h2>
-        <form method="POST" action="{{ url_for('upload.upload') }}">
+        <form method="POST" action="{{ url_for('upload.upload', spending_id=request.args.get('spending_id')) }}">
             {{ form.hidden_tag() }} <!-- CSRF Token -->
 
             <div class="mb-3">
