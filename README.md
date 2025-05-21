@@ -60,7 +60,25 @@ python app.py
 Open your browser and navigate to: [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ---
+## Setup and run test
 
+### Run all Unit Tests
+```bash
+python -m unittest run_unit_test.py 
+```
+### Run Selenium
+Get your server handy and open new terminal to run test
+```bash
+python test_app 
+```
+
+#### Download chromedriver
+https://developer.chrome.com/docs/chromedriver/downloads
+
+### How to setup chromedriver
+https://developer.chrome.com/docs/chromedriver/get-started
+
+---
 ## Features
 - **User Authentication**: Login, register, and logout functionality.
 - **Expense Tracking**: Upload spending data and budget estimates.
