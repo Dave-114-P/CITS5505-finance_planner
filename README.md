@@ -67,3 +67,12 @@ Open your browser and navigate to: [http://127.0.0.1:5000](http://127.0.0.1:5000
 - **Savings Goals**: Set and track your savings goals.
 - **Data Visualization**: View financial data through responsive charts.
 - **Community Forum**: Share advice and connect with others.
+
+## Teams
+
+| UWA ID    | Name        | Github User Name   |
+|-----------|-------------|--------------------|
+| 23320288  | Zeyu Wang   | zeyu-wang-123      |
+| 24595816  | Karl Hoang  | Karl-Sue           |
+| 24331475  | Bomin Liao  | Maxwell2048        |
+| 23495103  | David Pan   | Dave-114-P         |
