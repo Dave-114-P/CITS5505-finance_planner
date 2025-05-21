@@ -67,7 +67,7 @@ Open your browser and navigate to: [http://127.0.0.1:5000](http://127.0.0.1:5000
 python -m unittest run_unit_test.py 
 ```
 ### Run Selenium
-Get your server handy and open new terminal to run test
+Get your server handy and chromedriver downloaded on your local machine, then open new terminal to run test
 ```bash
 python test_app 
 ```
