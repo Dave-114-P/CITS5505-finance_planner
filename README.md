@@ -1,12 +1,56 @@
 # Finance Planner
 
 ## Overview
-Finance Planner is a web application built with Flask and Bootstrap to help users manage their finances. It includes features such as:
-- User authentication
-- Expense, Income tracking
-- Savings goals
-- Data visualization
-- Community forum
+# Finance Tracker App
+
+A simple, interactive finance tracker designed to help users manage their everyday expenses, set goals, and gain insight into their spending habits.
+
+## 🚀 Purpose
+
+The Finance Tracker App empowers individuals to take control of their finances by allowing them to **upload**, **visualise**, **share**, and **explore** their personal financial data in an intuitive way.
+
+## 🧩 Key Features
+
+- 🗺️ **Interactive Australia Map**  
+  Click on any state to view fee comparisons between regions. Unauthorised users are provided with helpful links to learn more.
+
+- 🔐 **User Account Management**  
+  Register a new account, log in securely, and use features like "Remember Me" and "Forgot Password."
+
+- 📊 **Dashboard**  
+  Upload financial data, view spending charts, share insights, or reset all data.
+
+- 💰 **Lifestyle Fee Estimator**  
+  Choose between Simple, Quality, or Luxury life to view dynamic spending percentages for the month.
+
+- 📆 **Transaction View**  
+  Upload income and spending, filter by month, and access older transactions via dropdown.
+
+- 🎯 **Goals Tracker**  
+  Set savings goals and calculate how much to save monthly.
+
+- 📈 **Visualised Insights**  
+  Automatically generated visual summaries of monthly financial data.
+
+- 🔄 **Sharing Options**  
+  Share insights publicly or privately and manage shared content.
+
+## 📌 Core Functions
+
+- **Upload**
+- **Visualise**
+- **Share**
+- **Introduce**
+
+## Technologies used
+- HTML
+- CSS
+- JavaScript
+- Bootstrap
+- JQuery
+- Flask (with plugins described in lectures)
+- AJAX/Websockets
+- SQLite interfaced to via the SQLAlchemy package
 
 ### Group Info
 Developed by **Group-18** for **CITS5505**.
@@ -79,12 +123,6 @@ https://developer.chrome.com/docs/chromedriver/downloads
 https://developer.chrome.com/docs/chromedriver/get-started
 
 ---
-## Features
-- **User Authentication**: Login, register, and logout functionality.
-- **Expense Tracking**: Upload spending data and budget estimates.
-- **Savings Goals**: Set and track your savings goals.
-- **Data Visualization**: View financial data through responsive charts.
-- **Community Forum**: Share advice and connect with others.
 
 ## Teams
 
