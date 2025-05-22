@@ -113,7 +113,7 @@ python -m unittest run_unit_test.py
 ### Run Selenium
 Get your server handy and chromedriver downloaded on your local machine, then open new terminal to run test
 ```bash
-python test_app 
+python test_app.py 
 ```
 
 #### Download chromedriver
